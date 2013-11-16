@@ -4,5 +4,10 @@
     <string name="app_name">Note-U-List!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_view_note">View Notes</string>
+    <string name="title_activity_note">Write New Note</string>
+    <string name="title_activity_camera">Take a Picture Note</string>
+    <string name="title_activity_voice_rec">Record a Voice Note</string>
+    <string name="title_activity_share">Share Your Notes</string>
 
 </resources>

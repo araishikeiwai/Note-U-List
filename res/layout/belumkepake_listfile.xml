@@ -29,7 +29,7 @@
     
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/noteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editText1"
@@ -40,8 +40,8 @@
         android:id="@+id/imageButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageButton1"
-        android:layout_toRightOf="@+id/imageButton1"
+        android:layout_alignTop="@+id/noteButton"
+        android:layout_toRightOf="@+id/noteButton"
         android:src="@android:drawable/ic_menu_manage" />
 
     <ListView
@@ -51,7 +51,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25dp"
         android:layout_marginLeft="23dp"
-        android:layout_toLeftOf="@+id/imageButton1"
+        android:layout_toLeftOf="@+id/noteButton"
         android:layout_toRightOf="@+id/searchView1" >
 
     </ListView>
@@ -60,8 +60,8 @@
         android:id="@+id/ImageView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_below="@+id/imageView1"
+        android:layout_alignLeft="@+id/logo"
+        android:layout_below="@+id/logo"
         android:layout_marginTop="35dp"
         android:src="@android:drawable/ic_menu_edit" />
 
@@ -75,7 +75,7 @@
         android:src="@android:drawable/ic_menu_edit" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText1"

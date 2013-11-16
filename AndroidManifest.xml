@@ -22,8 +22,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name="tekmob.nfc.note_u_list.CameraActivity" 
+            android:label="@string/title_activity_camera">
+        </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.CameraActivity">
+            android:name="tekmob.nfc.note_u_list.ViewNoteActivity"
+            android:label="@string/title_activity_view_note" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.NoteActivity"
+            android:label="@string/title_activity_note" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.VoiceRecActivity"
+            android:label="@string/title_activity_voice_rec" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.ShareActivity"
+            android:label="@string/title_activity_share" >
         </activity>
     </application>
 
