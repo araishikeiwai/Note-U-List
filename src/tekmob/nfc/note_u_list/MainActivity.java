@@ -11,23 +11,23 @@ import android.widget.ImageButton;
 
 public class MainActivity extends Activity implements OnClickListener {
 
-	ImageButton noteButton, cameraButton, viewNoteButton, voiceRecButton, shareButton;
+	ImageButton mNoteButton, mCameraButton, mViewNoteButton, mVoiceRecButton, mShareButton;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        noteButton = (ImageButton) findViewById(R.id.noteButton);
-        noteButton.setOnClickListener(this);
-        cameraButton = (ImageButton) findViewById(R.id.cameraButton);
-        cameraButton.setOnClickListener(this);
-        viewNoteButton = (ImageButton) findViewById(R.id.viewNoteButton);
-        viewNoteButton.setOnClickListener(this);
-        voiceRecButton = (ImageButton) findViewById(R.id.voiceRecButton);
-        voiceRecButton.setOnClickListener(this);
-        shareButton = (ImageButton) findViewById(R.id.shareButton);
-        shareButton.setOnClickListener(this);
+        mNoteButton = (ImageButton) findViewById(R.id.noteButton);
+        mNoteButton.setOnClickListener(this);
+        mCameraButton = (ImageButton) findViewById(R.id.cameraButton);
+        mCameraButton.setOnClickListener(this);
+        mViewNoteButton = (ImageButton) findViewById(R.id.viewNoteButton);
+        mViewNoteButton.setOnClickListener(this);
+        mVoiceRecButton = (ImageButton) findViewById(R.id.voiceRecButton);
+        mVoiceRecButton.setOnClickListener(this);
+        mShareButton = (ImageButton) findViewById(R.id.shareButton);
+        mShareButton.setOnClickListener(this);
     }
 
 
@@ -58,7 +58,6 @@ public class MainActivity extends Activity implements OnClickListener {
     		next = new Intent(getApplicationContext(), ShareActivity.class);
     		break;
     	}
-    	Log.d(null, "MASUK");
     	startActivity(next);
     }
 }
