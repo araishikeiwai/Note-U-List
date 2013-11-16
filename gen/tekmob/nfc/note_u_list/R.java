@@ -25,11 +25,6 @@ public final class R {
         public static final int ic_stat_name=0x7f020001;
     }
     public static final class id {
-        public static final int CheckBox01=0x7f080012;
-        public static final int CheckBox02=0x7f08000d;
-        public static final int CheckBox03=0x7f080011;
-        public static final int CheckBox04=0x7f08000e;
-        public static final int CheckBox05=0x7f08000f;
         public static final int ImageButton01=0x7f080004;
         public static final int ImageButton02=0x7f080003;
         public static final int ImageButton03=0x7f080002;
@@ -38,13 +33,13 @@ public final class R {
         public static final int ImageView02=0x7f080007;
         public static final int ImageView03=0x7f080009;
         public static final int ImageView04=0x7f080008;
-        public static final int action_settings=0x7f080014;
-        public static final int checkBox1=0x7f080010;
+        public static final int action_settings=0x7f08000f;
         public static final int editText1=0x7f08000c;
         public static final int imageButton1=0x7f080000;
-        public static final int imageButton2=0x7f080013;
+        public static final int imageButton2=0x7f08000d;
         public static final int imageView1=0x7f080001;
         public static final int imageView2=0x7f08000a;
+        public static final int listView1=0x7f08000e;
         public static final int searchView1=0x7f08000b;
     }
     public static final class layout {

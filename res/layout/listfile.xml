@@ -26,54 +26,7 @@
         <requestFocus />
     </EditText>
 
-    <CheckBox
-        android:id="@+id/CheckBox02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/searchView1"
-        android:layout_marginTop="32dp"
-        android:text="note3" />
-
-    <CheckBox
-        android:id="@+id/CheckBox04"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/CheckBox02"
-        android:text="note6" />
-
-    <CheckBox
-        android:id="@+id/CheckBox05"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/CheckBox04"
-        android:text="note5" />
-
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/CheckBox05"
-        android:text="note1" />
-
-    <CheckBox
-        android:id="@+id/CheckBox03"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/checkBox1"
-        android:text="note3" />
-
-    <CheckBox
-        android:id="@+id/CheckBox01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText1"
-        android:layout_below="@+id/CheckBox03"
-        android:text="note2" />
+    
 
     <ImageButton
         android:id="@+id/imageButton1"
@@ -90,5 +43,62 @@
         android:layout_alignTop="@+id/imageButton1"
         android:layout_toRightOf="@+id/imageButton1"
         android:src="@android:drawable/ic_menu_manage" />
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="100px"
+        android:layout_height="500px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="23dp"
+        android:layout_toLeftOf="@+id/imageButton1"
+        android:layout_toRightOf="@+id/searchView1" >
+
+    </ListView>
+
+    <ImageView
+        android:id="@+id/ImageView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="35dp"
+        android:src="@android:drawable/ic_menu_edit" />
+
+    <ImageView
+        android:id="@+id/ImageView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ImageView01"
+        android:layout_below="@+id/ImageView01"
+        android:layout_marginTop="25dp"
+        android:src="@android:drawable/ic_menu_edit" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText1"
+        android:layout_alignTop="@+id/listView1"
+        android:layout_marginTop="21dp"
+        android:src="@android:drawable/ic_menu_edit" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ImageView02"
+        android:layout_below="@+id/ImageView02"
+        android:layout_marginTop="44dp"
+        android:src="@android:drawable/ic_menu_camera" />
+
+    <ImageView
+        android:id="@+id/ImageView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_below="@+id/imageView2"
+        android:layout_marginTop="23dp"
+        android:src="@android:drawable/ic_menu_camera" />
 
 </RelativeLayout>
