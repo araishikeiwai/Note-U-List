@@ -4,6 +4,9 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
@@ -22,9 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="tekmob.nfc.note_u_list.CameraActivity" 
-            android:label="@string/title_activity_camera">
+        <activity
+            android:name="tekmob.nfc.note_u_list.CameraActivity"
+            android:label="@string/title_activity_camera" >
+        </activity>
+         <activity
+            android:name="tekmob.nfc.note_u_list.AudioRecordTest"
+            android:label="@string/title_activity_camera" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ViewNoteActivity"
@@ -35,12 +42,20 @@
             android:label="@string/title_activity_note" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.VoiceRecActivity"
+            android:name="tekmob.nfc.note_u_list.AudioRecordingActivity"
             android:label="@string/title_activity_voice_rec" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ShareActivity"
             android:label="@string/title_activity_share" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.SplashActivity"
+            android:label="@string/title_activity_splash" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.ManActivity"
+            android:label="@string/title_activity_man" >
         </activity>
     </application>
 

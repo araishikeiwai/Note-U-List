@@ -9,5 +9,7 @@
     <string name="title_activity_camera">Take a Picture Note</string>
     <string name="title_activity_voice_rec">Record a Voice Note</string>
     <string name="title_activity_share">Share Your Notes</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_man">ManActivity</string>
 
 </resources>

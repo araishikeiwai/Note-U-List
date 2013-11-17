@@ -43,7 +43,7 @@ public class MainActivity extends Activity implements OnClickListener {
     	Intent next = null;
     	switch (v.getId()) {
     	case R.id.noteButton:
-    		next = new Intent(getApplicationContext(), NoteActivity.class);
+    		next = new Intent(getApplicationContext(), AudioRecordingActivity.class);
     		break;
     	case R.id.cameraButton:
     		next = new Intent(getApplicationContext(), CameraActivity.class);
@@ -52,7 +52,7 @@ public class MainActivity extends Activity implements OnClickListener {
     		next = new Intent(getApplicationContext(), ViewNoteActivity.class);
     		break;
     	case R.id.voiceRecButton:
-    		next = new Intent(getApplicationContext(), VoiceRecActivity.class);
+    		next = new Intent(getApplicationContext(), AudioRecordingActivity.class);
     		break;
     	case R.id.shareButton:
     		next = new Intent(getApplicationContext(), ShareActivity.class);
