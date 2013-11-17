@@ -126,21 +126,24 @@ public class CameraActivity extends Activity implements PictureCallback {
 				startActivityForResult(result, ResultActivity.GET_TITLE_TAG);
 			}
 		});
-		
+
 		discardButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				// TODO when migrating to API 4.0 and above, change to recreate() method!
-				Toast.makeText(mActivity, "Picture note discarded!", Toast.LENGTH_SHORT).show();
+				// TODO when migrating to API 4.0 and above, change to
+				// recreate() method!
+				Toast.makeText(mActivity, "Picture note discarded!",
+						Toast.LENGTH_SHORT).show();
 				Intent intent = getIntent();
 				finish();
 				startActivity(intent);
 			}
 		});
-		
+
 		shareButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// TODO implement!
-				Toast.makeText(mActivity, "NOT YET IMPLEMENTED", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 	}
@@ -175,13 +178,14 @@ public class CameraActivity extends Activity implements PictureCallback {
 					fos.write(mPictureData);
 					fos.close();
 					Log.d(TAG, "FILE SAVED!");
-					Toast.makeText(mActivity, "Picture note saved!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(mActivity, "Picture note saved!",
+							Toast.LENGTH_SHORT).show();
 				} catch (FileNotFoundException e) {
 					Log.d(TAG, "File not found: " + e.getMessage());
 				} catch (IOException e) {
 					Log.d(TAG, "Error accessing file: " + e.getMessage());
 				}
-				
+
 				finish();
 			}
 		}
@@ -189,10 +193,8 @@ public class CameraActivity extends Activity implements PictureCallback {
 
 	private static File getOutputMediaFile(int type, String noteTitle) {
 		File mediaStorageDir = new File(
-				Environment
-						.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-				"Note-U-List!");
-		
+				Environment.getExternalStorageDirectory(), "Note-U-List!");
+
 		// Create the storage directory if it does not exist
 		if (!mediaStorageDir.exists()) {
 			if (!mediaStorageDir.mkdirs()) {
@@ -202,7 +204,8 @@ public class CameraActivity extends Activity implements PictureCallback {
 		}
 
 		// Create a media file name
-		String timeStamp = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		String timeStamp = new SimpleDateFormat("yyyyMMddHHmm")
+				.format(new Date());
 		File mediaFile;
 		if (type == MEDIA_TYPE_IMAGE) {
 			mediaFile = new File(mediaStorageDir.getPath() + File.separator
