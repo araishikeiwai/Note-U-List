@@ -20,6 +20,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="tekmob.nfc.note_u_list.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,22 +30,27 @@
         </activity>
         <activity 
             android:name="tekmob.nfc.note_u_list.CameraActivity" 
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_camera" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ViewNoteActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_view_note" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.NoteActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_note" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.VoiceRecActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_voice_rec" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ShareActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_share" >
         </activity>
     </application>
