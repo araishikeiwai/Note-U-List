@@ -38,6 +38,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		return true;
 	}
 
+<<<<<<< HEAD
 	public void onClick(View v) {
 		Intent next = null;
 		switch (v.getId()) {
@@ -59,4 +60,36 @@ public class MainActivity extends Activity implements OnClickListener {
 		}
 		startActivity(next);
 	}
+=======
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+    
+    public void onClick(View v) {
+    	Intent next = null;
+    	switch (v.getId()) {
+    	case R.id.noteButton:
+    		next = new Intent(getApplicationContext(), AudioRecordingActivity.class);
+    		break;
+    	case R.id.cameraButton:
+    		next = new Intent(getApplicationContext(), CameraActivity.class);
+    		break;
+    	case R.id.viewNoteButton:
+    		next = new Intent(getApplicationContext(), ViewNoteActivity.class);
+    		break;
+    	case R.id.voiceRecButton:
+    		next = new Intent(getApplicationContext(), AudioRecordingActivity.class);
+    		break;
+    	case R.id.shareButton:
+    		next = new Intent(getApplicationContext(), ShareActivity.class);
+    		break;
+    	}
+    	Log.d(null, "MASUK");
+    	startActivity(next);
+    }
+>>>>>>> master
 }
