@@ -20,123 +20,134 @@ public class AudioRecordingActivity extends Activity {
 	private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
 	private MediaRecorder recorder = null;
 	private int currentFormat = 0;
-	private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP };
-	private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
+	private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4,
+			MediaRecorder.OutputFormat.THREE_GPP };
+	private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4,
+			AUDIO_RECORDER_FILE_EXT_3GP };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.activity_voice_rec);
-	    setButtonHandlers();
-	    enableButtons(false);
-	    setFormatButtonCaption();
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_voice_rec);
+		setButtonHandlers();
+		enableButtons(false);
+		setFormatButtonCaption();
 	}
 
 	private void setButtonHandlers() {
-	    ((Button) findViewById(R.id.btnStart)).setOnClickListener(btnClick);
-	    ((Button) findViewById(R.id.btnStop)).setOnClickListener(btnClick);
-	    ((Button) findViewById(R.id.btnFormat)).setOnClickListener(btnClick);
+		((Button) findViewById(R.id.btnStart)).setOnClickListener(btnClick);
+		((Button) findViewById(R.id.btnStop)).setOnClickListener(btnClick);
+		((Button) findViewById(R.id.btnFormat)).setOnClickListener(btnClick);
 	}
 
 	private void enableButton(int id, boolean isEnable) {
-	    ((Button) findViewById(id)).setEnabled(isEnable);
+		((Button) findViewById(id)).setEnabled(isEnable);
 	}
 
 	private void enableButtons(boolean isRecording) {
-	    enableButton(R.id.btnStart, !isRecording);
-	    enableButton(R.id.btnFormat, !isRecording);
-	    enableButton(R.id.btnStop, isRecording);
+		enableButton(R.id.btnStart, !isRecording);
+		enableButton(R.id.btnFormat, !isRecording);
+		enableButton(R.id.btnStop, isRecording);
 	}
 
 	private void setFormatButtonCaption() {
-	    ((Button) findViewById(R.id.btnFormat)).setText("audio_format" + " (" + file_exts[currentFormat] + ")");
+		((Button) findViewById(R.id.btnFormat)).setText("audio_format" + " ("
+				+ file_exts[currentFormat] + ")");
 	}
 
 	private String getFilename() {
-	    String filepath = Environment.getExternalStorageDirectory().getPath();
-	    File file = new File(filepath, AUDIO_RECORDER_FOLDER);
-	    if (!file.exists()) {
-	        file.mkdirs();
-	    }
-	    return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + file_exts[currentFormat]);
+		String filepath = Environment.getExternalStorageDirectory().getPath();
+		File file = new File(filepath, AUDIO_RECORDER_FOLDER);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + file_exts[currentFormat]);
 	}
 
 	private void startRecording() {
-	    recorder = new MediaRecorder();
-	    recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-	    recorder.setOutputFormat(output_formats[currentFormat]);
-	    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-	    recorder.setOutputFile(getFilename());
-	    recorder.setOnErrorListener(errorListener);
-	    recorder.setOnInfoListener(infoListener);
-	    try {
-	        recorder.prepare();
-	        recorder.start();
-	    } catch (IllegalStateException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+		recorder = new MediaRecorder();
+		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+		recorder.setOutputFormat(output_formats[currentFormat]);
+		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+		recorder.setOutputFile(getFilename());
+		recorder.setOnErrorListener(errorListener);
+		recorder.setOnInfoListener(infoListener);
+		try {
+			recorder.prepare();
+			recorder.start();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void stopRecording() {
-	    if (null != recorder) {
-	        recorder.stop();
-	        recorder.reset();
-	        recorder.release();
-	        recorder = null;
-	    }
+		if (null != recorder) {
+			recorder.stop();
+			recorder.reset();
+			recorder.release();
+			recorder = null;
+		}
 	}
 
 	private void displayFormatDialog() {
-	    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-	    String formats[] = { "MPEG 4", "3GPP" };
-	    builder.setTitle("choose_format_title").setSingleChoiceItems(formats, currentFormat, new DialogInterface.OnClickListener() {
-	         @Override
-	         public void onClick(DialogInterface dialog, int which) {
-	             currentFormat = which;
-	             setFormatButtonCaption();
-	             dialog.dismiss();
-	         }
-	     }).show();
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		String formats[] = { "MPEG 4", "3GPP" };
+		builder.setTitle("choose_format_title")
+				.setSingleChoiceItems(formats, currentFormat,
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								currentFormat = which;
+								setFormatButtonCaption();
+								dialog.dismiss();
+							}
+						}).show();
 	}
 
 	private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
-	    @Override
-	    public void onError(MediaRecorder mr, int what, int extra) {
-	        Toast.makeText(AudioRecordingActivity.this, "Error: " + what + ", " + extra, Toast.LENGTH_SHORT).show();
-	    }
+		@Override
+		public void onError(MediaRecorder mr, int what, int extra) {
+			Toast.makeText(AudioRecordingActivity.this,
+					"Error: " + what + ", " + extra, Toast.LENGTH_SHORT).show();
+		}
 	};
 
 	private MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
-	    @Override
-	    public void onInfo(MediaRecorder mr, int what, int extra) {
-	        Toast.makeText(AudioRecordingActivity.this, "Warning: " + what + ", " + extra, Toast.LENGTH_SHORT).show();
-	    }
+		@Override
+		public void onInfo(MediaRecorder mr, int what, int extra) {
+			Toast.makeText(AudioRecordingActivity.this,
+					"Warning: " + what + ", " + extra, Toast.LENGTH_SHORT)
+					.show();
+		}
 	};
 
 	private View.OnClickListener btnClick = new View.OnClickListener() {
-	    @Override
-	    public void onClick(View v) {
-	        switch (v.getId()) {
-	            case R.id.btnStart: {
-	                Toast.makeText(AudioRecordingActivity.this, "Start Recording", Toast.LENGTH_SHORT).show();
-	                enableButtons(true);
-	                startRecording();
-	                break;
-	            }
-	            case R.id.btnStop: {
-	                Toast.makeText(AudioRecordingActivity.this, "Stop Recording", Toast.LENGTH_SHORT).show();
-	                enableButtons(false);
-	                stopRecording();
-	                break;
-	            }
-	            case R.id.btnFormat: {
-	                displayFormatDialog();
-	                break;
-	            }
-	        }
-	    }
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.btnStart: {
+				Toast.makeText(AudioRecordingActivity.this, "Start Recording",
+						Toast.LENGTH_SHORT).show();
+				enableButtons(true);
+				startRecording();
+				break;
+			}
+			case R.id.btnStop: {
+				Toast.makeText(AudioRecordingActivity.this, "Stop Recording",
+						Toast.LENGTH_SHORT).show();
+				enableButtons(false);
+				stopRecording();
+				break;
+			}
+			case R.id.btnFormat: {
+				displayFormatDialog();
+				break;
+			}
+			}
+		}
 	};
-    
+
 }
