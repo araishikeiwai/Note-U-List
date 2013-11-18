@@ -2,12 +2,9 @@ package tekmob.nfc.note_u_list;
 
 import java.io.IOException;
 
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
-import android.view.Display;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -17,8 +14,10 @@ public class CameraPreview extends SurfaceView implements
 	private static final String TAG = null;
 	private SurfaceHolder mHolder;
 	private Camera mCamera;
+	@SuppressWarnings("unused")
 	private Context mContext;
 
+	@SuppressWarnings("deprecation")
 	public CameraPreview(Context context, Camera camera) {
 		super(context);
 		mContext = context;

@@ -16,6 +16,6 @@
         android:layout_height="64dp"
         android:layout_gravity="center"
         android:layout_weight="0.04"
-        android:src="@android:drawable/ic_menu_camera" />
+        android:src="@drawable/ic_camera" />
 
 </LinearLayout>

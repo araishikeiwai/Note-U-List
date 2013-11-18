@@ -8,59 +8,58 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <ImageButton
-        android:id="@+id/noteButton"
+    <ImageView
+        android:id="@+id/viewNoteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/logo"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="52dp"
-        android:src="@drawable/ic_stat_name" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_view" />
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@id/viewNoteButton"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="18dp"
-        android:layout_toRightOf="@+id/noteButton"
-        android:src="@drawable/ic_launcher" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="64dp"
+        android:src="@drawable/logo" />
 
-    <ImageButton
-        android:id="@+id/voiceRecButton"
+    <ImageView
+        android:id="@+id/noteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/viewNoteButton"
-        android:layout_marginTop="81dp"
-        android:layout_toLeftOf="@+id/logo"
-        android:src="@drawable/ic_stat_name" />
+        android:layout_above="@id/viewNoteButton"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="28dp"
+        android:src="@drawable/ic_note" />
 
-    <ImageButton
-        android:id="@+id/viewNoteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/cameraButton"
-        android:layout_marginTop="52dp"
-        android:layout_toLeftOf="@+id/cameraButton"
-        android:src="@drawable/ic_stat_name" />
-
-    <ImageButton
+    <ImageView
         android:id="@+id/cameraButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/noteButton"
-        android:layout_marginLeft="46dp"
-        android:layout_toRightOf="@+id/logo"
-        android:src="@drawable/ic_stat_name" />
+        android:layout_above="@id/viewNoteButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="28dp"
+        android:src="@drawable/ic_camera" />
 
-    <ImageButton
+    <ImageView
+        android:id="@+id/voiceRecButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/viewNoteButton"
+        android:layout_marginLeft="28dp"
+        android:src="@drawable/ic_voicerec" />
+
+    <ImageView
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/cameraButton"
-        android:layout_alignTop="@+id/voiceRecButton"
-        android:src="@drawable/ic_stat_name" />
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/viewNoteButton"
+        android:layout_marginRight="28dp"
+        android:src="@drawable/ic_share" />
 
 </RelativeLayout>
