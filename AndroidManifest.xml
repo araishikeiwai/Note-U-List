@@ -4,9 +4,6 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
@@ -14,6 +11,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -37,9 +35,10 @@
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="tekmob.nfc.note_u_list.AudioRecordTest"
-            android:label="@string/title_activity_camera" >
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ViewNoteActivity"
@@ -53,7 +52,8 @@
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.AudioRecordingActivity"
-            android:label="@string/title_activity_voice_rec" >
+            android:label="@string/title_activity_voice_rec"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ShareActivity"
@@ -62,11 +62,13 @@
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.SplashActivity"
-            android:label="@string/title_activity_splash" >
+            android:label="@string/title_activity_splash"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ManActivity"
-            android:label="@string/title_activity_man" >
+            android:label="@string/title_activity_man"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.ResultActivity"
