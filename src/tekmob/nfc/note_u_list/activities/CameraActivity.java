@@ -4,6 +4,8 @@ import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.CameraPreview;
 import tekmob.nfc.note_u_list.helpers.NoteUListHelper;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -88,7 +90,7 @@ public class CameraActivity extends Activity implements PictureCallback {
 		((FrameLayout) findViewById(R.id.camera_preview)).removeAllViews();
 		mCamera.stopPreview();
 		mPictureData = data;
-		setContentView(R.layout.activity_camera_captured);
+		setContentView(R.layout.note_taken);
 
 		// get the image and rotate it to display
 		final Bitmap image = BitmapFactory
@@ -100,8 +102,10 @@ public class CameraActivity extends Activity implements PictureCallback {
 		Bitmap rotatedBitmap = Bitmap
 				.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(),
 						scaledBitmap.getHeight(), matrix, true);
-		ImageView imageView = (ImageView) findViewById(R.id.camera_result);
+		ImageView imageView = new ImageView(mActivity);
 		imageView.setImageBitmap(rotatedBitmap);
+
+		((FrameLayout) findViewById(R.id.result)).addView(imageView);
 
 		ImageView saveButton, discardButton, shareButton;
 		saveButton = (ImageView) findViewById(R.id.button_camera_captured_save);
@@ -120,11 +124,24 @@ public class CameraActivity extends Activity implements PictureCallback {
 			public void onClick(View v) {
 				// TODO when migrating to API 4.0 and above, change to
 				// recreate() method!
-				Toast.makeText(mActivity, "Picture note discarded!",
-						Toast.LENGTH_SHORT).show();
-				Intent intent = getIntent();
-				finish();
-				startActivity(intent);
+				new AlertDialog.Builder(mActivity)
+						.setTitle("Discard confirmation")
+						.setMessage(
+								"Do you really want to discard this note?\nThis cannot be undone!")
+						.setIcon(android.R.drawable.ic_dialog_alert)
+						.setPositiveButton(android.R.string.yes,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int whichButton) {
+										Toast.makeText(mActivity,
+												"Note discarded!",
+												Toast.LENGTH_SHORT).show();
+										Intent intent = getIntent();
+										finish();
+										startActivity(intent);
+									}
+								}).setNegativeButton(android.R.string.no, null)
+						.show();
 			}
 		});
 
@@ -138,13 +155,20 @@ public class CameraActivity extends Activity implements PictureCallback {
 	}
 
 	@Override
+	protected void onDestroy() {
+		((FrameLayout) findViewById(R.id.result)).removeAllViews();
+		super.onDestroy();
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		Log.d(TAG, "In onActivityResult()");
 		if (data != null) {
 			if (requestCode == ResultActivity.GET_TITLE_TAG
 					&& resultCode == RESULT_OK) {
-				data.putExtra(NoteUListHelper.MEDIA_TYPE, NoteUListHelper.MEDIA_TYPE_IMAGE);
+				data.putExtra(NoteUListHelper.MEDIA_TYPE,
+						NoteUListHelper.MEDIA_TYPE_IMAGE);
 				NoteUListHelper.save(mActivity, data, mPictureData);
 				finish();
 			}

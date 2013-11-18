@@ -23,22 +23,13 @@
     <EditText
         android:id="@+id/noteContent"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@+id/noteTitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:ems="10"
+        android:gravity="top"
         android:hint="@string/note_content"
         android:inputType="textMultiLine" />
-
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/noteContent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/save" />
 
 </RelativeLayout>
