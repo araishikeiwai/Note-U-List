@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class ResultActivity extends Activity {
 
-	public static final String NOTE_TITLE = "note title";
+	public static final String NOTE_TITLE = "note_title";
 	public static final String NOTE_TAG = "note_tag";
 	public static final int GET_TITLE_TAG = 21;
 	private static final String TAG = "Note-U-List! Result";
@@ -26,6 +26,11 @@ public class ResultActivity extends Activity {
 		setContentView(R.layout.activity_result);
 
 		final EditText noteTitle = (EditText) findViewById(R.id.note_title);
+		
+		if (getIntent().getExtras() != null && getIntent().getExtras().get(NOTE_TITLE) != null) {
+			noteTitle.setText((CharSequence) getIntent().getExtras().get(NOTE_TITLE));
+			noteTitle.setEnabled(false);
+		}
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_dropdown_item_1line,
