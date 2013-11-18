@@ -1,8 +1,10 @@
-package tekmob.nfc.note_u_list;
+package tekmob.nfc.note_u_list.activities;
 
-import android.os.Bundle;
+import tekmob.nfc.note_u_list.R;
+import tekmob.nfc.note_u_list.helpers.NoteUListHelper;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;

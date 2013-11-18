@@ -21,7 +21,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="tekmob.nfc.note_u_list.MainActivity"
+            android:name="tekmob.nfc.note_u_list.activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -31,47 +31,47 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.CameraActivity"
+            android:name="tekmob.nfc.note_u_list.activities.CameraActivity"
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.AudioRecordTest"
+            android:name="tekmob.nfc.note_u_list.activities.AudioRecordTest"
             android:label="@string/title_activity_camera"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.ViewNoteActivity"
+            android:name="tekmob.nfc.note_u_list.activities.ViewNoteActivity"
             android:label="@string/title_activity_view_note"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.NoteActivity"
+            android:name="tekmob.nfc.note_u_list.activities.NoteActivity"
             android:label="@string/title_activity_note"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.AudioRecordingActivity"
+            android:name="tekmob.nfc.note_u_list.activities.AudioRecordingActivity"
             android:label="@string/title_activity_voice_rec"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.ShareActivity"
+            android:name="tekmob.nfc.note_u_list.activities.ShareActivity"
             android:label="@string/title_activity_share"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.SplashActivity"
+            android:name="tekmob.nfc.note_u_list.activities.SplashActivity"
             android:label="@string/title_activity_splash"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.ManActivity"
+            android:name="tekmob.nfc.note_u_list.activities.ManActivity"
             android:label="@string/title_activity_man"
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.ResultActivity"
+            android:name="tekmob.nfc.note_u_list.activities.ResultActivity"
             android:label="@string/title_activity_result"
             android:screenOrientation="portrait" >
         </activity>

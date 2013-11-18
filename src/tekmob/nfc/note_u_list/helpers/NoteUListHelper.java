@@ -1,4 +1,4 @@
-package tekmob.nfc.note_u_list;
+package tekmob.nfc.note_u_list.helpers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import tekmob.nfc.note_u_list.activities.ResultActivity;
 
 import android.content.Context;
 import android.content.Intent;

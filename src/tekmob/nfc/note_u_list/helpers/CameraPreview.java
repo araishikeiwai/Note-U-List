@@ -1,4 +1,4 @@
-package tekmob.nfc.note_u_list;
+package tekmob.nfc.note_u_list.helpers;
 
 import java.io.IOException;
 

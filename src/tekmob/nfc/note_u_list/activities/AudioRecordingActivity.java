@@ -1,14 +1,15 @@
-package tekmob.nfc.note_u_list;
+package tekmob.nfc.note_u_list.activities;
 
 import java.io.File;
 import java.io.IOException;
 
-import android.media.MediaRecorder;
-import android.os.Bundle;
-import android.os.Environment;
+import tekmob.nfc.note_u_list.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.media.MediaRecorder;
+import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;

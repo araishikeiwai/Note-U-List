@@ -1,4 +1,4 @@
-package tekmob.nfc.note_u_list;
+package tekmob.nfc.note_u_list.activities;
 
 /*
  * The application needs to have the permission to write to external storage
