@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+
+
+
 import tekmob.nfc.note_u_list.activities.ResultActivity;
 
 import android.content.Context;
@@ -29,7 +33,6 @@ public class NoteUListHelper {
 	public static void save(Context context, Intent data, byte[] toSave) {
 		Log.d(TAG, "YEAAYY::" + data.getExtras().get(ResultActivity.NOTE_TITLE)
 				+ "::" + data.getExtras().get(ResultActivity.NOTE_TAG));
-
 		File fileLocation = getOutputMediaFile(
 				(Integer) data.getExtras().get(MEDIA_TYPE), (String) data
 						.getExtras().get(ResultActivity.NOTE_TITLE));
@@ -37,11 +40,16 @@ public class NoteUListHelper {
 			Log.d(TAG, "Error creating media file, check storage permissions");
 			return;
 		}
-
+		String tag =  (String) data.getExtras().get(ResultActivity.NOTE_TAG);
+		String judul = (String) data.getExtras().get(ResultActivity.NOTE_TITLE);
+		String path = fileLocation.getPath();
+		DBAdapter db = new DBAdapter(context);
 		// TODO organize tags into database
 		// TODO put link into database
 
 		try {
+			db.open();
+			long id = db.insertBerkas(judul,path, tag);   
 			FileOutputStream fos = new FileOutputStream(fileLocation);
 			fos.write(toSave);
 			fos.close();
@@ -52,6 +60,9 @@ public class NoteUListHelper {
 		} catch (IOException e) {
 			Log.d(TAG, "Error accessing file: " + e.getMessage());
 		}
+		finally {
+            db.close();
+        }
 	}
 
 	private static File getOutputMediaFile(int type, String noteTitle) {
@@ -77,7 +88,7 @@ public class NoteUListHelper {
 		} else if (type == MEDIA_TYPE_TEXT) {
 			mediaFile = new File(mediaName + ".txt");
 		} else if (type == MEDIA_TYPE_AUDIO) {
-			// TODO
+			mediaFile = new File(mediaName + ".MP4");
 		} else if (type == MEDIA_OTHERS) {
 			// TODO
 		} else {

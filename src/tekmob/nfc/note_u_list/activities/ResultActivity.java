@@ -64,6 +64,7 @@ public class ResultActivity extends Activity {
 											ResultActivity.NOTE_TAG));
 					setResult(RESULT_OK, intent);
 					finish();
+					
 				}
 			}
 		});

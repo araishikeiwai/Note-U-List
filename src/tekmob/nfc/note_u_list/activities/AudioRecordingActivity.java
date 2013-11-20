@@ -1,5 +1,5 @@
 package tekmob.nfc.note_u_list.activities;
-
+import tekmob.nfc.note_u_list.helpers.NoteUListHelper;
 import java.io.File;
 import java.io.IOException;
 
@@ -7,19 +7,23 @@ import tekmob.nfc.note_u_list.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 public class AudioRecordingActivity extends Activity {
-
-	private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
+	private String mData;
+	protected static final String TAG = "Note-U-List! Recording";
+	private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3ga";
 	private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
-	private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
+	private static final String AUDIO_RECORDER_FOLDER = "Note-U-List!";
 	private MediaRecorder recorder = null;
+	private Activity mActivity = this;
 	private int currentFormat = 0;
 	private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4,
 			MediaRecorder.OutputFormat.THREE_GPP };
@@ -39,6 +43,7 @@ public class AudioRecordingActivity extends Activity {
 		((Button) findViewById(R.id.btnStart)).setOnClickListener(btnClick);
 		((Button) findViewById(R.id.btnStop)).setOnClickListener(btnClick);
 		((Button) findViewById(R.id.btnFormat)).setOnClickListener(btnClick);
+		((Button) findViewById(R.id.btnPause)).setOnClickListener(btnClick);
 	}
 
 	private void enableButton(int id, boolean isEnable) {
@@ -49,6 +54,7 @@ public class AudioRecordingActivity extends Activity {
 		enableButton(R.id.btnStart, !isRecording);
 		enableButton(R.id.btnFormat, !isRecording);
 		enableButton(R.id.btnStop, isRecording);
+		enableButton(R.id.btnPause, isRecording);
 	}
 
 	private void setFormatButtonCaption() {
@@ -91,10 +97,18 @@ public class AudioRecordingActivity extends Activity {
 			recorder = null;
 		}
 	}
+	protected void onPause() {
+		   super.onPause();
+		   if (recorder != null) {
+		      recorder.release();
+		      
+		   }
+		}
+
 
 	private void displayFormatDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String formats[] = { "MPEG 4", "3GPP" };
+		String formats[] = { "MPEG 4", "3GA" };
 		builder.setTitle("choose_format_title")
 				.setSingleChoiceItems(formats, currentFormat,
 						new DialogInterface.OnClickListener() {
@@ -141,6 +155,13 @@ public class AudioRecordingActivity extends Activity {
 						Toast.LENGTH_SHORT).show();
 				enableButtons(false);
 				stopRecording();
+				break;
+			}
+			case R.id.btnPause: {
+				Toast.makeText(AudioRecordingActivity.this, "Pause Recording",
+						Toast.LENGTH_SHORT).show();
+				enableButtons(false);
+				onPause();
 				break;
 			}
 			case R.id.btnFormat: {

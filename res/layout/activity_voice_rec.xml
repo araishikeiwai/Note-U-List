@@ -19,30 +19,34 @@
         android:textSize="20dip"/>
       
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-      
+        android:layout_height="78dp"
+        android:orientation="horizontal" >
+
         <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnStart"
-                android:text="start_recording"
-                android:layout_weight="1.0"/>
-              
-                <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnStop"
-                android:text="stop_recording"
-                android:layout_weight="1.0"/>
-              
+            android:id="@+id/btnPause"
+            android:layout_width="50dp"
+            android:layout_height="99dp"
+            android:text="pause" />
+
         <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/btnFormat"
-                android:text="Format (mp4)"
-                android:layout_weight="1.0"/>
-      
+            android:id="@+id/btnStart"
+            android:layout_width="46dp"
+            android:layout_height="90dp"
+            android:text="start" />
+
+        <Button
+            android:id="@+id/btnStop"
+            android:layout_width="51dp"
+            android:layout_height="95dp"
+            android:text="stop" />
+
+        <Button
+            android:id="@+id/btnFormat"
+            android:layout_width="58dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.21"
+            android:text="Format (mp4)" />
     </LinearLayout>
+
 </LinearLayout>
