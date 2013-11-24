@@ -19,7 +19,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:text="Multiple Choice ListView"
+            android:text="Pilih Notes Dibawah ini"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
             android:textSize="16dp"
