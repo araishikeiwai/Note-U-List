@@ -1,7 +1,11 @@
 package tekmob.nfc.note_u_list.activities;
 
+
+
 import tekmob.nfc.note_u_list.R;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -59,6 +63,29 @@ public class MainActivity extends Activity implements OnClickListener {
 			break;
 		}
 		startActivity(next);
+	}
+	@Override
+	public void onBackPressed() {
+		AlertDialog alert_back = new AlertDialog.Builder(this).create();
+		alert_back.setTitle("Quit?");
+		alert_back.setMessage("Are you sure want to Quit?");
+
+		alert_back.setButton("No", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+
+		alert_back.setButton2("Yes", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				MainActivity.this.finish();
+			}
+		});
+		alert_back.show();
 	}
 
 }
