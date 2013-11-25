@@ -23,47 +23,35 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ViewNoteActivity extends Activity implements OnClickListener{
+public class ViewNoteActivity extends Activity {
 	private ListView listView;
-	private List<NameBean> items;
-	private List<NameBean> item;
-	private NamesAdapter objAdapter = null;
-	private Button btnGetSelected;
+	private List<String> items;
 	
 	Cursor c;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_note);
-		listView = (ListView) findViewById(R.id.listview);
-		btnGetSelected = (Button) findViewById(R.id.btnget);
-		btnGetSelected.setOnClickListener(ViewNoteActivity.this);
-		NameBean objItem;
-
+		listView = (ListView) findViewById(R.id.list);
 
 		DBAdapter db = new DBAdapter(ViewNoteActivity.this);
 		db.open();
 		c = db.getAllBerkas();
-		items = new ArrayList<NameBean>();
+		items = new ArrayList<String>();
 		while(c.moveToNext()){
-			objItem = new NameBean();
-			objItem.setName(c.getString(1));
-			items.add(objItem);
+			
+			items.add(c.getString(1));
 		}
-//				objItem = new NameBean();
-//				objItem.setName("Umar");
-//				item.add(objItem);
-//		//		objItem = new NameBean();
-//		//		objItem.setName("Umar");
-//		//		items.add(objItem);
-				
-
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+	              android.R.layout.simple_list_item_1, android.R.id.text1, items);
+		listView.setAdapter(adapter); 
 		//		if (c.moveToFirst()) {
 		//			do {
 		//				Toast.makeText(ViewNoteActivity.this, c.getString(1) + ", " + c.getString(2)+ ", " + c.getString(3)
@@ -74,77 +62,10 @@ public class ViewNoteActivity extends Activity implements OnClickListener{
 		//			Toast.makeText(ViewNoteActivity.this, "No data", Toast.LENGTH_SHORT).show();
 		
 		// XML Parsing Using AsyncTask...
-		setAdapterToListview();
+		
 		db.close();
 	}
-	public void setAdapterToListview() {
-
-
-		objAdapter = new NamesAdapter(ViewNoteActivity.this, items);
-		listView.setAdapter(objAdapter);
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				CheckBox chk = (CheckBox) view.findViewById(R.id.checkbox);
-				NameBean bean = items.get(position);
-				if (bean.isSelected()) {
-					bean.setSelected(false);
-					chk.setChecked(false);
-				} else {
-					bean.setSelected(true);
-					chk.setChecked(true);
-				}
-
-			}
-		});
-
-	}
-
-	// Toast is here...
-	private void showToast(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-	}
-
-	public void onClick(View v) {
-		StringBuffer sb = new StringBuffer();
-
-		// Retrive Data from list
-		for (NameBean bean : items) {
-
-			if (bean.isSelected()) {
-				sb.append(bean.getName());
-				sb.append(",");
-			}
-		}
-
-		showAlertView(sb.toString().trim());
-
-	}
-
-	private void showAlertView(String str) {
-		AlertDialog alert = new AlertDialog.Builder(this).create();
-		if (TextUtils.isEmpty(str)) {
-			alert.setTitle("Not Selected");
-			alert.setMessage("No One is Seleceted!!!");
-		} else {
-			// Remove , end of the name
-			String strContactList = str.substring(0, str.length() - 1);
-
-			alert.setTitle("Selected");
-			alert.setMessage(strContactList);
-		}
-		alert.setButton("Ok", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		alert.show();
-	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

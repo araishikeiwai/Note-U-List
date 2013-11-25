@@ -41,7 +41,7 @@ public class NoteUListHelper {
 			return;
 		}
 		String tag =  (String) data.getExtras().get(ResultActivity.NOTE_TAG);
-		String judul = (String) data.getExtras().get(ResultActivity.NOTE_TITLE);
+		String judul = fileLocation.getName();
 		String path = fileLocation.getPath();
 		DBAdapter db = new DBAdapter(context);
 		// TODO organize tags into database
