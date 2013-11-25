@@ -14,13 +14,14 @@ public class DBAdapter {
 	private static final int DATABASE_VERSION=1;
 	private static final String TABLE_CREATE = "create table IF NOT EXISTS berkas (_id integer primary key autoincrement, "
 		+ "judul text not null, tag text not null, "
-		+ "path text not null)";
+		+ "path text not null, ext text not null)";
 	private static final String TABLE_DROP = "DROP TABLE IF EXISTS berkas";
 	
 	public static final String KEY_ROWID="_id";
 	public static final String KEY_JUDUL="judul";
 	public static final String KEY_TAG="tag";
 	public static final String KEY_PATH="path";
+	public static final String KEY_EXT="ext";
 	private final Context context;
 	private DatabaseHelper dbHelper;
 	private SQLiteDatabase db;	
@@ -58,18 +59,19 @@ public class DBAdapter {
 		dbHelper.close();
 	}
 	
-	public long insertBerkas(String judul, String path, String tag) {
+	public long insertBerkas(String judul, String path, String tag,String ext) {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_JUDUL, judul);
 		initialValues.put(KEY_TAG, tag);
 		initialValues.put(KEY_PATH, path);
+		initialValues.put(KEY_EXT, ext);
 		
 		return db.insert("berkas", null, initialValues);
 	}
 	
 	public Cursor getAllBerkas() {
 		return db.query("berkas", new String[] {
-				KEY_ROWID, KEY_JUDUL, KEY_TAG, KEY_PATH
+				KEY_ROWID, KEY_JUDUL, KEY_TAG, KEY_PATH, KEY_EXT
 		}, null, null, null, null, KEY_ROWID + " DESC");
 	}
 }

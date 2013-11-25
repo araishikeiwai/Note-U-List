@@ -18,5 +18,7 @@
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_man">ManActivity</string>
-
+	<string name="error_file_does_not_exists">File does not exist.</string>
+    <string name="application_not_available">Application not available</string>
+	
 </resources>

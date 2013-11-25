@@ -26,7 +26,7 @@ public class NoteUListHelper {
 	public static final int MEDIA_OTHERS = 4;
 	public static final String MEDIA_TYPE = "mediaType";
 	protected static final String TAG = "Note-U-List! Helper";
-
+	public static String ext = "";
 	public NoteUListHelper() {
 	}
 
@@ -42,14 +42,19 @@ public class NoteUListHelper {
 		}
 		String tag =  (String) data.getExtras().get(ResultActivity.NOTE_TAG);
 		String judul = fileLocation.getName();
-		String path = fileLocation.getPath();
+		String path = fileLocation.getAbsolutePath();
+		
+		String sem = "";
+		int dot = path.lastIndexOf(".");
+		if (dot >= 0) 
+			sem = path.substring(dot);
 		DBAdapter db = new DBAdapter(context);
 		// TODO organize tags into database
 		// TODO put link into database
 
 		try {
 			db.open();
-			long id = db.insertBerkas(judul,path, tag);   
+			long id = db.insertBerkas(judul,path, tag,ext);   
 			FileOutputStream fos = new FileOutputStream(fileLocation);
 			fos.write(toSave);
 			fos.close();
@@ -84,10 +89,13 @@ public class NoteUListHelper {
 				+ timeStamp + "_" + noteTitle;
 		File mediaFile = null;
 		if (type == MEDIA_TYPE_IMAGE) {
+			ext = "image/*";
 			mediaFile = new File(mediaName + ".jpg");
 		} else if (type == MEDIA_TYPE_TEXT) {
 			mediaFile = new File(mediaName + ".txt");
+			ext = "text/*";
 		} else if (type == MEDIA_TYPE_AUDIO) {
+			ext = "audio/*";
 			mediaFile = new File(mediaName + ".MP4");
 		} else if (type == MEDIA_OTHERS) {
 			// TODO

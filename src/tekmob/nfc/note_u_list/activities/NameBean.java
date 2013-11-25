@@ -1,6 +1,8 @@
 package tekmob.nfc.note_u_list.activities;
 
-public class NameBean {
+
+
+public class NameBean  implements Comparable<NameBean>{
 
 	private String name;
 	private boolean selected;
@@ -20,5 +22,11 @@ public class NameBean {
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
+	public int compareTo(NameBean other) { 
+        if(this.name != null) 
+             return this.name.compareTo(other.getName()); 
+        else 
+             throw new IllegalArgumentException(); 
+   }
 
 }
