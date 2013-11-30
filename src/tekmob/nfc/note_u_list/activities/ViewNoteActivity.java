@@ -17,22 +17,21 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ViewNoteActivity extends Activity {
+public class ViewNoteActivity extends ActionBarActivity {
 	private ListView listView;
 	private static final int MENU_OPEN = Menu.FIRST + 4;
 	private static final int MENU_DELETE = Menu.FIRST + 5;
@@ -51,7 +50,6 @@ public class ViewNoteActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_note);
 		refresh();
-
 	}
 
 	public void refresh() {
@@ -64,8 +62,8 @@ public class ViewNoteActivity extends Activity {
 		while (c.moveToNext()) {
 			// Log.d(TAG, c.getString(0) + "," + c.getString(1) + "," +
 			// c.getString(2) + "," + c.getString(3) + "," + c.getString(4));
-			mList.add(new ViewNoteListObject(
-					getFileName(c.getString(1)), c.getString(4), c.getString(3)));
+			mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
+					.getString(4), c.getString(3)));
 
 		}
 		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
@@ -75,7 +73,8 @@ public class ViewNoteActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View v, int position,
 					long arg3) {
 				mContextText = mList.get(position).getFilename();
-				openFiles(mList.get(position).getFilename(), mList.get(position).getType());
+				openFiles(mList.get(position).getFilename(), mList
+						.get(position).getType());
 			}
 		});
 		// if (c.moveToFirst()) {

@@ -36,5 +36,7 @@
     <string name="quit_ask">Quit application?</string>
     <string name="quit_prompt">Are you sure you want to quit Note-U-List! application?</string>
     <string name="title_activity_view_note_detail">ViewNoteDetailActivity</string>
+    <string name="action_filter">Filter</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>
