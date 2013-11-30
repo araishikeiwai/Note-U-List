@@ -79,7 +79,8 @@
         </activity>
         <activity
             android:name="tekmob.nfc.note_u_list.activities.ViewNoteDetailActivity"
-            android:label="@string/title_activity_view_note_detail" >
+            android:label="@string/title_activity_view_note_detail"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

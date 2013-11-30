@@ -8,7 +8,6 @@ import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.DBAdapter;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListAdapter;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -17,12 +16,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -60,8 +60,10 @@ public class ViewNoteActivity extends ActionBarActivity {
 		c = db.getAllBerkas();
 		mList = new ArrayList<ViewNoteListObject>();
 		while (c.moveToNext()) {
-			// Log.d(TAG, c.getString(0) + "," + c.getString(1) + "," +
-			// c.getString(2) + "," + c.getString(3) + "," + c.getString(4));
+			Log.d(TAG,
+					c.getString(0) + "," + c.getString(1) + ","
+							+ c.getString(2) + "," + c.getString(3) + ","
+							+ c.getString(4));
 			mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
 					.getString(4), c.getString(3)));
 
@@ -74,7 +76,8 @@ public class ViewNoteActivity extends ActionBarActivity {
 					long arg3) {
 				mContextText = mList.get(position).getFilename();
 				openFiles(mList.get(position).getFilename(), mList
-						.get(position).getType());
+						.get(position).getType(), mList.get(position)
+						.getTitle());
 			}
 		});
 		// if (c.moveToFirst()) {
@@ -127,18 +130,28 @@ public class ViewNoteActivity extends ActionBarActivity {
 		}
 	}
 
-	private void openFiles(String filePath, String fileExtension) {
-		Intent intent = new Intent();
-		intent.setAction(android.content.Intent.ACTION_VIEW);
-		File file = new File(filePath);
-		intent.setDataAndType(Uri.fromFile(file), fileExtension);
-		try {
+	private void openFiles(String filePath, String fileExtension,
+			String fileTitle) {
+		if (fileExtension.equals(ViewNoteListObject.TYPE_TEXT)
+				|| fileExtension.equals(ViewNoteListObject.TYPE_IMAGE)) {
+			Intent intent = new Intent(getApplicationContext(),
+					ViewNoteDetailActivity.class);
+			intent.putExtra(ViewNoteListObject.FILENAME, filePath);
+			intent.putExtra(ViewNoteListObject.FILETYPE, fileExtension);
+			intent.putExtra(ViewNoteListObject.FILETITLE, fileTitle);
 			startActivity(intent);
-		} catch (ActivityNotFoundException e) {
-			Toast.makeText(this, R.string.application_not_available,
-					Toast.LENGTH_SHORT).show();
+		} else {
+			Intent intent = new Intent();
+			intent.setAction(android.content.Intent.ACTION_VIEW);
+			File file = new File(filePath);
+			intent.setDataAndType(Uri.fromFile(file), fileExtension);
+			try {
+				startActivity(intent);
+			} catch (ActivityNotFoundException e) {
+				Toast.makeText(this, R.string.application_not_available,
+						Toast.LENGTH_SHORT).show();
+			}
 		}
-		;
 	}
 
 	private void deleteFileOrFolder(File file) {

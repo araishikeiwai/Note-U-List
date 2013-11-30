@@ -1,6 +1,10 @@
 package tekmob.nfc.note_u_list.helpers;
 
 public class ViewNoteListObject {
+	public static final String FILENAME = "FILENAME";
+	public static final String FILETYPE = "FILETYPE";
+	public static final String FILETITLE = "FILETITLE";
+
 	public static final String TYPE_TEXT = "text/*";
 	public static final String TYPE_IMAGE = "image/*";
 	public static final String TYPE_AUDIO = "audio/*";
