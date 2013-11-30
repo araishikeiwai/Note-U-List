@@ -5,16 +5,16 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="14"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    
+
     <uses-feature android:name="android.hardware.camera" />
 
     <application
@@ -76,6 +76,10 @@
             android:name="tekmob.nfc.note_u_list.activities.ResultActivity"
             android:label="@string/title_activity_result"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ViewNoteDetailActivity"
+            android:label="@string/title_activity_view_note_detail" >
         </activity>
     </application>
 

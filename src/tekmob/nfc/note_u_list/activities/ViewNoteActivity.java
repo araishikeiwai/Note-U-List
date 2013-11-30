@@ -2,48 +2,32 @@ package tekmob.nfc.note_u_list.activities;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-
-
 
 import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.DBAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-
-import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class ViewNoteActivity extends Activity {
 	private ListView listView;
@@ -59,6 +43,7 @@ public class ViewNoteActivity extends Activity {
 	List<String> filename;
 	List<String> mime;
 	Cursor c;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,7 +51,8 @@ public class ViewNoteActivity extends Activity {
 		refresh();
 
 	}
-	public void refresh(){
+
+	public void refresh() {
 		listView = (ListView) findViewById(R.id.list);
 		registerForContextMenu(listView);
 		DBAdapter db = new DBAdapter(ViewNoteActivity.this);
@@ -75,7 +61,7 @@ public class ViewNoteActivity extends Activity {
 		items = new ArrayList<String>();
 		filename = new ArrayList<String>();
 		mime = new ArrayList<String>();
-		while(c.moveToNext()){
+		while (c.moveToNext()) {
 			mime.add(c.getString(4));
 			filename.add(c.getString(3));
 			items.add(c.getString(1));
@@ -83,28 +69,30 @@ public class ViewNoteActivity extends Activity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, android.R.id.text1, items);
 		listView.setAdapter(adapter);
-		listView.setOnItemClickListener(new OnItemClickListener()
-		{
-			public void onItemClick(AdapterView<?> arg0, View v,int position, long arg3)
-			{
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View v, int position,
+					long arg3) {
 				int name = position;
 				mContextText = filename.get(name);
-				openFiles(filename.get(name),mime.get(name));
+				openFiles(filename.get(name), mime.get(name));
 			}
 		});
-		//		if (c.moveToFirst()) {
-		//			do {
-		//				Toast.makeText(ViewNoteActivity.this, c.getString(1) + ", " + c.getString(2)+ ", " + c.getString(3)
-		//						, Toast.LENGTH_SHORT).show();
-		//			} while (c.moveToNext());
-		//		}
-		//		else
-		//			Toast.makeText(ViewNoteActivity.this, "No data", Toast.LENGTH_SHORT).show();
+		// if (c.moveToFirst()) {
+		// do {
+		// Toast.makeText(ViewNoteActivity.this, c.getString(1) + ", " +
+		// c.getString(2)+ ", " + c.getString(3)
+		// , Toast.LENGTH_SHORT).show();
+		// } while (c.moveToNext());
+		// }
+		// else
+		// Toast.makeText(ViewNoteActivity.this, "No data",
+		// Toast.LENGTH_SHORT).show();
 
 		// XML Parsing Using AsyncTask...
 
 		db.close();
 	}
+
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -113,9 +101,11 @@ public class ViewNoteActivity extends Activity {
 		menu.add(0, MENU_DELETE, 0, "Delete");
 		menu.add(0, MENU_RENAME, 0, "Rename");
 	}
+
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
 		DBAdapter db = new DBAdapter(this);
 		int count = db.getBerkasCount();
 		int name = info.position;
@@ -132,7 +122,8 @@ public class ViewNoteActivity extends Activity {
 			return super.onContextItemSelected(item);
 		}
 	}
-	private void openFiles(String filePath,String fileExtension) {
+
+	private void openFiles(String filePath, String fileExtension) {
 		Intent intent = new Intent();
 		intent.setAction(android.content.Intent.ACTION_VIEW);
 		File file = new File(filePath);
@@ -140,9 +131,12 @@ public class ViewNoteActivity extends Activity {
 		try {
 			startActivity(intent);
 		} catch (ActivityNotFoundException e) {
-			Toast.makeText(this, R.string.application_not_available, Toast.LENGTH_SHORT).show();
-		};
+			Toast.makeText(this, R.string.application_not_available,
+					Toast.LENGTH_SHORT).show();
+		}
+		;
 	}
+
 	private void deleteFileOrFolder(File file) {
 		DBAdapter db = new DBAdapter(this);
 
@@ -151,10 +145,12 @@ public class ViewNoteActivity extends Activity {
 			db.deleteBerkas(file.getName());
 			db.close();
 			// Delete was successful.
-			Toast.makeText(this, R.string.file_deleted, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.file_deleted, Toast.LENGTH_SHORT)
+					.show();
 
 		} else {
-			Toast.makeText(this, R.string.error_deleting_file, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, R.string.error_deleting_file,
+					Toast.LENGTH_SHORT).show();
 
 		}
 		refresh();
@@ -165,7 +161,8 @@ public class ViewNoteActivity extends Activity {
 		rename(file, newFile);
 		DBAdapter db = new DBAdapter(this);
 		db.open();
-		db.updateBerkas(newFile.getName(), newFile.getAbsolutePath(), file.getName());
+		db.updateBerkas(newFile.getName(), newFile.getAbsolutePath(),
+				file.getName());
 		refresh();
 
 	}
@@ -185,13 +182,15 @@ public class ViewNoteActivity extends Activity {
 		}
 		Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
 	}
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		final File file = new File(mContextText);
 		switch (id) {
 		case DIALOG_DELETE:
 			AlertDialog alert_back = new AlertDialog.Builder(this).create();
-			alert_back.setTitle(getString(R.string.really_delete, mContextText));
+			alert_back
+					.setTitle(getString(R.string.really_delete, mContextText));
 
 			alert_back.setButton2("No", new DialogInterface.OnClickListener() {
 
@@ -209,12 +208,11 @@ public class ViewNoteActivity extends Activity {
 				}
 			});
 			alert_back.show();
-			break;	
+			break;
 		case DIALOG_RENAME:
 			LayoutInflater inflater = LayoutInflater.from(this);
 			View view = inflater.inflate(R.layout.dialog_new_folder, null);
-			final EditText et2 = (EditText) view
-					.findViewById(R.id.foldername);
+			final EditText et2 = (EditText) view.findViewById(R.id.foldername);
 			et2.setText(mContextText);
 			AlertDialog alert_bac = new AlertDialog.Builder(this).create();
 			alert_bac.setTitle(getString(R.string.menu_rename));
@@ -239,6 +237,7 @@ public class ViewNoteActivity extends Activity {
 		}
 		return null;
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
