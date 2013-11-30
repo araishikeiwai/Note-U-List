@@ -64,7 +64,7 @@ public class ViewNoteActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_note);
 		refresh();
-		
+
 	}
 	public void refresh(){
 		listView = (ListView) findViewById(R.id.list);
@@ -82,7 +82,16 @@ public class ViewNoteActivity extends Activity {
 		}
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, android.R.id.text1, items);
-		listView.setAdapter(adapter); 
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener()
+		{
+			public void onItemClick(AdapterView<?> arg0, View v,int position, long arg3)
+			{
+				int name = position;
+				mContextText = filename.get(name);
+				openFiles(filename.get(name),mime.get(name));
+			}
+		});
 		//		if (c.moveToFirst()) {
 		//			do {
 		//				Toast.makeText(ViewNoteActivity.this, c.getString(1) + ", " + c.getString(2)+ ", " + c.getString(3)
@@ -101,7 +110,6 @@ public class ViewNoteActivity extends Activity {
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		menu.setHeaderTitle("Context Menu");
-		menu.add(0, MENU_OPEN, 0, "Open");
 		menu.add(0, MENU_DELETE, 0, "Delete");
 		menu.add(0, MENU_RENAME, 0, "Rename");
 	}
@@ -114,9 +122,6 @@ public class ViewNoteActivity extends Activity {
 		id = count - name;
 		mContextText = filename.get(name);
 		switch (item.getItemId()) {
-		case MENU_OPEN:
-			openFiles(filename.get(name),mime.get(name));
-			return true;
 		case MENU_DELETE:
 			showDialog(DIALOG_DELETE);
 			return true;
@@ -138,23 +143,23 @@ public class ViewNoteActivity extends Activity {
 			Toast.makeText(this, R.string.application_not_available, Toast.LENGTH_SHORT).show();
 		};
 	}
-private void deleteFileOrFolder(File file) {
+	private void deleteFileOrFolder(File file) {
 		DBAdapter db = new DBAdapter(this);
-		
+
 		if (file.delete()) {
 			db.open();
 			db.deleteBerkas(file.getName());
 			db.close();
 			// Delete was successful.
 			Toast.makeText(this, R.string.file_deleted, Toast.LENGTH_SHORT).show();
-			
+
 		} else {
 			Toast.makeText(this, R.string.error_deleting_file, Toast.LENGTH_SHORT).show();
-			
+
 		}
 		refresh();
 	}
-	
+
 	private void renameFileOrFolder(File file, String newFileName) {
 		File newFile = new File(newFileName);
 		rename(file, newFile);
@@ -162,7 +167,7 @@ private void deleteFileOrFolder(File file) {
 		db.open();
 		db.updateBerkas(newFile.getName(), newFile.getAbsolutePath(), file.getName());
 		refresh();
-		
+
 	}
 
 	/**
@@ -173,10 +178,10 @@ private void deleteFileOrFolder(File file) {
 		int toast = 0;
 		if (oldFile.renameTo(newFile)) {
 			// Rename was successful.
-				toast = R.string.file_renamed;
+			toast = R.string.file_renamed;
 		} else {
-				toast = R.string.error_renaming_file;
-			
+			toast = R.string.error_renaming_file;
+
 		}
 		Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
 	}
@@ -209,7 +214,7 @@ private void deleteFileOrFolder(File file) {
 			LayoutInflater inflater = LayoutInflater.from(this);
 			View view = inflater.inflate(R.layout.dialog_new_folder, null);
 			final EditText et2 = (EditText) view
-				.findViewById(R.id.foldername);
+					.findViewById(R.id.foldername);
 			et2.setText(mContextText);
 			AlertDialog alert_bac = new AlertDialog.Builder(this).create();
 			alert_bac.setTitle(getString(R.string.menu_rename));
