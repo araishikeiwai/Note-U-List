@@ -156,7 +156,10 @@ public class CameraActivity extends Activity implements PictureCallback {
 
 	@Override
 	protected void onDestroy() {
-		((FrameLayout) findViewById(R.id.result)).removeAllViews();
+		FrameLayout layout = (FrameLayout) findViewById(R.id.result); 
+		if (layout != null) {
+			layout.removeAllViews();
+		}
 		super.onDestroy();
 	}
 

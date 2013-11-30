@@ -193,7 +193,7 @@ public class ViewNoteActivity extends Activity {
 			AlertDialog alert_back = new AlertDialog.Builder(this).create();
 			alert_back.setTitle(getString(R.string.really_delete, mContextText));
 
-			alert_back.setButton("No", new DialogInterface.OnClickListener() {
+			alert_back.setButton2("No", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -201,7 +201,7 @@ public class ViewNoteActivity extends Activity {
 				}
 			});
 
-			alert_back.setButton2("Yes", new DialogInterface.OnClickListener() {
+			alert_back.setButton("Yes", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -219,7 +219,7 @@ public class ViewNoteActivity extends Activity {
 			AlertDialog alert_bac = new AlertDialog.Builder(this).create();
 			alert_bac.setTitle(getString(R.string.menu_rename));
 			alert_bac.setView(view);
-			alert_bac.setButton("No", new DialogInterface.OnClickListener() {
+			alert_bac.setButton2("No", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -227,7 +227,7 @@ public class ViewNoteActivity extends Activity {
 				}
 			});
 
-			alert_bac.setButton2("Yes", new DialogInterface.OnClickListener() {
+			alert_bac.setButton("Yes", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
