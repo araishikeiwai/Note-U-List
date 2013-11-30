@@ -67,10 +67,10 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onBackPressed() {
 		AlertDialog alert_back = new AlertDialog.Builder(this).create();
-		alert_back.setTitle("Quit?");
-		alert_back.setMessage("Are you sure want to Quit?");
+		alert_back.setTitle(getString(R.string.quit_ask));
+		alert_back.setMessage(getString(R.string.quit_prompt));
 
-		alert_back.setButton("No", new DialogInterface.OnClickListener() {
+		alert_back.setButton2(getString(R.string.no), new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -78,7 +78,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			}
 		});
 
-		alert_back.setButton2("Yes", new DialogInterface.OnClickListener() {
+		alert_back.setButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
