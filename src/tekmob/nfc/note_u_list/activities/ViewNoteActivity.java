@@ -6,6 +6,8 @@ import java.util.List;
 
 import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.DBAdapter;
+import tekmob.nfc.note_u_list.helpers.ViewNoteListAdapter;
+import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,6 +17,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -31,17 +34,16 @@ import android.widget.Toast;
 
 public class ViewNoteActivity extends Activity {
 	private ListView listView;
-	private List<String> items;
 	private static final int MENU_OPEN = Menu.FIRST + 4;
 	private static final int MENU_DELETE = Menu.FIRST + 5;
 	private static final int MENU_RENAME = Menu.FIRST + 6;
 	private static final int DIALOG_DELETE = 2;
 	private static final int DIALOG_RENAME = 3;
+	private static final String TAG = "ViewNoteActivity";
 	private File mContextFile = new File("");
 	private String mContextText = "";
 	private int id = 0;
-	List<String> filename;
-	List<String> mime;
+	private List<ViewNoteListObject> mList;
 	Cursor c;
 
 	@Override
@@ -58,23 +60,22 @@ public class ViewNoteActivity extends Activity {
 		DBAdapter db = new DBAdapter(ViewNoteActivity.this);
 		db.open();
 		c = db.getAllBerkas();
-		items = new ArrayList<String>();
-		filename = new ArrayList<String>();
-		mime = new ArrayList<String>();
+		mList = new ArrayList<ViewNoteListObject>();
 		while (c.moveToNext()) {
-			mime.add(c.getString(4));
-			filename.add(c.getString(3));
-			items.add(c.getString(1));
+			// Log.d(TAG, c.getString(0) + "," + c.getString(1) + "," +
+			// c.getString(2) + "," + c.getString(3) + "," + c.getString(4));
+			mList.add(new ViewNoteListObject(
+					getFileName(c.getString(1)), c.getString(4), c.getString(3)));
+
 		}
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, android.R.id.text1, items);
+		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
+				ViewNoteActivity.this, mList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position,
 					long arg3) {
-				int name = position;
-				mContextText = filename.get(name);
-				openFiles(filename.get(name), mime.get(name));
+				mContextText = mList.get(position).getFilename();
+				openFiles(mList.get(position).getFilename(), mList.get(position).getType());
 			}
 		});
 		// if (c.moveToFirst()) {
@@ -91,6 +92,10 @@ public class ViewNoteActivity extends Activity {
 		// XML Parsing Using AsyncTask...
 
 		db.close();
+	}
+
+	private String getFileName(String rawFileName) {
+		return rawFileName.substring(13, rawFileName.length() - 4);
 	}
 
 	@Override
@@ -110,7 +115,7 @@ public class ViewNoteActivity extends Activity {
 		int count = db.getBerkasCount();
 		int name = info.position;
 		id = count - name;
-		mContextText = filename.get(name);
+		mContextText = mList.get(name).getFilename();
 		switch (item.getItemId()) {
 		case MENU_DELETE:
 			showDialog(DIALOG_DELETE);
