@@ -82,6 +82,10 @@
             android:label="@string/title_activity_view_note_detail"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.FileActivity"
+            android:label="@string/title_activity_file" >
+        </activity>
     </application>
 
 </manifest>
