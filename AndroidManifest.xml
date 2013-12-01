@@ -86,6 +86,14 @@
             android:name="tekmob.nfc.note_u_list.activities.FileActivity"
             android:label="@string/title_activity_file" >
         </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.WifiActivity"
+            android:label="@string/title_activity_wifi" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.FileFixActivity"
+            android:label="@string/title_activity_file_fix" >
+        </activity>
     </application>
 
 </manifest>

@@ -39,5 +39,7 @@
     <string name="action_filter">Filter</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_file">FileActivity</string>
+    <string name="title_activity_wifi">WifiActivity</string>
+    <string name="title_activity_file_fix">FileFixActivity</string>
 
 </resources>
