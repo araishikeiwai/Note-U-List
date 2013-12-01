@@ -1,5 +1,10 @@
 package tekmob.nfc.note_u_list.activities;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+
 import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.app.Activity;
@@ -12,7 +17,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ViewNoteDetailActivity extends Activity {
 
@@ -37,8 +41,24 @@ public class ViewNoteDetailActivity extends Activity {
 		View toBeInFrameLayout = new View(getApplicationContext());
 
 		if (type.equals(ViewNoteListObject.TYPE_TEXT)) {
-			Toast.makeText(getApplicationContext(), "OHHOHO",
-					Toast.LENGTH_SHORT).show();
+			StringBuffer sb = new StringBuffer();
+			
+			try {
+				File file = new File(path);
+				
+				BufferedReader reader = new BufferedReader(new FileReader(file));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					sb.append(line);
+					sb.append('\n');
+				}
+				reader.close();
+			} catch (Exception e) {
+				Log.e(TAG, "Failed to load text note!", e);
+			}
+			
+			toBeInFrameLayout = new TextView(getApplicationContext());
+			((TextView) toBeInFrameLayout).setText(sb.toString());
 		} else if (type.equals(ViewNoteListObject.TYPE_IMAGE)) {
 			Log.d(TAG, path);
 			Bitmap image = BitmapFactory.decodeFile(path);
