@@ -38,6 +38,12 @@
     <string name="title_activity_view_note_detail">ViewNoteDetailActivity</string>
     <string name="action_filter">Filter</string>
     <string name="title_activity_test">TestActivity</string>
+<<<<<<< HEAD
     <string name="title_activity_recording_helper">RecordingHelper</string>
+=======
+    <string name="title_activity_file">FileActivity</string>
+    <string name="title_activity_wifi">WifiActivity</string>
+    <string name="title_activity_file_fix">FileFixActivity</string>
+>>>>>>> 85a28737ba9388bfe9e7da149f2a1f3b3e3e3620
 
 </resources>

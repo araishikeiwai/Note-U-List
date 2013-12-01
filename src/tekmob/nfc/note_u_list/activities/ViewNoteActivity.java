@@ -175,7 +175,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 	}
 
 	private void renameFileOrFolder(File file, String newFileName) {
-		newFileName = file.getName().substring(0, 13) + newFileName + ".txt";
+		newFileName = file.getName().substring(0, 13) + newFileName + file.getName().substring(file.getName().length() - 4, file.getName().length());
 		File newFile = new File(file.getParentFile(), newFileName);
 		rename(file, newFile);
 		DBAdapter db = new DBAdapter(this);
