@@ -40,7 +40,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 	private static final int DIALOG_RENAME = 3;
 	private static final String TAG = "ViewNoteActivity";
 	private File mContextFile = new File("");
-	private String mContextText = "";
+	private String mContextText = "", mContextTitle;
 	private int id = 0;
 	private List<ViewNoteListObject> mList;
 	Cursor c;
@@ -118,6 +118,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 		int name = info.position;
 		id = count - name;
 		mContextText = mList.get(name).getFilename();
+		mContextTitle = mList.get(name).getTitle();
 		switch (item.getItemId()) {
 		case MENU_DELETE:
 			showDialog(DIALOG_DELETE);
@@ -174,7 +175,8 @@ public class ViewNoteActivity extends ActionBarActivity {
 	}
 
 	private void renameFileOrFolder(File file, String newFileName) {
-		File newFile = new File(newFileName);
+		newFileName = file.getName().substring(0, 13) + newFileName + ".txt";
+		File newFile = new File(file.getParentFile(), newFileName);
 		rename(file, newFile);
 		DBAdapter db = new DBAdapter(this);
 		db.open();
@@ -207,7 +209,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 		case DIALOG_DELETE:
 			AlertDialog alert_back = new AlertDialog.Builder(this).create();
 			alert_back
-					.setTitle(getString(R.string.really_delete, mContextText));
+					.setTitle(getString(R.string.really_delete, mContextTitle));
 
 			alert_back.setButton2("No", new DialogInterface.OnClickListener() {
 
@@ -230,7 +232,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 			LayoutInflater inflater = LayoutInflater.from(this);
 			View view = inflater.inflate(R.layout.dialog_new_folder, null);
 			final EditText et2 = (EditText) view.findViewById(R.id.foldername);
-			et2.setText(mContextText);
+			et2.setText(mContextTitle);
 			AlertDialog alert_bac = new AlertDialog.Builder(this).create();
 			alert_bac.setTitle(getString(R.string.menu_rename));
 			alert_bac.setView(view);
