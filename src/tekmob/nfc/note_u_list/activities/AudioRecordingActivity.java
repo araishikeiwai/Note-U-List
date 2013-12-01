@@ -1,34 +1,41 @@
 package tekmob.nfc.note_u_list.activities;
+
+import tekmob.nfc.note_u_list.helpers.DBAdapter;
 import tekmob.nfc.note_u_list.helpers.NoteUListHelper;
+
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import tekmob.nfc.note_u_list.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.View.OnClickListener;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class AudioRecordingActivity extends Activity {
 	private String mData;
 	protected static final String TAG = "Note-U-List! Recording";
-	private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3ga";
-	private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
-	private static final String AUDIO_RECORDER_FOLDER = "Note-U-List!";
-	private MediaRecorder recorder = null;
+	private static MediaRecorder recorder = new MediaRecorder();
 	private Activity mActivity = this;
-	private int currentFormat = 0;
-	private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4,
-			MediaRecorder.OutputFormat.THREE_GPP };
-	private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4,
-			AUDIO_RECORDER_FILE_EXT_3GP };
+	SharedPreferences pref;
+	SharedPreferences.Editor editor;
+	private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3ga";
+	private static final String AUDIO_RECORDER_FOLDER = "Note-U-List!";
+	File file;
+	ViewNoteActivity vn = new ViewNoteActivity(); 
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,45 +43,42 @@ public class AudioRecordingActivity extends Activity {
 		setContentView(R.layout.activity_voice_rec);
 		setButtonHandlers();
 		enableButtons(false);
-		setFormatButtonCaption();
+		pref = getSharedPreferences("pref", MODE_PRIVATE);
+		editor = getSharedPreferences("pref", MODE_PRIVATE).edit();
 	}
 
 	private void setButtonHandlers() {
-		((Button) findViewById(R.id.btnStart)).setOnClickListener(btnClick);
-		((Button) findViewById(R.id.btnStop)).setOnClickListener(btnClick);
-		((Button) findViewById(R.id.btnFormat)).setOnClickListener(btnClick);
-		((Button) findViewById(R.id.btnPause)).setOnClickListener(btnClick);
+		(findViewById(R.id.btnStart)).setOnClickListener(btnClick);
+		(findViewById(R.id.btnStop)).setOnClickListener(btnClick);
+		(findViewById(R.id.btnPause)).setOnClickListener(btnClick);
 	}
 
 	private void enableButton(int id, boolean isEnable) {
-		((Button) findViewById(id)).setEnabled(isEnable);
+		(findViewById(id)).setEnabled(isEnable);
 	}
 
 	private void enableButtons(boolean isRecording) {
 		enableButton(R.id.btnStart, !isRecording);
-		enableButton(R.id.btnFormat, !isRecording);
 		enableButton(R.id.btnStop, isRecording);
 		enableButton(R.id.btnPause, isRecording);
 	}
 
-	private void setFormatButtonCaption() {
-		((Button) findViewById(R.id.btnFormat)).setText("audio_format" + " ("
-				+ file_exts[currentFormat] + ")");
-	}
-
 	private String getFilename() {
-		String filepath = Environment.getExternalStorageDirectory().getPath();
-		File file = new File(filepath, AUDIO_RECORDER_FOLDER);
+		file = new File(
+				Environment.getExternalStorageDirectory(), "Note-U-List!");
+		String timeStamp = new SimpleDateFormat("yyyyMMddHHmm")
+				.format(new Date());
+		String mediaName = file.getPath() + File.separator
+				+ timeStamp + "_";
 		if (!file.exists()) {
 			file.mkdirs();
 		}
-		return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + file_exts[currentFormat]);
+		return (mediaName + AUDIO_RECORDER_FILE_EXT_3GP);
 	}
 
 	private void startRecording() {
-		recorder = new MediaRecorder();
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		recorder.setOutputFormat(output_formats[currentFormat]);
+		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 		recorder.setOutputFile(getFilename());
 		recorder.setOnErrorListener(errorListener);
@@ -91,35 +95,81 @@ public class AudioRecordingActivity extends Activity {
 
 	private void stopRecording() {
 		if (null != recorder) {
-			recorder.stop();
+			try {
+				recorder.stop();
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
 			recorder.reset();
 			recorder.release();
-			recorder = null;
+			//recorder = null;
+			
+			onRecordTaken(recorder);
 		}
 	}
+
 	protected void onPause() {
-		   super.onPause();
-		   if (recorder != null) {
-		      recorder.release();
-		      
-		   }
+		super.onPause();
+		if (recorder != null) {
+			recorder.release();
 		}
+	}
 
+	public void onRecordTaken(MediaRecorder recorder) {
 
-	private void displayFormatDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		String formats[] = { "MPEG 4", "3GA" };
-		builder.setTitle("choose_format_title")
-				.setSingleChoiceItems(formats, currentFormat,
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								currentFormat = which;
-								setFormatButtonCaption();
-								dialog.dismiss();
-							}
-						}).show();
+		setContentView(R.layout.note_taken);
+		recorder.setOutputFile(getFilename());
+		// ImageView imageView = new ImageView(mActivity);
+		// imageView.setImageBitmap(rotatedBitmap);
+
+		// ((FrameLayout) findViewById(R.id.result)).addView(imageView);
+
+		ImageView saveButton, discardButton, shareButton;
+		saveButton = (ImageView) findViewById(R.id.button_camera_captured_save);
+		discardButton = (ImageView) findViewById(R.id.button_camera_captured_discard);
+		shareButton = (ImageView) findViewById(R.id.button_camera_captured_share);
+
+		saveButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				
+				Intent result = new Intent(mActivity.getApplicationContext(),
+						ResultActivity.class);
+				startActivityForResult(result, ResultActivity.GET_TITLE_TAG);
+			}
+		});
+
+		discardButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// TODO when migrating to API 4.0 and above, change to
+				// recreate() method!
+				new AlertDialog.Builder(mActivity)
+						.setTitle("Discard confirmation")
+						.setMessage(
+								"Do you really want to discard this note?\nThis cannot be undone!")
+						.setIcon(android.R.drawable.ic_dialog_alert)
+						.setPositiveButton(android.R.string.yes,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int whichButton) {
+										Toast.makeText(mActivity,
+												"Note discarded!",
+												Toast.LENGTH_SHORT).show();
+										Intent intent = getIntent();
+										finish();
+										startActivity(intent);
+									}
+								}).setNegativeButton(android.R.string.no, null)
+						.show();
+			}
+		});
+
+		shareButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				// TODO implement!
+				Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
+						Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	private MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
@@ -164,12 +214,63 @@ public class AudioRecordingActivity extends Activity {
 				onPause();
 				break;
 			}
-			case R.id.btnFormat: {
-				displayFormatDialog();
-				break;
-			}
 			}
 		}
 	};
+
+	@Override
+	protected void onDestroy() {
+		FrameLayout layout = (FrameLayout) findViewById(R.id.result);
+		if (layout != null) {
+			layout.removeAllViews();
+		}
+		super.onDestroy();
+	}
+	
+	private void renameFileOrFolder(File file, String newFileName) {
+		newFileName = file.getName().substring(0, 13) + newFileName + ".txt";
+		File newFile = new File(file.getParentFile(), newFileName);
+		rename(file, newFile);
+		DBAdapter db = new DBAdapter(this);
+		db.open();
+		db.updateBerkas(newFile.getName(), newFile.getAbsolutePath(),
+				file.getName());
+		//refresh();
+
+	}
+	
+	private void rename(File oldFile, File newFile) {
+		int toast = 0;
+		if (oldFile.renameTo(newFile)) {
+			// Rename was successful.
+			toast = R.string.file_renamed;
+		} else {
+			toast = R.string.error_renaming_file;
+
+		}
+		Toast.makeText(this, toast, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		Log.d(TAG, "In onActivityResult()");
+		if (data != null) {
+			if (requestCode == ResultActivity.GET_TITLE_TAG
+					&& resultCode == RESULT_OK) {
+				data.putExtra(NoteUListHelper.MEDIA_TYPE,
+						NoteUListHelper.MEDIA_TYPE_AUDIO);
+				NoteUListHelper.save2(mActivity, data, file);
+				Log.d(TAG, getFilename());
+				
+				if (recorder != null){
+					Log.d("recorder", "kesave");	
+					recorder.setOutputFile(getFilename());
+				} else {
+				Log.d("recorder", "null");}
+				finish();
+			}
+		}
+	}
 
 }

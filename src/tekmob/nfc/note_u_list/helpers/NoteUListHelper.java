@@ -15,6 +15,7 @@ import tekmob.nfc.note_u_list.activities.ResultActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
@@ -70,6 +71,34 @@ public class NoteUListHelper {
         }
 	}
 
+	public static void save2(Context context, Intent data, File fileLocation) {
+		Log.d(TAG, "YEAAYY::" + data.getExtras().get(ResultActivity.NOTE_TITLE)
+				+ "::" + data.getExtras().get(ResultActivity.NOTE_TAG));
+
+		if (fileLocation == null) {
+			Log.d(TAG, "Error creating media file, check storage permissions");
+			return;
+		}
+		String tag =  (String) data.getExtras().get(ResultActivity.NOTE_TAG);
+		String judul = fileLocation.getName();
+		String path = fileLocation.getAbsolutePath();
+		
+		String sem = "";
+		int dot = path.lastIndexOf(".");
+		if (dot >= 0) 
+			sem = path.substring(dot);
+		DBAdapter db = new DBAdapter(context);
+		// TODO organize tags into database
+		// TODO put link into database
+		
+		db.open();
+		long id = db.insertBerkas(judul, path, tag, ext);   
+		Log.d(TAG, "FILE SAVED!");
+		Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
+		db.close();
+	}
+	
+	
 	private static File getOutputMediaFile(int type, String noteTitle) {
 		File mediaStorageDir = new File(
 				Environment.getExternalStorageDirectory(), "Note-U-List!");
