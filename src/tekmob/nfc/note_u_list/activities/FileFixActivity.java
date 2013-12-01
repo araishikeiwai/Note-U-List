@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.DBAdapter;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.os.Bundle;

@@ -2,11 +2,9 @@ package tekmob.nfc.note_u_list.activities;
 
 import java.io.File;
 
-import edu.pdx.cs410.wifi.direct.file.transfer.ClientActivity;
-import edu.pdx.cs410.wifi.direct.file.transfer.FileBrowser;
-import edu.pdx.cs410.wifi.direct.file.transfer.R;
-import edu.pdx.cs410.wifi.direct.file.transfer.ServerService;
-import edu.pdx.cs410.wifi.direct.file.transfer.WiFiServerBroadcastReceiver;
+import tekmob.nfc.note_u_list.R;
+
+
 
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;

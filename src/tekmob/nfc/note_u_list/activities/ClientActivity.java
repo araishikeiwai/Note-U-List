@@ -3,6 +3,8 @@ package tekmob.nfc.note_u_list.activities;
 import java.io.File;
 import java.util.ArrayList;
 
+import tekmob.nfc.note_u_list.R;
+
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
@@ -87,7 +89,7 @@ public class ClientActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_client, menu);
+       // getMenuInflater().inflate(R.menu.activity_client, menu);
         
         return true;
     }
