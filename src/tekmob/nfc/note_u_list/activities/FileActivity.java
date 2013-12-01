@@ -18,7 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class FileActivity extends Activity {
+public class FileActivity extends Activity  {
 	private ArrayList<String> list;
 	private ArrayList<String> real;
 	private ListView listView;
@@ -26,13 +26,14 @@ public class FileActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_file);
+		setContentView(R.layout.activity_file_browser);
 		showNotes();
 	}
 	private String getFileName(String rawFileName) {
 		return rawFileName.substring(13, rawFileName.length() - 4);
 	}
 	private void showNotes() {
+		listView = (ListView) findViewById(R.id.file_browser_listview);
 		DBAdapter db = new DBAdapter(this);
 		db.open();
 		Cursor c = db.getAllBerkas();
@@ -40,10 +41,11 @@ public class FileActivity extends Activity {
 		real = new ArrayList<String>();
 		while(c.moveToNext()){
 			list.add(getFileName(c.getString(1)));
-			real.add(c.getString(1));
+			real.add(c.getString(3));
 		}
+		
  		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
- 				android.R.layout.simple_list_item_1, android.R.id.text1, list);
+ 				android.R.layout.simple_list_item_1, list);
  		listView.setAdapter(adapter);
  		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position,

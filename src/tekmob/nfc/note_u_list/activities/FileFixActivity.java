@@ -23,7 +23,7 @@ public class FileFixActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		String path = "/mnc/sdcard/Note-U-List!";
+		String path = "/mnt/sdcard/Note-U-List!";
 		targetFile = new File(path);
 		returnTarget();
 	}

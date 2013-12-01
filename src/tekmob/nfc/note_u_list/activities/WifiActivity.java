@@ -71,7 +71,7 @@ public class WifiActivity extends Activity {
 	}
 	public void startFileBrowseActivity(View view) {
 
-		Intent clientStartIntent = new Intent(this, FileActivity.class);
+		Intent clientStartIntent = new Intent(this, FileFixActivity.class);
 		startActivityForResult(clientStartIntent, fileRequestID);  
 		//Path returned to onActivityResult
 

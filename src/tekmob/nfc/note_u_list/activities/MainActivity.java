@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			next = new Intent(getApplicationContext(), AudioRecordingActivity.class);
 			break;
 		case R.id.shareButton:
-			next = new Intent(getApplicationContext(), ShareActivity.class);
+			next = new Intent(getApplicationContext(), WifiActivity.class);
 			break;
 		}
 		startActivity(next);

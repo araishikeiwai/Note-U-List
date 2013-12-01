@@ -141,7 +141,7 @@ public class ClientActivity extends Activity {
     
     
     public void browseForFile(View view) {
-        Intent clientStartIntent = new Intent(this, File.class);
+        Intent clientStartIntent = new Intent(this, FileActivity.class);
         startActivityForResult(clientStartIntent, fileRequestID);  
         
     }

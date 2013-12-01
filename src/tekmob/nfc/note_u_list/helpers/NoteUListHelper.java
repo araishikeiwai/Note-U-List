@@ -81,6 +81,7 @@ public class NoteUListHelper {
 		}
 		String tag =  (String) data.getExtras().get(ResultActivity.NOTE_TAG);
 		String judul = fileLocation.getName();
+		Log.d("judul awal di database", judul);
 		String path = fileLocation.getAbsolutePath();
 		
 		String sem = "";
