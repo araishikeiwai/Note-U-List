@@ -88,13 +88,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-<<<<<<< HEAD
-<<<<<<< HEAD
-            android:name="tekmob.nfc.note_u_list.RecordingHelper"
-            android:label="@string/title_activity_recording_helper" >
-=======
-=======
->>>>>>> origin/finalweek/ricky
             android:name="tekmob.nfc.note_u_list.activities.FileActivity"
             android:label="@string/title_activity_file" >
         </activity>
@@ -105,10 +98,6 @@
         <activity
             android:name="tekmob.nfc.note_u_list.activities.FileFixActivity"
             android:label="@string/title_activity_file_fix" >
-<<<<<<< HEAD
->>>>>>> 85a28737ba9388bfe9e7da149f2a1f3b3e3e3620
-=======
->>>>>>> origin/finalweek/ricky
         </activity>
     </application>
 
