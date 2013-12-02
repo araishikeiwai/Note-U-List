@@ -1,5 +1,7 @@
 package tekmob.nfc.note_u_list.helpers;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -25,7 +27,7 @@ public class DBAdapter {
 	private final Context context;
 	private static final String TABLE_CREATE = "create table IF NOT EXISTS berkas (_id integer primary key autoincrement, judul text not null, path text not null, ext text not null)";
 	private static final String TABLE_CREATE_TAG = "create table IF NOT EXISTS tag (tagid integer primary key autoincrement, tagname text not null)";
-	private static final String TABLE_CREATE_TAGFILES = "create table IF NOT EXISTS tag_rel (_idtag integer, _idberkas integer, foreign key (_idtag) REFERENCES tag(tagid) ON DELETE CASCADE ON UPDATE CASCADE, foreign key (_idberkas) REFERENCES berkas(_id) ON DELETE CASCADE ON UPDATE CASCADE, PRIMARY KEY(_idtag, _idberkas))";
+	private static final String TABLE_CREATE_TAGFILES = "create table IF NOT EXISTS tag_rel (_idtag integer, _idberkas integer, foreign key (_idtag) REFERENCES tag(tagid) ON DELETE CASCADE ON UPDATE CASCADE, foreign key (_idberkas) REFERENCES berkas(_id) ON DELETE CASCADE ON UPDATE CASCADE)";
 	private static final String TABLE_DROP = "DROP TABLE IF EXISTS berkas; DROP TABLE IF EXISTS tag; DROP TABLE IF EXISTS tag_rel";
 
 	private DatabaseHelper dbHelper;
@@ -98,13 +100,49 @@ public class DBAdapter {
 		return 0;
 	}
 
+	public long insertTagRelationship(String filePath, String tagName) {
+		ContentValues initialValues = new ContentValues();
+		int filid = getBerkasIdFromPath(filePath);
+		int tagid = getTagIdFromTagName(tagName);
+		initialValues.put(KEY_IDBERKAS_REL, filid);
+		initialValues.put(KEY_IDTAG_REL, tagid);
+		Log.d(TAG, "Inserting tag " + tagName + "(" + tagid
+				+ ") associated with file " + filePath + "(" + filid + ")");
+		return db.insert("tag_rel", null, initialValues);
+	}
+
+	private int getTagIdFromTagName(String tagName) {
+		// TODO Auto-generated method stub
+		String query = "SELECT " + KEY_IDTAG + " FROM tag WHERE " + KEY_TAGNAME
+				+ " = '" + tagName + "'";
+		Log.d(TAG, query);
+		Cursor id = db.rawQuery(query, null);
+		id.moveToFirst();
+		return id.getInt(0);
+	}
+
+	private int getBerkasIdFromPath(String filePath) {
+		// TODO Auto-generated method stub
+		String query = "SELECT " + KEY_ID + " FROM berkas WHERE " + KEY_PATH
+				+ " = '" + filePath + "'";
+		Log.d(TAG, query);
+		Cursor id = db.rawQuery(query, null);
+		id.moveToFirst();
+		return id.getInt(0);
+	}
+
 	public Cursor getAllAvailableTags() {
-		return db.rawQuery("SELECT * FROM tag ORDER BY " + KEY_IDTAG + " ASC", null);
+		String query = "SELECT * FROM tag ORDER BY " + KEY_IDTAG + " ASC";
+		Log.d(TAG, query);
+		return db.rawQuery(query, null);
 	}
 
 	public boolean isTagInTable(String tagName) {
-		Cursor tags = db.rawQuery("SELECT * FROM tag WHERE " + KEY_TAGNAME
-				+ "= '" + tagName + "'", null);
+		String query = "SELECT * FROM tag WHERE " + KEY_TAGNAME + "= '"
+				+ tagName + "'";
+		Log.d(TAG, query);
+		Cursor tags = db.rawQuery(query, null);
+		tags.moveToFirst();
 
 		if (tags != null) {
 			if (tags.getCount() > 0) {
@@ -116,10 +154,6 @@ public class DBAdapter {
 			}
 		}
 		return false;
-	}
-
-	public long insertTagRel(String tagName, String judul) {
-		return 0;
 	}
 
 	public void deleteBerkas(String judul) {
@@ -163,5 +197,78 @@ public class DBAdapter {
 		return db.query("berkas", new String[] { KEY_ROWID, KEY_JUDUL,
 				KEY_PATH, KEY_EXT }, null, null, null, null, KEY_ROWID
 				+ " DESC");
+	}
+
+	public Cursor getFiltered(ArrayList<String> type, ArrayList<String> tags) {
+		// public Cursor getFiltered(ArrayList<String> tags) {
+		// TODO Auto-generated method stub
+		String selection_type;
+		String selection_tags;
+		if (type.size() > 0) {
+			selection_type = KEY_EXT + "= ";
+
+			for (String x : type) {
+				selection_type += "'" + x + "' OR " + KEY_EXT + "= ";
+			}
+			selection_type = selection_type.substring(0,
+					selection_type.length() - 9);
+		} else {
+			selection_type = "";
+		}
+
+		if (tags.size() > 0) {
+			selection_tags = KEY_IDTAG_REL + "= ";
+
+			for (String x : tags) {
+				int idtag = getTagIdFromTagName(x);
+				selection_tags += idtag + " OR " + KEY_IDTAG_REL + "= ";
+			}
+			selection_tags = selection_tags.substring(0,
+					selection_tags.length() - 12);
+		} else {
+			selection_tags = "";
+		}
+
+		String selection = "";
+		if (selection_type.length() > 0) {
+			selection_type = "(" + selection_type + ")";
+			selection = " where " + selection_type;
+		}
+		if (selection_tags.length() > 0) {
+			selection_tags = "(" + selection_tags + ")";
+			selection = " where " + selection_tags;
+		}
+		if (selection_tags.length() > 0 && selection_type.length() > 0)
+			selection = " where " + selection_type + " AND " + selection_tags;
+		
+		String query = "SELECT DISTINCT " + KEY_ROWID + "," + KEY_JUDUL + ","
+				+ KEY_PATH + "," + KEY_EXT
+				+ " from tag_rel a left join berkas b on a." + KEY_IDBERKAS_REL
+				+ "=b." + KEY_ROWID + selection;
+		Log.d(TAG, query);
+		Cursor c = db.rawQuery(query, null);
+		c.moveToFirst();
+		return c;
+
+		// String query = "SELECT " + KEY_IDBERKAS_REL + " FROM tag_rel"
+		// + selection;
+		// Log.d(TAG, query);
+		// Cursor t = db.rawQuery(query, null);
+		// t.moveToFirst();
+		//
+		// String newSelection = "";
+		// do {
+		// newSelection += KEY_ROWID + "=" + t.getInt(0) + " OR ";
+		// } while (t.moveToNext());
+		// if (newSelection.length() > 0) {
+		// newSelection = " WHERE "
+		// + newSelection.substring(0, newSelection.length() - 4);
+		// }
+		//
+		// query = "SELECT * FROM berkas" + newSelection;
+		// Log.d(TAG, query);
+		// Cursor c = db.rawQuery(query, null);
+		// c.moveToFirst();
+		// return c;
 	}
 }

@@ -269,7 +269,7 @@ public class AudioRecordingActivity extends Activity {
 						+ AUDIO_RECORDER_FILE_EXT_3GP;
 				Log.d("recorder", namaFile);
 				File old = new File(fileName);
-				NoteUListHelper.save2(mActivity, data, old);
+				NoteUListHelper.save_audio(mActivity, data, old);
 				Log.d("filename", old.getName());
 				renameFileOrFolder(old, namaFile);
 				recorder = null;

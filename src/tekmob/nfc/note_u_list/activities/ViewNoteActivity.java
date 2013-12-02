@@ -45,6 +45,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 	private int id = 0;
 	private List<ViewNoteListObject> mList;
 	private AlertDialog dialog;
+	private String[] mType, mTags;
 	Cursor c;
 
 	@Override
@@ -263,9 +264,25 @@ public class ViewNoteActivity extends ActionBarActivity {
 
 	public boolean onOptionsItemSelected(MenuItem menu) {
 		if (menu.getItemId() == R.id.action_filter) {
-			String[] items = TagsHelper.getAvailableTags(getApplicationContext());
+			String[] type = new String[] { "Text Notes", "Picture Notes",
+					"Audio Notes" };
+			mType = new String[] { ViewNoteListObject.TYPE_TEXT,
+					ViewNoteListObject.TYPE_IMAGE,
+					ViewNoteListObject.TYPE_AUDIO };
+			mTags = TagsHelper.getAvailableTags(getApplicationContext());
 			// arraylist to keep the selected items
-			final ArrayList seletedItems = new ArrayList();
+			final ArrayList<Integer> selectedItems = new ArrayList<Integer>();
+
+			String[] items = new String[mType.length + mTags.length];
+
+			int i = 0;
+			for (; i < type.length; i++) {
+				items[i] = type[i];
+			}
+			for (; i < items.length; i++) {
+				items[i] = mTags[i - 3];
+			}
+			// String[] items = mTags;
 
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(getString(R.string.select_tag));
@@ -281,13 +298,13 @@ public class ViewNoteActivity extends ActionBarActivity {
 								// selected items
 								// write your code when user checked the
 								// checkbox
-								seletedItems.add(indexSelected);
-							} else if (seletedItems.contains(indexSelected)) {
+								selectedItems.add(indexSelected);
+							} else if (selectedItems.contains(indexSelected)) {
 								// Else, if the item is already in the array,
 								// remove it
 								// write your code when user Uchecked the
 								// checkbox
-								seletedItems.remove(Integer
+								selectedItems.remove(Integer
 										.valueOf(indexSelected));
 							}
 						}
@@ -298,9 +315,18 @@ public class ViewNoteActivity extends ActionBarActivity {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int id) {
-									// Your code when user clicked on OK
-									// You can write the code to save the
-									// selected item here
+									ArrayList<String> selectedType = new ArrayList<String>();
+									ArrayList<String> selectedTags = new ArrayList<String>();
+									for (Integer sel : selectedItems) {
+										if (sel < 3) {
+											selectedType.add(mType[sel]);
+										} else {
+											selectedTags.add(mTags[sel - 3]);
+										}
+										// selectedTags.add(mTags[sel]);
+									}
+									showFiltered(selectedType, selectedTags);
+									// showFiltered(selectedTags);
 
 								}
 							})
@@ -309,7 +335,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int id) {
-									// Your code when user clicked on Cancel
+									refresh();
 
 								}
 							});
@@ -319,6 +345,42 @@ public class ViewNoteActivity extends ActionBarActivity {
 			dialog.show();
 		}
 		return true;
+	}
+
+	protected void showFiltered(ArrayList<String> type, ArrayList<String> tags) {
+		// protected void showFiltered(ArrayList<String> tags) {
+		listView = (ListView) findViewById(R.id.list);
+		registerForContextMenu(listView);
+		DBAdapter db = new DBAdapter(ViewNoteActivity.this);
+		db.open();
+		c = db.getFiltered(type, tags);
+		// c = db.getFiltered(tags);
+		c.moveToFirst();
+		mList = new ArrayList<ViewNoteListObject>();
+		if (c.getCount() > 0) {
+			do {
+				Log.d(TAG,
+						c.getString(0) + "," + c.getString(1) + ","
+								+ c.getString(2) + "," + c.getString(3));
+				mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
+						.getString(3), c.getString(2)));
+
+			} while (c.moveToNext());
+		}
+		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
+				ViewNoteActivity.this, mList);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View v, int position,
+					long arg3) {
+				mContextText = mList.get(position).getFilename();
+				openFiles(mList.get(position).getFilename(), mList
+						.get(position).getType(), mList.get(position)
+						.getTitle());
+			}
+		});
+		db.close();
+
 	}
 
 	@Override

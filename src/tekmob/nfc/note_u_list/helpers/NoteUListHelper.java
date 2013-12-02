@@ -56,8 +56,10 @@ public class NoteUListHelper {
 			long id = db.insertBerkas(judul, path, ext);
 			for (String tag : tags) {
 				tag = tag.trim();
-				db.insertTag(tag);
-				Log.d(TAG, tag);
+				if (tag.length() > 0) {
+					db.insertTag(tag);
+					db.insertTagRelationship(path, tag);
+				}
 			}
 			FileOutputStream fos = new FileOutputStream(fileLocation);
 			fos.write(toSave);
@@ -73,7 +75,8 @@ public class NoteUListHelper {
 		}
 	}
 
-	public static void save2(Context context, Intent data, File fileLocation) {
+	public static void save_audio(Context context, Intent data,
+			File fileLocation) {
 		Log.d(TAG, "YEAAYY::" + data.getExtras().get(ResultActivity.NOTE_TITLE)
 				+ "::" + data.getExtras().get(ResultActivity.NOTE_TAG));
 
@@ -81,7 +84,8 @@ public class NoteUListHelper {
 			Log.d(TAG, "Error creating media file, check storage permissions");
 			return;
 		}
-		String[] tags = ((String) data.getExtras().get(ResultActivity.NOTE_TAG)).split(",");
+		String[] tags = ((String) data.getExtras().get(ResultActivity.NOTE_TAG))
+				.split(",");
 		String judul = fileLocation.getName();
 		Log.d("judul awal di database", judul);
 		String path = fileLocation.getAbsolutePath();
@@ -95,10 +99,13 @@ public class NoteUListHelper {
 		// TODO put link into database
 
 		db.open();
-		long id = db.insertBerkas(judul, path, "audio/*");
+		long id = db.insertBerkas(judul, path, ViewNoteListObject.TYPE_AUDIO);
 		for (String tag : tags) {
 			tag = tag.trim();
-			db.insertTag(tag);
+			if (tag.length() > 0) {
+				db.insertTag(tag);
+				db.insertTagRelationship(path, tag);
+			}
 		}
 		Log.d(TAG, "FILE SAVED!");
 		Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
@@ -124,13 +131,13 @@ public class NoteUListHelper {
 				+ timeStamp + "_" + noteTitle;
 		File mediaFile = null;
 		if (type == MEDIA_TYPE_IMAGE) {
-			ext = "image/*";
+			ext = ViewNoteListObject.TYPE_IMAGE;
 			mediaFile = new File(mediaName + ".jpg");
 		} else if (type == MEDIA_TYPE_TEXT) {
 			mediaFile = new File(mediaName + ".txt");
-			ext = "text/*";
+			ext = ViewNoteListObject.TYPE_TEXT;
 		} else if (type == MEDIA_TYPE_AUDIO) {
-			ext = "audio/*";
+			ext = ViewNoteListObject.TYPE_AUDIO;
 			mediaFile = new File(mediaName + ".3ga");
 		} else if (type == MEDIA_OTHERS) {
 			// TODO
@@ -151,3 +158,4 @@ public class NoteUListHelper {
 		return mediaFile;
 	}
 }
+;
