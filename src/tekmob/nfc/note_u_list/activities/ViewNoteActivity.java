@@ -67,9 +67,10 @@ public class ViewNoteActivity extends ActionBarActivity {
 					c.getString(0) + "," + c.getString(1) + ","
 							+ c.getString(2) + "," + c.getString(3));
 			mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
-					.getString(3), c.getString(2)));
+					.getString(3), c.getString(2), db.getTagsForFile(c.getString(2))));
 
 		}
+
 		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
 				ViewNoteActivity.this, mList);
 		listView.setAdapter(adapter);
@@ -363,10 +364,11 @@ public class ViewNoteActivity extends ActionBarActivity {
 						c.getString(0) + "," + c.getString(1) + ","
 								+ c.getString(2) + "," + c.getString(3));
 				mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
-						.getString(3), c.getString(2)));
+						.getString(3), c.getString(2), db.getTagsForFile(c.getString(2))));
 
 			} while (c.moveToNext());
 		}
+
 		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
 				ViewNoteActivity.this, mList);
 		listView.setAdapter(adapter);

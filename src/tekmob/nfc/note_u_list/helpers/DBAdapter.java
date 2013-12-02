@@ -240,7 +240,7 @@ public class DBAdapter {
 		}
 		if (selection_tags.length() > 0 && selection_type.length() > 0)
 			selection = " where " + selection_type + " AND " + selection_tags;
-		
+
 		String query = "SELECT DISTINCT " + KEY_ROWID + "," + KEY_JUDUL + ","
 				+ KEY_PATH + "," + KEY_EXT
 				+ " from tag_rel a left join berkas b on a." + KEY_IDBERKAS_REL
@@ -270,5 +270,31 @@ public class DBAdapter {
 		// Cursor c = db.rawQuery(query, null);
 		// c.moveToFirst();
 		// return c;
+	}
+
+	public String[] getTagsForFile(String filepath) {
+		int fileId = getBerkasIdFromPath(filepath);
+		String query = "SELECT " + KEY_IDTAG_REL + " FROM tag_rel WHERE "
+				+ KEY_IDBERKAS_REL + "=" + fileId;
+		Log.d(TAG, query);
+		Cursor c = db.rawQuery(query, null);
+		c.moveToFirst();
+		ArrayList<String> res = new ArrayList<String>();
+		if (c.getCount() > 0) {
+			do {
+				query = "SELECT " + KEY_TAGNAME + " from tag where "
+						+ KEY_IDTAG + " = " + c.getInt(0);
+				Log.d(TAG, query);
+				Cursor d = db.rawQuery(query, null);
+				d.moveToFirst();
+				if (d.getCount() > 0)
+					res.add(d.getString(0));
+			} while (c.moveToNext());
+		}
+		String[] toRet = new String[res.size()];
+		for (int i = 0; i < toRet.length; i++) {
+			toRet[i] = res.get(i);
+		}
+		return toRet;
 	}
 }
