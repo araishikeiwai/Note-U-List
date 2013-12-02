@@ -1,6 +1,7 @@
 package tekmob.nfc.note_u_list.activities;
 
 import tekmob.nfc.note_u_list.R;
+import tekmob.nfc.note_u_list.helpers.TagsHelper;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,11 +72,7 @@ public class ResultActivity extends Activity {
 	}
 
 	private String[] getTagsAutocompletes() {
-		// TODO get from database
-		return new String[] { "aDum", "bDum", "cDum", "dDum", "eDum", "fDum",
-				"gDum", "hDum", "iDum", "jDum", "kDum", "lDum", "mDum", "nDum",
-				"oDum", "pDum", "qDum", "rDum", "sDum", "tDum", "uDum", "vDum",
-				"wDum", "xDum", "yDum", "zDum" };
+		return TagsHelper.getAvailableTags(getApplicationContext());
 	}
 
 	@Override

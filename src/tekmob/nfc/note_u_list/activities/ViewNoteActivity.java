@@ -6,6 +6,7 @@ import java.util.List;
 
 import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.DBAdapter;
+import tekmob.nfc.note_u_list.helpers.TagsHelper;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListAdapter;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.app.AlertDialog;
@@ -43,6 +44,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 	private String mContextText = "", mContextTitle;
 	private int id = 0;
 	private List<ViewNoteListObject> mList;
+	private AlertDialog dialog;
 	Cursor c;
 
 	@Override
@@ -62,10 +64,9 @@ public class ViewNoteActivity extends ActionBarActivity {
 		while (c.moveToNext()) {
 			Log.d(TAG,
 					c.getString(0) + "," + c.getString(1) + ","
-							+ c.getString(2) + "," + c.getString(3) + ","
-							+ c.getString(4));
+							+ c.getString(2) + "," + c.getString(3));
 			mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
-					.getString(4), c.getString(3)));
+					.getString(3), c.getString(2)));
 
 		}
 		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
@@ -175,7 +176,10 @@ public class ViewNoteActivity extends ActionBarActivity {
 	}
 
 	private void renameFileOrFolder(File file, String newFileName) {
-		newFileName = file.getName().substring(0, 13) + newFileName + file.getName().substring(file.getName().length() - 4, file.getName().length());
+		newFileName = file.getName().substring(0, 13)
+				+ newFileName
+				+ file.getName().substring(file.getName().length() - 4,
+						file.getName().length());
 		File newFile = new File(file.getParentFile(), newFileName);
 		rename(file, newFile);
 		DBAdapter db = new DBAdapter(this);
@@ -255,6 +259,66 @@ public class ViewNoteActivity extends ActionBarActivity {
 			break;
 		}
 		return null;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem menu) {
+		if (menu.getItemId() == R.id.action_filter) {
+			String[] items = TagsHelper.getAvailableTags(getApplicationContext());
+			// arraylist to keep the selected items
+			final ArrayList seletedItems = new ArrayList();
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle(getString(R.string.select_tag));
+			builder.setMultiChoiceItems(items, null,
+					new DialogInterface.OnMultiChoiceClickListener() {
+						// indexSelected contains the index of item (of which
+						// checkbox checked)
+						@Override
+						public void onClick(DialogInterface dialog,
+								int indexSelected, boolean isChecked) {
+							if (isChecked) {
+								// If the user checked the item, add it to the
+								// selected items
+								// write your code when user checked the
+								// checkbox
+								seletedItems.add(indexSelected);
+							} else if (seletedItems.contains(indexSelected)) {
+								// Else, if the item is already in the array,
+								// remove it
+								// write your code when user Uchecked the
+								// checkbox
+								seletedItems.remove(Integer
+										.valueOf(indexSelected));
+							}
+						}
+					})
+					// Set the action buttons
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// Your code when user clicked on OK
+									// You can write the code to save the
+									// selected item here
+
+								}
+							})
+					.setNegativeButton("Cancel",
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog,
+										int id) {
+									// Your code when user clicked on Cancel
+
+								}
+							});
+
+			dialog = builder.create();// AlertDialog dialog; create like this
+										// outside onClick
+			dialog.show();
+		}
+		return true;
 	}
 
 	@Override

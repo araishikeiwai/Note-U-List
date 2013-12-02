@@ -7,10 +7,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
-
-
-
 import tekmob.nfc.note_u_list.activities.ResultActivity;
 
 import android.content.Context;
@@ -28,6 +24,7 @@ public class NoteUListHelper {
 	public static final String MEDIA_TYPE = "mediaType";
 	protected static final String TAG = "Note-U-List! Helper";
 	public static String ext = "";
+
 	public NoteUListHelper() {
 	}
 
@@ -41,13 +38,14 @@ public class NoteUListHelper {
 			Log.d(TAG, "Error creating media file, check storage permissions");
 			return;
 		}
-		String tag =  (String) data.getExtras().get(ResultActivity.NOTE_TAG);
+		String[] tags = ((String) data.getExtras().get(ResultActivity.NOTE_TAG))
+				.split(",");
 		String judul = fileLocation.getName();
 		String path = fileLocation.getAbsolutePath();
-		
+
 		String sem = "";
 		int dot = path.lastIndexOf(".");
-		if (dot >= 0) 
+		if (dot >= 0)
 			sem = path.substring(dot);
 		DBAdapter db = new DBAdapter(context);
 		// TODO organize tags into database
@@ -55,7 +53,12 @@ public class NoteUListHelper {
 
 		try {
 			db.open();
-			long id = db.insertBerkas(judul,path, tag,ext);   
+			long id = db.insertBerkas(judul, path, ext);
+			for (String tag : tags) {
+				tag = tag.trim();
+				db.insertTag(tag);
+				Log.d(TAG, tag);
+			}
 			FileOutputStream fos = new FileOutputStream(fileLocation);
 			fos.write(toSave);
 			fos.close();
@@ -65,10 +68,9 @@ public class NoteUListHelper {
 			Log.d(TAG, "File not found: " + e.getMessage());
 		} catch (IOException e) {
 			Log.d(TAG, "Error accessing file: " + e.getMessage());
+		} finally {
+			db.close();
 		}
-		finally {
-            db.close();
-        }
 	}
 
 	public static void save2(Context context, Intent data, File fileLocation) {
@@ -79,27 +81,30 @@ public class NoteUListHelper {
 			Log.d(TAG, "Error creating media file, check storage permissions");
 			return;
 		}
-		String tag =  (String) data.getExtras().get(ResultActivity.NOTE_TAG);
+		String[] tags = ((String) data.getExtras().get(ResultActivity.NOTE_TAG)).split(",");
 		String judul = fileLocation.getName();
 		Log.d("judul awal di database", judul);
 		String path = fileLocation.getAbsolutePath();
-		
+
 		String sem = "";
 		int dot = path.lastIndexOf(".");
-		if (dot >= 0) 
+		if (dot >= 0)
 			sem = path.substring(dot);
 		DBAdapter db = new DBAdapter(context);
 		// TODO organize tags into database
 		// TODO put link into database
-		
+
 		db.open();
-		long id = db.insertBerkas(judul, path, tag, "audio/*");   
+		long id = db.insertBerkas(judul, path, "audio/*");
+		for (String tag : tags) {
+			tag = tag.trim();
+			db.insertTag(tag);
+		}
 		Log.d(TAG, "FILE SAVED!");
 		Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
 		db.close();
 	}
-	
-	
+
 	private static File getOutputMediaFile(int type, String noteTitle) {
 		File mediaStorageDir = new File(
 				Environment.getExternalStorageDirectory(), "Note-U-List!");
