@@ -93,7 +93,7 @@ public class NoteUListHelper {
 		// TODO put link into database
 		
 		db.open();
-		long id = db.insertBerkas(judul, path, tag, ext);   
+		long id = db.insertBerkas(judul, path, tag, "audio/*");   
 		Log.d(TAG, "FILE SAVED!");
 		Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
 		db.close();
@@ -126,7 +126,7 @@ public class NoteUListHelper {
 			ext = "text/*";
 		} else if (type == MEDIA_TYPE_AUDIO) {
 			ext = "audio/*";
-			mediaFile = new File(mediaName + ".MP4");
+			mediaFile = new File(mediaName + ".3ga");
 		} else if (type == MEDIA_OTHERS) {
 			// TODO
 		} else {
