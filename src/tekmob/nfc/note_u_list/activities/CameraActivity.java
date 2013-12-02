@@ -36,6 +36,7 @@ public class CameraActivity extends Activity implements PictureCallback {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		mCamera = getCameraInstance();

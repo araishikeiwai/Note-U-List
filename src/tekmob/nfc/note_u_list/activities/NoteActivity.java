@@ -28,6 +28,7 @@ public class NoteActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.note_taken);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		mActivity = this;
 
 		LayoutInflater inflater = LayoutInflater.from(mActivity);

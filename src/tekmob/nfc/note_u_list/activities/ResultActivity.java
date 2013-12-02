@@ -26,6 +26,7 @@ public class ResultActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		final EditText noteTitle = (EditText) findViewById(R.id.note_title);
 		

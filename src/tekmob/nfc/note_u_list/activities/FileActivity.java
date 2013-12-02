@@ -18,20 +18,23 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class FileActivity extends Activity  {
+public class FileActivity extends Activity {
 	private ArrayList<String> list;
 	private ArrayList<String> real;
 	private ListView listView;
 	private File targetFile;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_file_browser);
 		showNotes();
 	}
+
 	private String getFileName(String rawFileName) {
 		return rawFileName.substring(13, rawFileName.length() - 4);
 	}
+
 	private void showNotes() {
 		listView = (ListView) findViewById(R.id.file_browser_listview);
 		DBAdapter db = new DBAdapter(this);
@@ -39,35 +42,37 @@ public class FileActivity extends Activity  {
 		Cursor c = db.getAllBerkas();
 		list = new ArrayList<String>();
 		real = new ArrayList<String>();
-		while(c.moveToNext()){
+		while (c.moveToNext()) {
 			list.add(getFileName(c.getString(1)));
-			real.add(c.getString(3));
+			real.add(c.getString(2));
 		}
-		
- 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
- 				android.R.layout.simple_list_item_1, list);
- 		listView.setAdapter(adapter);
- 		listView.setOnItemClickListener(new OnItemClickListener() {
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_1, list);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position,
 					long arg3) {
 				File f = new File(real.get(position));
-				if(f.isFile()) {
-					  targetFile = f;
-					  returnTarget();
-					  //Return target File to activity
+				if (f.isFile()) {
+					targetFile = f;
+					returnTarget();
+					// Return target File to activity
 				}
 			}
 		});
-		
+
 	}
-	public void returnTarget(){
-		
+
+	public void returnTarget() {
+
 		Intent returnIntent = new Intent();
 		returnIntent.putExtra("file", targetFile);
 		setResult(RESULT_OK, returnIntent);
 		finish();
-		
+
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

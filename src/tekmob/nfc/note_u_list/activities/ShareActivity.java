@@ -41,6 +41,7 @@ public class ShareActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_share);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		listView = (ListView) findViewById(R.id.listview);
 		btnGetSelected = (Button) findViewById(R.id.btnget);
 		btnGetSelected.setOnClickListener(ShareActivity.this);

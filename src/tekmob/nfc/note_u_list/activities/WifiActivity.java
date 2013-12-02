@@ -4,8 +4,6 @@ import java.io.File;
 
 import tekmob.nfc.note_u_list.R;
 
-
-
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.os.Bundle;
@@ -25,7 +23,6 @@ public class WifiActivity extends Activity {
 	public final int fileRequestID = 55;
 	public final int port = 7950;
 
-
 	private WifiP2pManager wifiManager;
 	private Channel wifichannel;
 	private BroadcastReceiver wifiServerReceiver;
@@ -35,45 +32,55 @@ public class WifiActivity extends Activity {
 	private String path;
 	private File downloadTarget;
 
-	private Intent serverServiceIntent; 
+	private Intent serverServiceIntent;
 
 	private boolean serverThreadActive;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wifi);
-		//Block auto opening keyboard
-		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		// Block auto opening keyboard
+		this.getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		wifiManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
 		wifichannel = wifiManager.initialize(this, getMainLooper(), null);
-		wifiServerReceiver = new WiFiServerBroadcastReceiver(wifiManager, wifichannel, this);
+		wifiServerReceiver = new WiFiServerBroadcastReceiver(wifiManager,
+				wifichannel, this);
 
-		wifiServerReceiverIntentFilter = new IntentFilter();;
-		wifiServerReceiverIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-		wifiServerReceiverIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-		wifiServerReceiverIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-		wifiServerReceiverIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
+		wifiServerReceiverIntentFilter = new IntentFilter();
+		;
+		wifiServerReceiverIntentFilter
+				.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
+		wifiServerReceiverIntentFilter
+				.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
+		wifiServerReceiverIntentFilter
+				.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
+		wifiServerReceiverIntentFilter
+				.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 
-		//set status to stopped
+		// set status to stopped
 		TextView serverServiceStatus = (TextView) findViewById(R.id.server_status_text);
 		serverServiceStatus.setText(R.string.server_stopped);
 
 		path = "/";
 		downloadTarget = new File(path);
 
-		serverServiceIntent = null; 
+		serverServiceIntent = null;
 		serverThreadActive = false;
 
 		setServerFileTransferStatus("No File being transfered");
 
 		registerReceiver(wifiServerReceiver, wifiServerReceiverIntentFilter);
 	}
+
 	public void startFileBrowseActivity(View view) {
 
 		Intent clientStartIntent = new Intent(this, FileFixActivity.class);
-		startActivityForResult(clientStartIntent, fileRequestID);  
-		//Path returned to onActivityResult
+		startActivityForResult(clientStartIntent, fileRequestID);
+		// Path returned to onActivityResult
 
 	}
 
@@ -81,27 +88,23 @@ public class WifiActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		if (resultCode == Activity.RESULT_OK && requestCode == fileRequestID) {
-			//Fetch result
+			// Fetch result
 			File targetDir = (File) data.getExtras().get("file");
 
-			if(targetDir.isDirectory())
-			{
-				if(targetDir.canWrite())
-				{
+			if (targetDir.isDirectory()) {
+				if (targetDir.canWrite()) {
 					downloadTarget = targetDir;
 					TextView filePath = (TextView) findViewById(R.id.server_file_path);
 					filePath.setText(targetDir.getPath());
-					setServerFileTransferStatus("Download directory set to " + targetDir.getName());
+					setServerFileTransferStatus("Download directory set to "
+							+ targetDir.getName());
 
-				}
-				else
-				{
-					setServerFileTransferStatus("You do not have permission to write to " + targetDir.getName());
+				} else {
+					setServerFileTransferStatus("You do not have permission to write to "
+							+ targetDir.getName());
 				}
 
-			}
-			else
-			{
+			} else {
 				setServerFileTransferStatus("The selected file is not a directory. Please select a valid download directory.");
 			}
 
@@ -110,43 +113,45 @@ public class WifiActivity extends Activity {
 
 	public void startServer(View view) {
 
-		//If server is already listening on port or transfering data, do not attempt to start server service 
-		if(!serverThreadActive)
-		{
-			//Create new thread, open socket, wait for connection, and transfer file 
+		// If server is already listening on port or transfering data, do not
+		// attempt to start server service
+		if (!serverThreadActive) {
+			// Create new thread, open socket, wait for connection, and transfer
+			// file
 
 			serverServiceIntent = new Intent(this, ServerService.class);
 			serverServiceIntent.putExtra("saveLocation", downloadTarget);
 			serverServiceIntent.putExtra("port", new Integer(port));
-			serverServiceIntent.putExtra("serverResult", new ResultReceiver(null) {
+			serverServiceIntent.putExtra("serverResult", new ResultReceiver(
+					null) {
 				@Override
-				protected void onReceiveResult(int resultCode, final Bundle resultData) {
+				protected void onReceiveResult(int resultCode,
+						final Bundle resultData) {
 
-					if(resultCode == port )
-					{
+					if (resultCode == port) {
 						if (resultData == null) {
-							//Server service has shut down. Download may or may not have completed properly. 
-							serverThreadActive = false;	
-
+							// Server service has shut down. Download may or may
+							// not have completed properly.
+							serverThreadActive = false;
 
 							final TextView server_status_text = (TextView) findViewById(R.id.server_status_text);
 							server_status_text.post(new Runnable() {
 								public void run() {
-									server_status_text.setText(R.string.server_stopped);
+									server_status_text
+											.setText(R.string.server_stopped);
 								}
-							});	
+							});
 
-
-						}
-						else
-						{    	        	
+						} else {
 							final TextView server_file_status_text = (TextView) findViewById(R.id.server_file_transfer_status);
 
 							server_file_status_text.post(new Runnable() {
 								public void run() {
-									server_file_status_text.setText((String)resultData.get("message"));
+									server_file_status_text
+											.setText((String) resultData
+													.get("message"));
 								}
-							});		    	   		    	        	
+							});
 						}
 					}
 
@@ -156,39 +161,34 @@ public class WifiActivity extends Activity {
 			serverThreadActive = true;
 			startService(serverServiceIntent);
 
-			//Set status to running
+			// Set status to running
 			TextView serverServiceStatus = (TextView) findViewById(R.id.server_status_text);
 			serverServiceStatus.setText(R.string.server_running);
 
-		}
-		else
-		{
-			//Set status to already running
+		} else {
+			// Set status to already running
 			TextView serverServiceStatus = (TextView) findViewById(R.id.server_status_text);
 			serverServiceStatus.setText("The server is already running");
 
 		}
 	}
+
 	public void stopServer(View view) {
 
-
-		//stop download thread 
-		if(serverServiceIntent != null)
-		{
+		// stop download thread
+		if (serverServiceIntent != null) {
 			stopService(serverServiceIntent);
 
 		}
 
 	}
 
-
 	public void startClientActivity(View view) {
 
 		stopServer(null);
 		Intent clientStartIntent = new Intent(this, ClientActivity.class);
-		startActivity(clientStartIntent);    		
-	}   
-
+		startActivity(clientStartIntent);
+	}
 
 	@Override
 	protected void onResume() {
@@ -198,8 +198,8 @@ public class WifiActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//stopServer(null);
-		//unregisterReceiver(wifiServerReceiver);
+		// stopServer(null);
+		// unregisterReceiver(wifiServerReceiver);
 	}
 
 	@Override
@@ -208,32 +208,33 @@ public class WifiActivity extends Activity {
 
 		stopServer(null);
 
-		//stopService(serverServiceIntent);
+		// stopService(serverServiceIntent);
 
-		//Unregister broadcast receiver		
+		// Unregister broadcast receiver
 		try {
 			unregisterReceiver(wifiServerReceiver);
 		} catch (IllegalArgumentException e) {
 			// This will happen if the server was never running and the stop
 			// button was pressed.
 			// Do nothing in this case.
-		}      
+		}
 	}
-	public void setServerWifiStatus(String message){
+
+	public void setServerWifiStatus(String message) {
 		TextView server_wifi_status_text = (TextView) findViewById(R.id.server_wifi_status_text);
 		server_wifi_status_text.setText(message);
 	}
 
-	public void setServerStatus(String message){
+	public void setServerStatus(String message) {
 		TextView server_status_text = (TextView) findViewById(R.id.server_status_text_2);
-		server_status_text.setText(message);	
+		server_status_text.setText(message);
 	}
 
-
-	public void setServerFileTransferStatus(String message){
+	public void setServerFileTransferStatus(String message) {
 		TextView server_status_text = (TextView) findViewById(R.id.server_file_transfer_status);
-		server_status_text.setText(message);	
+		server_status_text.setText(message);
 	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

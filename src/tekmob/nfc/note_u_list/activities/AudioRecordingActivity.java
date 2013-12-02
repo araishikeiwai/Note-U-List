@@ -41,6 +41,7 @@ public class AudioRecordingActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_voice_rec);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setButtonHandlers();
 		enableButtons(false);
 		pref = getSharedPreferences("pref", MODE_PRIVATE);
