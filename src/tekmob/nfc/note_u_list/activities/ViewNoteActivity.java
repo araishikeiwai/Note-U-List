@@ -68,7 +68,8 @@ public class ViewNoteActivity extends ActionBarActivity {
 					c.getString(0) + "," + c.getString(1) + ","
 							+ c.getString(2) + "," + c.getString(3));
 			mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
-					.getString(3), c.getString(2), db.getTagsForFile(c.getString(2))));
+					.getString(3), c.getString(2), db.getTagsForFile(c
+					.getString(2))));
 
 		}
 
@@ -265,7 +266,10 @@ public class ViewNoteActivity extends ActionBarActivity {
 	}
 
 	public boolean onOptionsItemSelected(MenuItem menu) {
-		if (menu.getItemId() == R.id.action_filter) {
+		if (menu.getItemId() == android.R.id.home) {
+			onBackPressed();
+			return true;
+		} else if (menu.getItemId() == R.id.action_filter) {
 			String[] type = new String[] { "Text Notes", "Picture Notes",
 					"Audio Notes" };
 			mType = new String[] { ViewNoteListObject.TYPE_TEXT,
@@ -365,7 +369,8 @@ public class ViewNoteActivity extends ActionBarActivity {
 						c.getString(0) + "," + c.getString(1) + ","
 								+ c.getString(2) + "," + c.getString(3));
 				mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
-						.getString(3), c.getString(2), db.getTagsForFile(c.getString(2))));
+						.getString(3), c.getString(2), db.getTagsForFile(c
+						.getString(2))));
 
 			} while (c.moveToNext());
 		}
