@@ -6,60 +6,54 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/mainbc"
     tools:context=".MainActivity" >
-
-    <ImageView
-        android:id="@+id/viewNoteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_view" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/viewNoteButton"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="64dp"
-        android:src="@drawable/logo" />
 
     <ImageView
         android:id="@+id/noteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/viewNoteButton"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="28dp"
-        android:src="@drawable/ic_note" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/ic_newnote" />
 
     <ImageView
         android:id="@+id/cameraButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/viewNoteButton"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="28dp"
-        android:src="@drawable/ic_camera" />
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="25dp"
+        android:src="@drawable/ic_newpic" />
 
     <ImageView
         android:id="@+id/voiceRecButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/viewNoteButton"
-        android:layout_marginLeft="28dp"
-        android:src="@drawable/ic_voicerec" />
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="25dp"
+        android:src="@drawable/ic_newrec" />
 
     <ImageView
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/viewNoteButton"
-        android:layout_marginRight="28dp"
-        android:src="@drawable/ic_share" />
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="60dp"
+        android:src="@drawable/ic_share2" />
+
+    <ImageView
+        android:id="@+id/viewNoteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="60dp"
+        android:src="@drawable/ic_viewnot" />
 
 </RelativeLayout>

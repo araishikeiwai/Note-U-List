@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_gravity="center"
+        android:background="@color/tur"
         android:layout_weight="0.04"
-        android:src="@drawable/ic_camera" />
+        android:src="@drawable/cambutton" />
 
 </LinearLayout>

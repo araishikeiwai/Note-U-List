@@ -14,6 +14,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,6 +44,8 @@ public class AudioRecordingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_voice_rec);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#3BB3C2")));
 		setButtonHandlers();
 		enableButtons(false);
 		pref = getSharedPreferences("pref", MODE_PRIVATE);

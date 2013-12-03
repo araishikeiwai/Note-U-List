@@ -3,6 +3,7 @@ package tekmob.nfc.note_u_list.activities;
 
 
 import tekmob.nfc.note_u_list.R;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,6 +24,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		// TODO when migrating to API lv 14, change to grid layout
 		setContentView(R.layout.activity_main);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
 
 		mNoteButton = (ImageView) findViewById(R.id.noteButton);
 		mNoteButton.setOnClickListener(this);
