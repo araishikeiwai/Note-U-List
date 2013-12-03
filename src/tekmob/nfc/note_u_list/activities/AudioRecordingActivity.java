@@ -11,6 +11,7 @@ import java.util.Date;
 import tekmob.nfc.note_u_list.R;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +38,10 @@ public class AudioRecordingActivity extends Activity {
 	SharedPreferences pref;
 	SharedPreferences.Editor editor;
 	private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3ga";
+	private LinearLayout mLayoutRecord, mLayoutPaustop;
+	private ImageButton mRec, mSto;
+	private LayoutInflater mInflater;
+	private FrameLayout mFrameLayout;
 
 	File file;
 	String fileName;
@@ -48,27 +54,24 @@ public class AudioRecordingActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setBackgroundDrawable(
 				new ColorDrawable(Color.parseColor("#3BB3C2")));
-		((FrameLayout) findViewById(R.id.record_buttons)).addView(findViewById(R.id.button_capture_layout));
-		setButtonHandlers();
-		enableButtons(false);
+
+		// mInflater = (LayoutInflater)
+		// getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		mInflater = LayoutInflater.from(this);
+		mFrameLayout = (FrameLayout) findViewById(R.id.record_buttons);
+
+		mLayoutRecord = (LinearLayout) mInflater.inflate(
+				R.layout.activity_record_record, null);
+		mFrameLayout.addView(mLayoutRecord);
+		mRec = (ImageButton) findViewById(R.id.button_capture);
+		mRec.setOnClickListener(btnClick);
+		// mPau = (ImageButton) findViewById(R.id.button_pause);
+		// mSto = (ImageButton) findViewById(R.id.button_stop);
+
+		// setButtonHandlers();
+		// enableButtons(false);
 		pref = getSharedPreferences("pref", MODE_PRIVATE);
 		editor = getSharedPreferences("pref", MODE_PRIVATE).edit();
-	}
-
-	private void setButtonHandlers() {
-		(findViewById(R.id.button_capture)).setOnClickListener(btnClick);
-		(findViewById(R.id.button_pause)).setOnClickListener(btnClick);
-		(findViewById(R.id.button_stop)).setOnClickListener(btnClick);
-	}
-
-	private void enableButton(int id, boolean isEnable) {
-		(findViewById(id)).setEnabled(isEnable);
-	}
-
-	private void enableButtons(boolean isRecording) {
-		enableButton(R.id.button_capture, !isRecording);
-		enableButton(R.id.button_pause, isRecording);
-		enableButton(R.id.button_stop, isRecording);
 	}
 
 	private String getFilename() {
@@ -91,10 +94,18 @@ public class AudioRecordingActivity extends Activity {
 		fileName = getFilename();
 		recorder.setOnErrorListener(errorListener);
 		recorder.setOnInfoListener(infoListener);
-//		((ImageButton) findViewById(R.id.button_capture)).setVisibility(View.INVISIBLE);
-//		((LinearLayout) findViewById(R.id.button_paustop)).setVisibility(View.VISIBLE);
-		((FrameLayout) findViewById(R.id.record_buttons)).removeAllViews();
-		((FrameLayout) findViewById(R.id.record_buttons)).addView(findViewById(R.id.button_paustop));
+		// ((ImageButton)
+		// findViewById(R.id.button_capture)).setVisibility(View.INVISIBLE);
+		// ((LinearLayout)
+		// findViewById(R.id.button_paustop)).setVisibility(View.VISIBLE);
+		mFrameLayout.removeAllViews();
+		mLayoutPaustop = (LinearLayout) mInflater.inflate(
+				R.layout.activity_record_paustop, null);
+		mFrameLayout.addView(mLayoutPaustop);
+		// mPau = (ImageButton) findViewById(R.id.button_pause);
+		mSto = (ImageButton) findViewById(R.id.button_stop);
+		// mPau.setOnClickListener(btnClick);
+		mSto.setOnClickListener(btnClick);
 		try {
 			recorder.prepare();
 			recorder.start();
@@ -114,10 +125,14 @@ public class AudioRecordingActivity extends Activity {
 			}
 			recorder.reset();
 			recorder.release();
-//			((ImageButton) findViewById(R.id.button_capture)).setVisibility(View.VISIBLE);
-//			((LinearLayout) findViewById(R.id.button_paustop)).setVisibility(View.INVISIBLE);
-			((FrameLayout) findViewById(R.id.record_buttons)).removeAllViews();
-			((FrameLayout) findViewById(R.id.record_buttons)).addView(findViewById(R.id.button_capture_layout));
+			// ((ImageButton)
+			// findViewById(R.id.button_capture)).setVisibility(View.VISIBLE);
+			// ((LinearLayout)
+			// findViewById(R.id.button_paustop)).setVisibility(View.INVISIBLE);
+			// ((FrameLayout)
+			// findViewById(R.id.record_buttons)).removeAllViews();
+			// ((FrameLayout) findViewById(R.id.record_buttons))
+			// .addView(mLayoutRecord);
 			onRecordTaken(recorder);
 		}
 	}
@@ -206,24 +221,21 @@ public class AudioRecordingActivity extends Activity {
 			case R.id.button_capture: {
 				Toast.makeText(AudioRecordingActivity.this, "Start Recording",
 						Toast.LENGTH_SHORT).show();
-				enableButtons(true);
 				startRecording();
 				break;
 			}
 			case R.id.button_stop: {
 				Toast.makeText(AudioRecordingActivity.this, "Stop Recording",
 						Toast.LENGTH_SHORT).show();
-				enableButtons(false);
 				stopRecording();
 				break;
 			}
-			case R.id.button_pause: {
-				Toast.makeText(AudioRecordingActivity.this, "Pause Recording",
-						Toast.LENGTH_SHORT).show();
-				enableButtons(false);
-				onPause();
-				break;
-			}
+			// case R.id.button_pause: {
+			// Toast.makeText(AudioRecordingActivity.this, "Pause Recording",
+			// Toast.LENGTH_SHORT).show();
+			// onPause();
+			// break;
+			// }
 			}
 		}
 	};
