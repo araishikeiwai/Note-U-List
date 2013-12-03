@@ -49,8 +49,6 @@ public class RecordingHelper extends Activity  {
 
 		discardButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				// TODO when migrating to API 4.0 and above, change to
-				// recreate() method!
 				new AlertDialog.Builder(mActivity)
 						.setTitle("Discard confirmation")
 						.setMessage(

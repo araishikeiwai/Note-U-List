@@ -112,7 +112,6 @@ public class DBAdapter {
 	}
 
 	private int getTagIdFromTagName(String tagName) {
-		// TODO Auto-generated method stub
 		String query = "SELECT " + KEY_IDTAG + " FROM tag WHERE " + KEY_TAGNAME
 				+ " = '" + tagName + "'";
 		Log.d(TAG, query);
@@ -122,7 +121,6 @@ public class DBAdapter {
 	}
 
 	private int getBerkasIdFromPath(String filePath) {
-		// TODO Auto-generated method stub
 		String query = "SELECT " + KEY_ID + " FROM berkas WHERE " + KEY_PATH
 				+ " = '" + filePath + "'";
 		Log.d(TAG, query);
@@ -201,7 +199,6 @@ public class DBAdapter {
 
 	public Cursor getFiltered(ArrayList<String> type, ArrayList<String> tags) {
 		// public Cursor getFiltered(ArrayList<String> tags) {
-		// TODO Auto-generated method stub
 		String selection_type;
 		String selection_tags;
 		if (type.size() > 0) {

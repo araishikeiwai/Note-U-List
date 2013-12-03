@@ -324,7 +324,6 @@ public class ClientActivity extends Activity {
 
 				}
 			}
-			// TODO Auto-generated method stub
 		});
 
 	}

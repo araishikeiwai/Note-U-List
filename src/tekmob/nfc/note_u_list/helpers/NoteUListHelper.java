@@ -48,8 +48,6 @@ public class NoteUListHelper {
 		if (dot >= 0)
 			sem = path.substring(dot);
 		DBAdapter db = new DBAdapter(context);
-		// TODO organize tags into database
-		// TODO put link into database
 
 		try {
 			db.open();
@@ -95,8 +93,6 @@ public class NoteUListHelper {
 		if (dot >= 0)
 			sem = path.substring(dot);
 		DBAdapter db = new DBAdapter(context);
-		// TODO organize tags into database
-		// TODO put link into database
 
 		db.open();
 		long id = db.insertBerkas(judul, path, ViewNoteListObject.TYPE_AUDIO);
@@ -158,4 +154,3 @@ public class NoteUListHelper {
 		return mediaFile;
 	}
 }
-;

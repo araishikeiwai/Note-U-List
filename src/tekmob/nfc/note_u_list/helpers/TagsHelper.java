@@ -11,7 +11,6 @@ public class TagsHelper {
 	public static final String TAG = "TagsHelper";
 
 	public static String[] getAvailableTags(Context context) {
-		// TODO get from database
 		DBAdapter db = new DBAdapter(context);
 		db.open();
 		Cursor tags = db.getAllAvailableTags();
