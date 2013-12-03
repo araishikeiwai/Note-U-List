@@ -1,7 +1,5 @@
 package tekmob.nfc.note_u_list.activities;
 
-
-
 import tekmob.nfc.note_u_list.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,8 +13,8 @@ import android.widget.ImageView;
 
 public class MainActivity extends Activity implements OnClickListener {
 
-	private ImageView mNoteButton, mCameraButton, mViewNoteButton, mVoiceRecButton,
-			mShareButton;
+	private ImageView mNoteButton, mCameraButton, mViewNoteButton,
+			mVoiceRecButton, mShareButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,35 +55,39 @@ public class MainActivity extends Activity implements OnClickListener {
 			next = new Intent(getApplicationContext(), ViewNoteActivity.class);
 			break;
 		case R.id.voiceRecButton:
-			next = new Intent(getApplicationContext(), AudioRecordingActivity.class);
+			next = new Intent(getApplicationContext(),
+					AudioRecordingActivity.class);
 			break;
 		case R.id.shareButton:
-			next = new Intent(getApplicationContext(), WifiActivity.class);
+			next = new Intent(getApplicationContext(), ShareActivity.class);
 			break;
 		}
 		startActivity(next);
 	}
+
 	@Override
 	public void onBackPressed() {
 		AlertDialog alert_back = new AlertDialog.Builder(this).create();
 		alert_back.setTitle(getString(R.string.quit_ask));
 		alert_back.setMessage(getString(R.string.quit_prompt));
 
-		alert_back.setButton2(getString(R.string.no), new DialogInterface.OnClickListener() {
+		alert_back.setButton2(getString(R.string.no),
+				new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
 
-		alert_back.setButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+		alert_back.setButton(getString(R.string.yes),
+				new DialogInterface.OnClickListener() {
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				MainActivity.this.finish();
-			}
-		});
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						MainActivity.this.finish();
+					}
+				});
 		alert_back.show();
 	}
 

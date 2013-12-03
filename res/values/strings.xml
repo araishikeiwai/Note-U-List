@@ -65,6 +65,12 @@
     <string name="no_file_selected">No file selected to transfer</string>
     <string name="select_dir">Select Directory</string>
     <string name="select_tag">Select note type/tags to show</string>
+    <string name="no_nfc">Sorry, NFC/Android Beam is not available on your device</string>
+    <string name="nfc_button">Send note using NFC</string>
+    <string name="wifi_button">Send note using WiFi Direct</string>
+
     <color name="tur">#3BB3C2</color>
+
+    <string name="title_activity_beam">BeamActivity</string>
 
 </resources>
