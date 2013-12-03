@@ -4,6 +4,8 @@ import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.TagsHelper;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +30,8 @@ public class ResultActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#3BB3C2")));
 
 		final EditText noteTitle = (EditText) findViewById(R.id.note_title);
 		

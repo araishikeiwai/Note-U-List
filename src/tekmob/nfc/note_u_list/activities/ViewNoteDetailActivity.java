@@ -58,7 +58,9 @@ public class ViewNoteDetailActivity extends Activity {
 			}
 			
 			toBeInFrameLayout = new TextView(getApplicationContext());
+			((TextView) toBeInFrameLayout).setTextSize(15.0f);
 			((TextView) toBeInFrameLayout).setText(sb.toString());
+			((TextView) toBeInFrameLayout).setVisibility(View.VISIBLE);
 		} else if (type.equals(ViewNoteListObject.TYPE_IMAGE)) {
 			Log.d(TAG, path);
 			Bitmap image = BitmapFactory.decodeFile(path);

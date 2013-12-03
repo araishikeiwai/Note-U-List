@@ -14,6 +14,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,18 +24,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class AudioRecordingActivity extends Activity {
-	private String mData;
 	protected static final String TAG = "Note-U-List! Recording";
 	private static MediaRecorder recorder = new MediaRecorder();
 	private Activity mActivity = this;
 	SharedPreferences pref;
 	SharedPreferences.Editor editor;
 	private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3ga";
-	private static final String AUDIO_RECORDER_FOLDER = "Note-U-List!";
+
 	File file;
 	String fileName;
 	ViewNoteActivity vn = new ViewNoteActivity();
@@ -41,8 +44,11 @@ public class AudioRecordingActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_voice_rec);
+		setContentView(R.layout.activity_record);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#3BB3C2")));
+		((FrameLayout) findViewById(R.id.record_buttons)).addView(findViewById(R.id.button_capture_layout));
 		setButtonHandlers();
 		enableButtons(false);
 		pref = getSharedPreferences("pref", MODE_PRIVATE);
@@ -50,9 +56,9 @@ public class AudioRecordingActivity extends Activity {
 	}
 
 	private void setButtonHandlers() {
-		(findViewById(R.id.btnStart)).setOnClickListener(btnClick);
-		(findViewById(R.id.btnStop)).setOnClickListener(btnClick);
-		(findViewById(R.id.btnPause)).setOnClickListener(btnClick);
+		(findViewById(R.id.button_capture)).setOnClickListener(btnClick);
+		(findViewById(R.id.button_pause)).setOnClickListener(btnClick);
+		(findViewById(R.id.button_stop)).setOnClickListener(btnClick);
 	}
 
 	private void enableButton(int id, boolean isEnable) {
@@ -60,9 +66,9 @@ public class AudioRecordingActivity extends Activity {
 	}
 
 	private void enableButtons(boolean isRecording) {
-		enableButton(R.id.btnStart, !isRecording);
-		enableButton(R.id.btnStop, isRecording);
-		enableButton(R.id.btnPause, isRecording);
+		enableButton(R.id.button_capture, !isRecording);
+		enableButton(R.id.button_pause, isRecording);
+		enableButton(R.id.button_stop, isRecording);
 	}
 
 	private String getFilename() {
@@ -85,6 +91,10 @@ public class AudioRecordingActivity extends Activity {
 		fileName = getFilename();
 		recorder.setOnErrorListener(errorListener);
 		recorder.setOnInfoListener(infoListener);
+//		((ImageButton) findViewById(R.id.button_capture)).setVisibility(View.INVISIBLE);
+//		((LinearLayout) findViewById(R.id.button_paustop)).setVisibility(View.VISIBLE);
+		((FrameLayout) findViewById(R.id.record_buttons)).removeAllViews();
+		((FrameLayout) findViewById(R.id.record_buttons)).addView(findViewById(R.id.button_paustop));
 		try {
 			recorder.prepare();
 			recorder.start();
@@ -104,6 +114,10 @@ public class AudioRecordingActivity extends Activity {
 			}
 			recorder.reset();
 			recorder.release();
+//			((ImageButton) findViewById(R.id.button_capture)).setVisibility(View.VISIBLE);
+//			((LinearLayout) findViewById(R.id.button_paustop)).setVisibility(View.INVISIBLE);
+			((FrameLayout) findViewById(R.id.record_buttons)).removeAllViews();
+			((FrameLayout) findViewById(R.id.record_buttons)).addView(findViewById(R.id.button_capture_layout));
 			onRecordTaken(recorder);
 		}
 	}
@@ -189,21 +203,21 @@ public class AudioRecordingActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.btnStart: {
+			case R.id.button_capture: {
 				Toast.makeText(AudioRecordingActivity.this, "Start Recording",
 						Toast.LENGTH_SHORT).show();
 				enableButtons(true);
 				startRecording();
 				break;
 			}
-			case R.id.btnStop: {
+			case R.id.button_stop: {
 				Toast.makeText(AudioRecordingActivity.this, "Stop Recording",
 						Toast.LENGTH_SHORT).show();
 				enableButtons(false);
 				stopRecording();
 				break;
 			}
-			case R.id.btnPause: {
+			case R.id.button_pause: {
 				Toast.makeText(AudioRecordingActivity.this, "Pause Recording",
 						Toast.LENGTH_SHORT).show();
 				enableButtons(false);

@@ -23,6 +23,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		// TODO when migrating to API lv 14, change to grid layout
 		setContentView(R.layout.activity_main);
+		getActionBar().hide();
 
 		mNoteButton = (ImageView) findViewById(R.id.noteButton);
 		mNoteButton.setOnClickListener(this);

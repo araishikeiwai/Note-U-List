@@ -2,20 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/bg_paper"
     android:orientation="vertical" >
 
     <FrameLayout
         android:id="@+id/camera_preview"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
 
-    <ImageButton
-        android:id="@+id/button_capture"
+        <ImageView
+            android:id="@+id/backgrecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="50dp"
+            android:src="@drawable/ic_mic" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/record_buttons"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_gravity="center"
-        android:layout_weight="0.04"
-        android:src="@drawable/ic_record" />
+        android:layout_height="64dp" />
 
 </LinearLayout>
