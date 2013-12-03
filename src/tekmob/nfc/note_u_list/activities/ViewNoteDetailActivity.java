@@ -35,17 +35,17 @@ public class ViewNoteDetailActivity extends Activity {
 				ViewNoteListObject.FILENAME);
 		String title = getIntent().getExtras().getString(
 				ViewNoteListObject.FILETITLE);
-		
+
 		((TextView) findViewById(R.id.noteViewTitle)).setText(title);
 
 		View toBeInFrameLayout = new View(getApplicationContext());
 
 		if (type.equals(ViewNoteListObject.TYPE_TEXT)) {
 			StringBuffer sb = new StringBuffer();
-			
+
 			try {
 				File file = new File(path);
-				
+
 				BufferedReader reader = new BufferedReader(new FileReader(file));
 				String line;
 				while ((line = reader.readLine()) != null) {
@@ -56,7 +56,7 @@ public class ViewNoteDetailActivity extends Activity {
 			} catch (Exception e) {
 				Log.e(TAG, "Failed to load text note!", e);
 			}
-			
+
 			toBeInFrameLayout = new TextView(getApplicationContext());
 			((TextView) toBeInFrameLayout).setTextSize(15.0f);
 			((TextView) toBeInFrameLayout).setText(sb.toString());
@@ -64,16 +64,19 @@ public class ViewNoteDetailActivity extends Activity {
 		} else if (type.equals(ViewNoteListObject.TYPE_IMAGE)) {
 			Log.d(TAG, path);
 			Bitmap image = BitmapFactory.decodeFile(path);
-			Matrix matrix = new Matrix();
-			matrix.postRotate(90);
-			Bitmap scaledBitmap = Bitmap.createScaledBitmap(image,
-					image.getWidth(), image.getHeight(), true);
-			Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
-					scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,
-					true);
-
 			toBeInFrameLayout = new ImageView(getApplicationContext());
-			((ImageView) toBeInFrameLayout).setImageBitmap(rotatedBitmap);
+			if (image.getWidth() > image.getHeight()) {
+				Matrix matrix = new Matrix();
+				matrix.postRotate(90);
+				Bitmap scaledBitmap = Bitmap.createScaledBitmap(image,
+						image.getWidth(), image.getHeight(), true);
+				Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+						scaledBitmap.getWidth(), scaledBitmap.getHeight(),
+						matrix, true);
+				((ImageView) toBeInFrameLayout).setImageBitmap(rotatedBitmap);
+			} else {
+				((ImageView) toBeInFrameLayout).setImageBitmap(image);
+			}
 		}
 
 		frameLayout = (FrameLayout) findViewById(R.id.noteViewLayout);

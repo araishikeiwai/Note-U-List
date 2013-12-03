@@ -64,7 +64,7 @@ public class CameraActivity extends Activity implements PictureCallback {
 		getMenuInflater().inflate(R.menu.camera, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -111,15 +111,19 @@ public class CameraActivity extends Activity implements PictureCallback {
 		// get the image and rotate it to display
 		final Bitmap image = BitmapFactory
 				.decodeByteArray(data, 0, data.length);
-		Matrix matrix = new Matrix();
-		matrix.postRotate(90);
-		Bitmap scaledBitmap = Bitmap.createScaledBitmap(image,
-				image.getWidth(), image.getHeight(), true);
-		Bitmap rotatedBitmap = Bitmap
-				.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(),
-						scaledBitmap.getHeight(), matrix, true);
 		ImageView imageView = new ImageView(mActivity);
-		imageView.setImageBitmap(rotatedBitmap);
+		if (image.getWidth() > image.getHeight()) {
+			Matrix matrix = new Matrix();
+			matrix.postRotate(90);
+			Bitmap scaledBitmap = Bitmap.createScaledBitmap(image,
+					image.getWidth(), image.getHeight(), true);
+			Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+					scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,
+					true);
+			imageView.setImageBitmap(rotatedBitmap);
+		} else {
+			imageView.setImageBitmap(image);
+		}
 
 		((FrameLayout) findViewById(R.id.result)).addView(imageView);
 
@@ -168,7 +172,7 @@ public class CameraActivity extends Activity implements PictureCallback {
 
 	@Override
 	protected void onDestroy() {
-		FrameLayout layout = (FrameLayout) findViewById(R.id.result); 
+		FrameLayout layout = (FrameLayout) findViewById(R.id.result);
 		if (layout != null) {
 			layout.removeAllViews();
 		}
