@@ -103,7 +103,7 @@ public class ClientActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpFromSameTask(this);
+			onBackPressed();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
