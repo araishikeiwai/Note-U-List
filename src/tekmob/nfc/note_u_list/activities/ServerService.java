@@ -13,6 +13,9 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import tekmob.nfc.note_u_list.helpers.DBAdapter;
+import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
+
 import android.os.Bundle;
 
 import android.app.IntentService;
@@ -44,7 +47,8 @@ public class ServerService extends IntentService {
 		// signalActivity("Starting to download");
 
 		String fileName = "";
-
+		String judul = "";
+		String nama = "";
 		ServerSocket welcomeSocket = null;
 		Socket socket = null;
 
@@ -57,9 +61,11 @@ public class ServerService extends IntentService {
 				// Listen for incoming connections on specified port
 				// Block thread until someone connects
 				socket = welcomeSocket.accept();
-				ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+				Socket socket1 = welcomeSocket.accept();
+				ObjectInputStream input = new ObjectInputStream(socket1.getInputStream());
 				String[] args = ((String)input.readObject()).split("\\|");
-				String judul = args[0];
+				judul = args[0];
+				
 				// signalActivity("TCP Connection Established: " +
 				// socket.toString() + " Starting file transfer");
 
@@ -110,7 +116,7 @@ public class ServerService extends IntentService {
 				// signalActivity("Handshake complete, getting file: " +
 				// fileName);
 
-				String savedAs = "WDFL_File_" + judul;
+				String savedAs = judul;
 				File file = new File(saveLocation, savedAs);
 
 				byte[] buffer = new byte[4096];
@@ -121,7 +127,6 @@ public class ServerService extends IntentService {
 				String header;
 				while (true) {
 					bytesRead = is.read(buffer, 0, buffer.length);
-					header = new String(buffer, 0, 128);
 					if (bytesRead == -1) {
 						break;
 					}
@@ -141,9 +146,25 @@ public class ServerService extends IntentService {
 				 */
 
 				bos.close();
+				
 				socket.close();
-
-				signalActivity("File Transfer Complete, saved as: " + savedAs+" "+header);
+				
+				DBAdapter db = new DBAdapter(this);
+				db.open();
+				String path = file.getAbsolutePath();
+				String ext = "";
+				int dot = path.lastIndexOf(".");
+				if (dot >= 0)
+					ext = path.substring(dot);
+				if(ext.equals(".txt"))
+					ext = ViewNoteListObject.TYPE_TEXT;
+				if(ext.equals(".jpg"))
+					ext = ViewNoteListObject.TYPE_IMAGE;
+				if(ext.equals(".3ga"))
+					ext = ViewNoteListObject.TYPE_AUDIO;
+				db.insertBerkas(judul,path , ext);
+				
+				signalActivity("File Transfer Complete, saved as: " + savedAs);
 				// Start writing to file
 
 			}

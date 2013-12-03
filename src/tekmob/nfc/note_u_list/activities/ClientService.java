@@ -87,9 +87,7 @@ public class ClientService extends IntentService {
 			try {
 
 				clientSocket = new Socket(targetIP, port);
-				ObjectOutputStream obj = new ObjectOutputStream(clientSocket.getOutputStream());
-				obj.writeObject(fileToSend.getName()+"|"+fileToSend.length());
-				obj.reset();
+				Socket clientSocket1 = new Socket(targetIP, port);
 				os = clientSocket.getOutputStream();
 				PrintWriter pw = new PrintWriter(os);
 
@@ -98,6 +96,9 @@ public class ClientService extends IntentService {
 				BufferedReader br = new BufferedReader(isr);
 
 				signalActivity("About to start handshake");
+				ObjectOutputStream obj = new ObjectOutputStream(clientSocket1.getOutputStream());
+				obj.writeObject(fileToSend.getName()+"|"+fileToSend.length());
+				obj.reset();
 
 				// Client-Server handshake
 				/*
@@ -155,7 +156,7 @@ public class ClientService extends IntentService {
 
 				pw.close();
 				os.close();
-
+				
 				clientSocket.close();
 
 				signalActivity("File Transfer Complete, sent file: "
