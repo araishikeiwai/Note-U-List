@@ -2,14 +2,15 @@ package tekmob.nfc.note_u_list.activities;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 
 import tekmob.nfc.note_u_list.R;
+import tekmob.nfc.note_u_list.helpers.ViewNoteListAdapter;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,8 +36,15 @@ public class ViewNoteDetailActivity extends Activity {
 				ViewNoteListObject.FILENAME);
 		String title = getIntent().getExtras().getString(
 				ViewNoteListObject.FILETITLE);
+		String tags = getIntent().getExtras().getString(
+				ViewNoteListObject.FILETAG);
 
+		((TextView) findViewById(R.id.noteViewTitle)).setTextSize(30.0f);
+		((TextView) findViewById(R.id.noteViewTitle)).setTextColor(Color.BLACK);
 		((TextView) findViewById(R.id.noteViewTitle)).setText(title);
+		((TextView) findViewById(R.id.noteViewTags)).setTextSize(15.0f);
+		((TextView) findViewById(R.id.noteViewTags)).setTextColor(Color.GRAY);
+		((TextView) findViewById(R.id.noteViewTags)).setText(tags);
 
 		View toBeInFrameLayout = new View(getApplicationContext());
 
@@ -58,9 +66,9 @@ public class ViewNoteDetailActivity extends Activity {
 			}
 
 			toBeInFrameLayout = new TextView(getApplicationContext());
-			((TextView) toBeInFrameLayout).setTextSize(15.0f);
+			((TextView) toBeInFrameLayout).setTextSize(20.0f);
+			((TextView) toBeInFrameLayout).setTextColor(Color.BLACK);
 			((TextView) toBeInFrameLayout).setText(sb.toString());
-			((TextView) toBeInFrameLayout).setVisibility(View.VISIBLE);
 		} else if (type.equals(ViewNoteListObject.TYPE_IMAGE)) {
 			Log.d(TAG, path);
 			Bitmap image = BitmapFactory.decodeFile(path);

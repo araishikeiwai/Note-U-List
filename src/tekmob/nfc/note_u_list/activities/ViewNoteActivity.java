@@ -86,7 +86,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 				mContextText = mList.get(position).getFilename();
 				openFiles(mList.get(position).getFilename(), mList
 						.get(position).getType(), mList.get(position)
-						.getTitle());
+						.getTitle(), (String) ViewNoteListAdapter.convertTagsToString(mList.get(position).getTags()));
 			}
 		});
 		// if (c.moveToFirst()) {
@@ -141,7 +141,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 	}
 
 	private void openFiles(String filePath, String fileExtension,
-			String fileTitle) {
+			String fileTitle, String fileTag) {
 		if (fileExtension.equals(ViewNoteListObject.TYPE_TEXT)
 				|| fileExtension.equals(ViewNoteListObject.TYPE_IMAGE)) {
 			Intent intent = new Intent(getApplicationContext(),
@@ -149,6 +149,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 			intent.putExtra(ViewNoteListObject.FILENAME, filePath);
 			intent.putExtra(ViewNoteListObject.FILETYPE, fileExtension);
 			intent.putExtra(ViewNoteListObject.FILETITLE, fileTitle);
+			intent.putExtra(ViewNoteListObject.FILETAG, fileTag);
 			startActivity(intent);
 		} else {
 			Intent intent = new Intent();
@@ -388,7 +389,7 @@ public class ViewNoteActivity extends ActionBarActivity {
 				mContextText = mList.get(position).getFilename();
 				openFiles(mList.get(position).getFilename(), mList
 						.get(position).getType(), mList.get(position)
-						.getTitle());
+						.getTitle(), (String) ViewNoteListAdapter.convertTagsToString(mList.get(position).getTags()));
 			}
 		});
 		db.close();

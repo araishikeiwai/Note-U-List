@@ -64,7 +64,7 @@ public class ViewNoteListAdapter extends ArrayAdapter<ViewNoteListObject> {
 		return convertView;
 	}
 
-	private CharSequence convertTagsToString(String[] tags) {
+	public static CharSequence convertTagsToString(String[] tags) {
 		String tagsRes = "";
 		if (tags != null) {
 			for (String tag : tags) {

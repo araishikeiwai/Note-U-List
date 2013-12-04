@@ -122,7 +122,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="application/com.tapped.nfc" />
+                <data android:mimeType="application/tekmob.nfc.note_u_list" />
             </intent-filter>
         </activity>
     </application>

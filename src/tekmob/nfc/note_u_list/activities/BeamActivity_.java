@@ -1,113 +1,163 @@
 package tekmob.nfc.note_u_list.activities;
 
+import java.io.File;
+
 import tekmob.nfc.note_u_list.R;
-import tekmob.nfc.note_u_list.helpers.NfcUtils;
 import android.app.Activity;
 import android.content.Intent;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcAdapter.CreateNdefMessageCallback;
-import android.nfc.NfcAdapter.OnNdefPushCompleteCallback;
 import android.nfc.NfcEvent;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Parcelable;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-public class BeamActivity_ extends Activity implements CreateNdefMessageCallback, 
-                OnNdefPushCompleteCallback {
-        
-        NfcAdapter mNfcAdapter;
-        EditText mEditText;
+public class BeamActivity_ extends Activity {
 
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_beam);
+	private NfcAdapter mNfcAdapter;
+	// private static final String MIME_TYPE =
+	// "application/tekmob.nfc.note_u_list";
+	// private static final String PACKAGE_NAME = "tekmob.nfc.note_u_list";
 
-                // Check for available NFC Adapter
-                mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-                if (mNfcAdapter == null) {
-                        Toast.makeText(this, getString(R.string.no_nfc), 
-                                        Toast.LENGTH_SHORT).show();
-                } else {
-                        // Register callback to set NDEF message
-                        mNfcAdapter.setNdefPushMessageCallback(this, this);
-                        // Register callback to listen for message-sent success
-                        mNfcAdapter.setOnNdefPushCompleteCallback(this, this);
-                }
-        }
+	private Uri[] mFileUris = new Uri[10];
+	private FileUriCallback mFileUriCallback;
 
-        private static final String MIME_TYPE = "application/tekmob.nfc.note_u_list";
-        private static final String PACKAGE_NAME = "tekmob.nfc.note_u_list";
+	private File mParentPath;
+	private Intent mIntent;
 
-        /**
-         * Implementation for the CreateNdefMessageCallback interface
-         */
-        @Override
-        public NdefMessage createNdefMessage(NfcEvent event) {
-                String m = "ricky ganteng sekali";
-                byte[] data = m.getBytes();
-                NdefMessage msg = new NdefMessage(new NdefRecord[] { NfcUtils.createRecord(MIME_TYPE, data),
-                                NdefRecord.createApplicationRecord(PACKAGE_NAME) });
-                return msg;
-        }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_beam);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        private static final int MESSAGE_SENT = 1;
+		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC)
+				|| Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+			mFileUriCallback = new FileUriCallback();
+			mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback, this);
+			// if (mNfcAdapter == null) {
+			// Toast.makeText(this, getString(R.string.no_nfc),
+			// Toast.LENGTH_SHORT).show();
+			// }
+			// mNfcAdapter.setNdefPushMessageCallback(this, this);
+			// mNfcAdapter.setOnNdefPushCompleteCallback(this, this);
+		} else {
+			((TextView) findViewById(R.id.selected_filename))
+					.setText(getString(R.string.no_nfc));
+		}
+	}
 
-        /** This handler receives a message from onNdefPushComplete */
-        private final Handler mHandler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                        switch (msg.what) {
-                        case MESSAGE_SENT:
-                                Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_LONG).show();
-                                break;
-                        }
-                }
-        };
+	private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
+		public FileUriCallback() {
+		}
 
-        /**
-         * Implementation for the OnNdefPushCompleteCallback interface
-         */
-        @Override
-        public void onNdefPushComplete(NfcEvent arg0) {
-                // A handler is needed to send messages to the activity when this
-                // callback occurs, because it happens from a binder thread
-                mHandler.obtainMessage(MESSAGE_SENT).sendToTarget();
-        }
+		@Override
+		public Uri[] createBeamUris(NfcEvent event) {
+			return mFileUris;
+		}
+	}
 
-        @Override
-        public void onNewIntent(Intent intent) {
-                // onResume gets called after this to handle the intent
-                setIntent(intent);
-        }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.beam, menu);
 
-        @Override
-        public void onResume() {
-                super.onResume();
-                // Check to see that the Activity started due to an Android Beam
-                if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-                        processIntent(getIntent());
-                }
-        }
+		return true;
+	}
 
-        /**
-         * Parses the NDEF Message from the intent and toast to the user
-         */
-        void processIntent(Intent intent) {
-                Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-                // in this context, only one message was sent over beam
-                NdefMessage msg = (NdefMessage) rawMsgs[0];
-                // record 0 contains the MIME type, record 1 is the AAR, if present
-                String payload = new String(msg.getRecords()[0].getPayload());
-		Toast.makeText(getApplicationContext(),
-				"Message received over beam: " + payload, Toast.LENGTH_LONG)
-				.show();
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	public void browseForFile(View view) {
+		Intent clientStartIntent = new Intent(this, FileActivity.class);
+		startActivityForResult(clientStartIntent, 1);
+
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+			File transFile = (File) data.getExtras().get("file");
+			transFile.setReadable(true, false);
+			if (transFile.isFile()) {
+				Uri fileUri = Uri.fromFile(transFile);
+				mFileUris[0] = fileUri;
+				if (transFile.canRead()) {
+					setTargetFileStatus(transFile.getName()
+							+ " selected for file transfer");
+				} else {
+					setTargetFileStatus("You do not have permission to read the file "
+							+ transFile.getName());
+				}
+			} else {
+				setTargetFileStatus("You may not transfer a directory, please select a single file");
+			}
+
+		}
+	}
+
+	public void setTargetFileStatus(String message) {
+		TextView targetFileStatus = (TextView) findViewById(R.id.selected_filename);
+		targetFileStatus.setText(message);
+	}
+
+	private void handleViewIntent() {
+		mIntent = getIntent();
+		String action = mIntent.getAction();
+
+		if (TextUtils.equals(action, Intent.ACTION_VIEW)) {
+			Uri beamUri = mIntent.getData();
+
+			if (TextUtils.equals(beamUri.getScheme(), "file")) {
+				mParentPath = handleFileUri(beamUri);
+			} else if (TextUtils.equals(beamUri.getScheme(), "content")) {
+				mParentPath = handleContentUri(beamUri);
+			}
+		}
+	}
+
+	public File handleFileUri(Uri beamUri) {
+		String fileName = beamUri.getPath();
+		File copiedFile = new File(fileName);
+		return copiedFile.getParentFile();
+	}
+
+	public File handleContentUri(Uri beamUri) {
+		int filenameIndex;
+		File copiedFile;
+		String fileName;
+
+		if (TextUtils.equals(beamUri.getAuthority(), MediaStore.AUTHORITY)) {
+			String[] projection = { MediaStore.MediaColumns.DATA };
+			Cursor pathCursor = getContentResolver().query(beamUri, projection,
+					null, null, null);
+
+			if (pathCursor != null && pathCursor.moveToFirst()) {
+				filenameIndex = pathCursor
+						.getColumnIndex(MediaStore.MediaColumns.DATA);
+				fileName = pathCursor.getString(filenameIndex);
+				copiedFile = new File(fileName);
+				return new File(copiedFile.getParent());
+			} else {
+				return null;
+			}
+		}
+		return null;
 	}
 
 }
-
