@@ -125,6 +125,17 @@
                 <data android:mimeType="application/tekmob.nfc.note_u_list" />
             </intent-filter>
         </activity>
+         <activity
+            android:name="tekmob.nfc.note_u_list.activities.BeamActivity_"
+            android:label="@string/title_activity_beam" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/tekmob.nfc.note_u_list" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

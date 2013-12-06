@@ -2,11 +2,16 @@ package tekmob.nfc.note_u_list.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import tekmob.nfc.note_u_list.R;
+import tekmob.nfc.note_u_list.helpers.DBAdapter;
 import tekmob.nfc.note_u_list.helpers.NfcUtils;
+import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,6 +36,7 @@ public class BeamActivity extends Activity implements
 
 	private NfcAdapter mNfcAdapter;
 	private byte[] mToSend;
+	File files;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,12 +61,12 @@ public class BeamActivity extends Activity implements
 	 */
 	@Override
 	public NdefMessage createNdefMessage(NfcEvent event) {
-//		NdefMessage msg = new NdefMessage(new NdefRecord[] {
-//				NfcUtils.createRecord(MIME_TYPE, mToSend),
-//				NdefRecord.createApplicationRecord(PACKAGE_NAME) });
+		// NdefMessage msg = new NdefMessage(new NdefRecord[] {
+		// NfcUtils.createRecord(MIME_TYPE, mToSend),
+		// NdefRecord.createApplicationRecord(PACKAGE_NAME) });
+		String text = files.getName();
 		NdefMessage msg = new NdefMessage(
-				new NdefRecord[] { NdefRecord.createMime(
-						MIME_TYPE, mToSend)});
+				new NdefRecord[] { NdefRecord.createMime(MIME_TYPE, mToSend),NdefRecord.createMime(MIME_TYPE, text.getBytes()) });
 		return msg;
 	}
 
@@ -101,7 +107,12 @@ public class BeamActivity extends Activity implements
 		super.onResume();
 		// Check to see that the Activity started due to an Android Beam
 		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-			processIntent(getIntent());
+			try {
+				processIntent(getIntent());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -124,6 +135,7 @@ public class BeamActivity extends Activity implements
 
 		if (resultCode == Activity.RESULT_OK && requestCode == 1) {
 			File transFile = (File) data.getExtras().get("file");
+			files = new File(transFile.getAbsolutePath());
 			transFile.setReadable(true, false);
 			if (transFile.isFile()) {
 				if (transFile.canRead()) {
@@ -177,17 +189,38 @@ public class BeamActivity extends Activity implements
 
 	/**
 	 * Parses the NDEF Message from the intent and toast to the user
+	 * 
+	 * @throws IOException
 	 */
-	void processIntent(Intent intent) {
+	void processIntent(Intent intent) throws IOException {
 		Parcelable[] rawMsgs = intent
 				.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
 		// in this context, only one message was sent over beam
 		NdefMessage msg = (NdefMessage) rawMsgs[0];
 		// record 0 contains the MIME type, record 1 is the AAR, if present
 		String payload = new String(msg.getRecords()[0].getPayload());
+		String name = new String(msg.getRecords()[1].getPayload());
+		FileOutputStream fileOuputStream = new FileOutputStream(
+				new File("/mnt/sdcard/Note-U-List!/", name));
+		fileOuputStream.write(msg.getRecords()[0].getPayload());
+		fileOuputStream.close();
 		Toast.makeText(getApplicationContext(),
-				"Message received over beam: " + payload, Toast.LENGTH_LONG)
+				"Message received over beam: " + name, Toast.LENGTH_LONG)
 				.show();
+		String path = "/mnt/sdcard/Note-U-List!/"+name;
+		String ext = "";
+		int dot = path.lastIndexOf(".");
+		if (dot >= 0)
+			ext = path.substring(dot);
+		if(ext.equals(".txt"))
+			ext = ViewNoteListObject.TYPE_TEXT;
+		if(ext.equals(".jpg"))
+			ext = ViewNoteListObject.TYPE_IMAGE;
+		if(ext.equals(".3ga"))
+			ext = ViewNoteListObject.TYPE_AUDIO;
+		DBAdapter db = new DBAdapter(this);
+		db.open();
+		db.insertBerkas(name, path, ext);
 	}
 
 }
