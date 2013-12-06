@@ -16,8 +16,8 @@
     <string name="note_tag_remark">Separate using comma</string>
     <string name="submit">Submit</string>
     <string name="save">Save</string>
-    <string name="title_activity_result">ResultActivity</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_result">Your Note Properties</string>
+    <string name="title_activity_splash">Note-U-List!</string>
     <string name="title_activity_man">ManActivity</string>
     <string name="error_file_does_not_exists">File does not exist.</string>
     <string name="application_not_available">Application not available</string>
@@ -35,7 +35,7 @@
     <string name="no">No</string>
     <string name="quit_ask">Quit application?</string>
     <string name="quit_prompt">Are you sure you want to quit Note-U-List! application?</string>
-    <string name="title_activity_view_note_detail">ViewNoteDetailActivity</string>
+    <string name="title_activity_view_note_detail">Note Details</string>
     <string name="action_filter">Filter</string>
     <string name="title_activity_test">TestActivity</string>
     <string name="title_activity_recording_helper">RecordingHelper</string>
