@@ -91,7 +91,7 @@ public class RecordingHelper extends Activity  {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d(TAG, "In onActivityResult()");
+		// Log.d(TAG, "In onActivityResult()");
 		if (data != null) {
 			if (requestCode == ResultActivity.GET_TITLE_TAG
 					&& resultCode == RESULT_OK) {

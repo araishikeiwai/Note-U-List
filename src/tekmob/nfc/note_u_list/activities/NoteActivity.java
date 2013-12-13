@@ -50,12 +50,13 @@ public class NoteActivity extends Activity {
 
 		saveButton = (ImageView) findViewById(R.id.button_camera_captured_save);
 		discardButton = (ImageView) findViewById(R.id.button_camera_captured_discard);
-//		shareButton = (ImageView) findViewById(R.id.button_camera_captured_share);
+		// shareButton = (ImageView)
+		// findViewById(R.id.button_camera_captured_share);
 
 		saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (mNoteTitle.getText().toString().equals("")) {
-					Log.d(TAG, "Content invalid");
+					// Log.d(TAG, "Content invalid");
 					Toast t = Toast.makeText(NoteActivity.this,
 							"Insert title!", Toast.LENGTH_SHORT);
 					t.show();
@@ -111,7 +112,7 @@ public class NoteActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d(TAG, "In onActivityResult()");
+		// Log.d(TAG, "In onActivityResult()");
 		if (data != null) {
 			if (requestCode == ResultActivity.GET_TITLE_TAG
 					&& resultCode == RESULT_OK) {

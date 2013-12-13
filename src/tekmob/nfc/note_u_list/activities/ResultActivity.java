@@ -34,9 +34,11 @@ public class ResultActivity extends Activity {
 				new ColorDrawable(Color.parseColor("#3BB3C2")));
 
 		final EditText noteTitle = (EditText) findViewById(R.id.note_title);
-		
-		if (getIntent().getExtras() != null && getIntent().getExtras().get(NOTE_TITLE) != null) {
-			noteTitle.setText((CharSequence) getIntent().getExtras().get(NOTE_TITLE));
+
+		if (getIntent().getExtras() != null
+				&& getIntent().getExtras().get(NOTE_TITLE) != null) {
+			noteTitle.setText((CharSequence) getIntent().getExtras().get(
+					NOTE_TITLE));
 			noteTitle.setEnabled(false);
 		}
 
@@ -53,25 +55,25 @@ public class ResultActivity extends Activity {
 		submit_button.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (noteTitle.getText().toString().equals("")) {
-					Log.d(TAG, "Content invalid");
+					// Log.d(TAG, "Content invalid");
 					Toast t = Toast.makeText(ResultActivity.this,
 							"Insert title!", Toast.LENGTH_SHORT);
 					t.show();
 				} else {
-					Log.d(TAG, "Content valid");
+					// Log.d(TAG, "Content valid");
 					Intent intent = new Intent();
 					intent.putExtra(NOTE_TITLE, noteTitle.getText().toString());
 					intent.putExtra(NOTE_TAG, noteTag.getText().toString());
-					Log.d(TAG,
-							"FINISH RESULT::"
-									+ intent.getExtras().get(
-											ResultActivity.NOTE_TITLE)
-									+ "::"
-									+ intent.getExtras().get(
-											ResultActivity.NOTE_TAG));
+					// Log.d(TAG,
+					// "FINISH RESULT::"
+					// + intent.getExtras().get(
+					// ResultActivity.NOTE_TITLE)
+					// + "::"
+					// + intent.getExtras().get(
+					// ResultActivity.NOTE_TAG));
 					setResult(RESULT_OK, intent);
 					finish();
-					
+
 				}
 			}
 		});
@@ -87,7 +89,7 @@ public class ResultActivity extends Activity {
 		getMenuInflater().inflate(R.menu.result, menu);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

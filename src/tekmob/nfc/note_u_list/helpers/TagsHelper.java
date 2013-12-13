@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 public class TagsHelper {
-	
+
 	public static final String TAG = "TagsHelper";
 
 	public static String[] getAvailableTags(Context context) {
@@ -17,7 +17,7 @@ public class TagsHelper {
 		ArrayList<String> tagsList = new ArrayList<String>();
 		while (tags.moveToNext()) {
 			tagsList.add(tags.getString(1));
-			Log.d(TAG, tags.getString(0) + ":::" + tags.getString(1));
+			// Log.d(TAG, tags.getString(0) + ":::" + tags.getString(1));
 		}
 		db.close();
 		String[] toRet = new String[tagsList.size()];

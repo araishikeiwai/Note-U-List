@@ -62,7 +62,7 @@ public class ViewNoteDetailActivity extends Activity {
 				}
 				reader.close();
 			} catch (Exception e) {
-				Log.e(TAG, "Failed to load text note!", e);
+				// Log.e(TAG, "Failed to load text note!", e);
 			}
 
 			toBeInFrameLayout = new TextView(getApplicationContext());
@@ -70,7 +70,7 @@ public class ViewNoteDetailActivity extends Activity {
 			((TextView) toBeInFrameLayout).setTextColor(Color.BLACK);
 			((TextView) toBeInFrameLayout).setText(sb.toString());
 		} else if (type.equals(ViewNoteListObject.TYPE_IMAGE)) {
-			Log.d(TAG, path);
+			// Log.d(TAG, path);
 			Bitmap image = BitmapFactory.decodeFile(path);
 			toBeInFrameLayout = new ImageView(getApplicationContext());
 			if (image.getWidth() > image.getHeight()) {

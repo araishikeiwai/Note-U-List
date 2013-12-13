@@ -58,7 +58,7 @@ public class AudioRecordTest extends Activity {
 			mPlayer.prepare();
 			mPlayer.start();
 		} catch (IOException e) {
-			Log.e(LOG_TAG, "prepare() failed");
+			// Log.e(LOG_TAG, "prepare() failed");
 		}
 	}
 
@@ -77,7 +77,7 @@ public class AudioRecordTest extends Activity {
 		try {
 			mRecorder.prepare();
 		} catch (IOException e) {
-			Log.e(LOG_TAG, "prepare() failed");
+			// Log.e(LOG_TAG, "prepare() failed");
 		}
 
 		mRecorder.start();

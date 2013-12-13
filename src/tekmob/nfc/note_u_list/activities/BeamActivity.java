@@ -2,15 +2,12 @@ package tekmob.nfc.note_u_list.activities;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.DBAdapter;
-import tekmob.nfc.note_u_list.helpers.NfcUtils;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.app.Activity;
 import android.content.Intent;
@@ -145,7 +142,7 @@ public class BeamActivity extends Activity implements
 			if (transFile.isFile()) {
 				if (transFile.canRead()) {
 					Uri fileUri = Uri.fromFile(transFile);
-					Log.d(TAG, fileUri.toString());
+					// Log.d(TAG, fileUri.toString());
 					try {
 						mToSend = getByteFromUri(fileUri);
 					} catch (Exception e) {

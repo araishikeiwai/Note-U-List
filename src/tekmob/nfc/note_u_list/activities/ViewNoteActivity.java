@@ -68,9 +68,9 @@ public class ViewNoteActivity extends ActionBarActivity {
 		c = db.getAllBerkas();
 		mList = new ArrayList<ViewNoteListObject>();
 		while (c.moveToNext()) {
-			Log.d(TAG,
-					c.getString(0) + "," + c.getString(1) + ","
-							+ c.getString(2) + "," + c.getString(3));
+			// Log.d(TAG,
+			// c.getString(0) + "," + c.getString(1) + ","
+			// + c.getString(2) + "," + c.getString(3));
 			mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
 					.getString(3), c.getString(2), db.getTagsForFile(c
 					.getString(2))));
@@ -371,9 +371,9 @@ public class ViewNoteActivity extends ActionBarActivity {
 		mList = new ArrayList<ViewNoteListObject>();
 		if (c.getCount() > 0) {
 			do {
-				Log.d(TAG,
-						c.getString(0) + "," + c.getString(1) + ","
-								+ c.getString(2) + "," + c.getString(3));
+				// Log.d(TAG,
+				// c.getString(0) + "," + c.getString(1) + ","
+				//			+ c.getString(2) + "," + c.getString(3));
 				mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
 						.getString(3), c.getString(2), db.getTagsForFile(c
 						.getString(2))));

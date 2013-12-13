@@ -156,7 +156,8 @@ public class AudioRecordingActivity extends Activity {
 		ImageView saveButton, discardButton, shareButton;
 		saveButton = (ImageView) findViewById(R.id.button_camera_captured_save);
 		discardButton = (ImageView) findViewById(R.id.button_camera_captured_discard);
-//		shareButton = (ImageView) findViewById(R.id.button_camera_captured_share);
+		// shareButton = (ImageView)
+		// findViewById(R.id.button_camera_captured_share);
 
 		saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -252,13 +253,13 @@ public class AudioRecordingActivity extends Activity {
 	private void renameFileOrFolder(File file, String newFileName) {
 		// newFileName = file.getName().substring(0, 13) + newFileName + ".txt";
 		File newFile = new File(newFileName);
-		Log.d("getParentFile", newFileName);
+		// Log.d("getParentFile", newFileName);
 		rename(file, newFile);
 		DBAdapter db = new DBAdapter(this);
 		db.open();
-		Log.d("newFile.getName()", newFile.getName());
-		Log.d("newFile.getAbsolutePath()", newFile.getAbsolutePath());
-		Log.d("file.getName()", file.getName());
+		// Log.d("newFile.getName()", newFile.getName());
+		// Log.d("newFile.getAbsolutePath()", newFile.getAbsolutePath());
+		// Log.d("file.getName()", file.getName());
 		db.updateBerkas(newFile.getName(), newFile.getAbsolutePath(),
 				file.getName());
 		// refresh();
@@ -268,7 +269,7 @@ public class AudioRecordingActivity extends Activity {
 	private void rename(File oldFile, File newFile) {
 		int toast = 0;
 		if (oldFile.renameTo(newFile)) {
-			Log.d("Rename", "was successful.");
+			// Log.d("Rename", "was successful.");
 			toast = R.string.file_renamed;
 		} else {
 			toast = R.string.error_renaming_file;
@@ -280,21 +281,21 @@ public class AudioRecordingActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		Log.d(TAG, "In onActivityResult()");
+		// Log.d(TAG, "In onActivityResult()");
 		if (data != null) {
 			if (requestCode == ResultActivity.GET_TITLE_TAG
 					&& resultCode == RESULT_OK) {
 				data.putExtra(NoteUListHelper.MEDIA_TYPE,
 						NoteUListHelper.MEDIA_TYPE_AUDIO);
 
-				Log.d(TAG, fileName);
+				// Log.d(TAG, fileName);
 
 				String namaFile = fileName + data.getExtras().get("note_title")
 						+ AUDIO_RECORDER_FILE_EXT_3GP;
-				Log.d("recorder", namaFile);
+				// Log.d("recorder", namaFile);
 				File old = new File(fileName);
 				NoteUListHelper.save_audio(mActivity, data, old);
-				Log.d("filename", old.getName());
+				// Log.d("filename", old.getName());
 				renameFileOrFolder(old, namaFile);
 				recorder = null;
 			}

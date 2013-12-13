@@ -29,13 +29,15 @@ public class NoteUListHelper {
 	}
 
 	public static void save(Context context, Intent data, byte[] toSave) {
-		Log.d(TAG, "YEAAYY::" + data.getExtras().get(ResultActivity.NOTE_TITLE)
-				+ "::" + data.getExtras().get(ResultActivity.NOTE_TAG));
+		// Log.d(TAG, "YEAAYY::" +
+		// data.getExtras().get(ResultActivity.NOTE_TITLE)
+		// + "::" + data.getExtras().get(ResultActivity.NOTE_TAG));
 		File fileLocation = getOutputMediaFile(
 				(Integer) data.getExtras().get(MEDIA_TYPE), (String) data
 						.getExtras().get(ResultActivity.NOTE_TITLE));
 		if (fileLocation == null) {
-			Log.d(TAG, "Error creating media file, check storage permissions");
+			// Log.d(TAG,
+			// "Error creating media file, check storage permissions");
 			return;
 		}
 		String[] tags = ((String) data.getExtras().get(ResultActivity.NOTE_TAG))
@@ -62,12 +64,12 @@ public class NoteUListHelper {
 			FileOutputStream fos = new FileOutputStream(fileLocation);
 			fos.write(toSave);
 			fos.close();
-			Log.d(TAG, "FILE SAVED!");
+			// Log.d(TAG, "FILE SAVED!");
 			Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
 		} catch (FileNotFoundException e) {
-			Log.d(TAG, "File not found: " + e.getMessage());
+			// Log.d(TAG, "File not found: " + e.getMessage());
 		} catch (IOException e) {
-			Log.d(TAG, "Error accessing file: " + e.getMessage());
+			// Log.d(TAG, "Error accessing file: " + e.getMessage());
 		} finally {
 			db.close();
 		}
@@ -75,17 +77,19 @@ public class NoteUListHelper {
 
 	public static void save_audio(Context context, Intent data,
 			File fileLocation) {
-		Log.d(TAG, "YEAAYY::" + data.getExtras().get(ResultActivity.NOTE_TITLE)
-				+ "::" + data.getExtras().get(ResultActivity.NOTE_TAG));
+		// Log.d(TAG, "YEAAYY::" +
+		// data.getExtras().get(ResultActivity.NOTE_TITLE)
+		// + "::" + data.getExtras().get(ResultActivity.NOTE_TAG));
 
 		if (fileLocation == null) {
-			Log.d(TAG, "Error creating media file, check storage permissions");
+			// Log.d(TAG,
+			// "Error creating media file, check storage permissions");
 			return;
 		}
 		String[] tags = ((String) data.getExtras().get(ResultActivity.NOTE_TAG))
 				.split(",");
 		String judul = fileLocation.getName();
-		Log.d("judul awal di database", judul);
+		// Log.d("judul awal di database", judul);
 		String path = fileLocation.getAbsolutePath();
 
 		String sem = "";
@@ -103,7 +107,7 @@ public class NoteUListHelper {
 				db.insertTagRelationship(path, tag);
 			}
 		}
-		Log.d(TAG, "FILE SAVED!");
+		// Log.d(TAG, "FILE SAVED!");
 		Toast.makeText(context, "Note saved!", Toast.LENGTH_SHORT).show();
 		db.close();
 	}
@@ -115,7 +119,7 @@ public class NoteUListHelper {
 		// Create the storage directory if it does not exist
 		if (!mediaStorageDir.exists()) {
 			if (!mediaStorageDir.mkdirs()) {
-				Log.d(TAG, "failed to create directory");
+				// Log.d(TAG, "failed to create directory");
 				return null;
 			}
 		}
@@ -150,7 +154,7 @@ public class NoteUListHelper {
 							mediaFile.getPath().length() - 4));
 		}
 
-		Log.d(TAG, mediaFile.getPath());
+		// Log.d(TAG, mediaFile.getPath());
 		return mediaFile;
 	}
 }

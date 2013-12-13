@@ -52,8 +52,9 @@ public class DBAdapter {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
-					+ newVersion + ", which will destroy all old data");
+			// Log.w(TAG, "Upgrading database from version " + oldVersion +
+			// " to "
+			// + newVersion + ", which will destroy all old data");
 			db.execSQL(TABLE_DROP);
 			onCreate(db);
 		}
@@ -94,7 +95,7 @@ public class DBAdapter {
 		if (!isTagInTable(tagName)) {
 			ContentValues initialValues = new ContentValues();
 			initialValues.put(KEY_TAGNAME, tagName);
-			Log.d(TAG, tagName);
+			// Log.d(TAG, tagName);
 			return db.insert("tag", null, initialValues);
 		}
 		return 0;
@@ -106,15 +107,15 @@ public class DBAdapter {
 		int tagid = getTagIdFromTagName(tagName);
 		initialValues.put(KEY_IDBERKAS_REL, filid);
 		initialValues.put(KEY_IDTAG_REL, tagid);
-		Log.d(TAG, "Inserting tag " + tagName + "(" + tagid
-				+ ") associated with file " + filePath + "(" + filid + ")");
+		// Log.d(TAG, "Inserting tag " + tagName + "(" + tagid
+		// + ") associated with file " + filePath + "(" + filid + ")");
 		return db.insert("tag_rel", null, initialValues);
 	}
 
 	private int getTagIdFromTagName(String tagName) {
 		String query = "SELECT " + KEY_IDTAG + " FROM tag WHERE " + KEY_TAGNAME
 				+ " = '" + tagName + "'";
-		Log.d(TAG, query);
+		// Log.d(TAG, query);
 		Cursor id = db.rawQuery(query, null);
 		id.moveToFirst();
 		return id.getInt(0);
@@ -123,7 +124,7 @@ public class DBAdapter {
 	private int getBerkasIdFromPath(String filePath) {
 		String query = "SELECT " + KEY_ID + " FROM berkas WHERE " + KEY_PATH
 				+ " = '" + filePath + "'";
-		Log.d(TAG, query);
+		// Log.d(TAG, query);
 		Cursor id = db.rawQuery(query, null);
 		id.moveToFirst();
 		return id.getInt(0);
@@ -131,14 +132,14 @@ public class DBAdapter {
 
 	public Cursor getAllAvailableTags() {
 		String query = "SELECT * FROM tag ORDER BY " + KEY_IDTAG + " ASC";
-		Log.d(TAG, query);
+		// Log.d(TAG, query);
 		return db.rawQuery(query, null);
 	}
 
 	public boolean isTagInTable(String tagName) {
 		String query = "SELECT * FROM tag WHERE " + KEY_TAGNAME + "= '"
 				+ tagName + "'";
-		Log.d(TAG, query);
+		// Log.d(TAG, query);
 		Cursor tags = db.rawQuery(query, null);
 		tags.moveToFirst();
 
@@ -242,7 +243,7 @@ public class DBAdapter {
 				+ KEY_PATH + "," + KEY_EXT
 				+ " from tag_rel a left join berkas b on a." + KEY_IDBERKAS_REL
 				+ "=b." + KEY_ROWID + selection;
-		Log.d(TAG, query);
+		// Log.d(TAG, query);
 		Cursor c = db.rawQuery(query, null);
 		c.moveToFirst();
 		return c;
@@ -273,7 +274,7 @@ public class DBAdapter {
 		int fileId = getBerkasIdFromPath(filepath);
 		String query = "SELECT " + KEY_IDTAG_REL + " FROM tag_rel WHERE "
 				+ KEY_IDBERKAS_REL + "=" + fileId;
-		Log.d(TAG, query);
+		// Log.d(TAG, query);
 		Cursor c = db.rawQuery(query, null);
 		c.moveToFirst();
 		ArrayList<String> res = new ArrayList<String>();
@@ -281,7 +282,7 @@ public class DBAdapter {
 			do {
 				query = "SELECT " + KEY_TAGNAME + " from tag where "
 						+ KEY_IDTAG + " = " + c.getInt(0);
-				Log.d(TAG, query);
+				// Log.d(TAG, query);
 				Cursor d = db.rawQuery(query, null);
 				d.moveToFirst();
 				if (d.getCount() > 0)

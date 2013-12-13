@@ -42,7 +42,7 @@ public class CameraPreview extends SurfaceView implements
 			mCamera.setParameters(p);
 			mCamera.startPreview();
 		} catch (IOException e) {
-			Log.d(TAG, "Error setting camera preview: " + e.getMessage());
+			// Log.d(TAG, "Error setting camera preview: " + e.getMessage());
 		}
 	}
 
