@@ -32,13 +32,13 @@
             android:layout_weight="1"
             android:src="@drawable/ic_discard2" />
 
-        <ImageView
+        <!-- <ImageView
             android:id="@+id/button_camera_captured_share"
             android:layout_width="0dp"
             android:layout_height="64dp"
             android:padding="10dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_share3" />
+            android:src="@drawable/ic_share3" /> -->
     </LinearLayout>
 
 </LinearLayout>
