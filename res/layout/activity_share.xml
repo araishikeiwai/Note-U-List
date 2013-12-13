@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="@string/nfc_button"
-        android:textAlignment="center" />
+         />
 
     <Button
         android:id="@+id/wifi_button"
@@ -21,6 +21,6 @@
         android:layout_below="@+id/nfc_button"
         android:layout_centerHorizontal="true"
         android:text="@string/wifi_button"
-        android:textAlignment="center" />
+        />
 
 </RelativeLayout>

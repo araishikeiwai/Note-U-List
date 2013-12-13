@@ -1,5 +1,7 @@
 package tekmob.nfc.note_u_list.activities;
 
+import java.io.File;
+
 import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.NoteUListHelper;
 import android.app.Activity;
@@ -96,6 +98,12 @@ public class NoteActivity extends Activity {
 				// TODO implement!
 				Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
 						Toast.LENGTH_SHORT).show();
+//				Intent result = new Intent(mActivity
+//						.getApplicationContext(), BeamActivity.class);
+//				File targetFile  = new File("mnt/sdcard/mNoteTitle");
+//				result.putExtra("file", targetFile);
+//				setResult(RESULT_OK, result);
+//				startActivityForResult(result, BeamActivity.GET_TITLE_TAG);
 			}
 		});
 	}

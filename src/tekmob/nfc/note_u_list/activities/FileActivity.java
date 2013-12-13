@@ -6,24 +6,28 @@ import java.util.List;
 
 import tekmob.nfc.note_u_list.R;
 import tekmob.nfc.note_u_list.helpers.DBAdapter;
+import tekmob.nfc.note_u_list.helpers.ViewNoteListAdapter;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 public class FileActivity extends Activity {
-	private ArrayList<String> list;
-	private ArrayList<String> real;
-	private ListView listView;
+	private String mContextText = "";
+	private List<ViewNoteListObject> mList;
+	Cursor c;
 	private File targetFile;
+	private ListView listView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +42,26 @@ public class FileActivity extends Activity {
 	}
 
 	private void showNotes() {
-		listView = (ListView) findViewById(R.id.file_browser_listview);
+		listView = (ListView) findViewById(R.id.list);
 		DBAdapter db = new DBAdapter(this);
 		db.open();
-		Cursor c = db.getAllBerkas();
-		list = new ArrayList<String>();
-		real = new ArrayList<String>();
+		c = db.getAllBerkas();
+		mList = new ArrayList<ViewNoteListObject>();
 		while (c.moveToNext()) {
-			list.add(getFileName(c.getString(1)));
-			real.add(c.getString(2));
+			mList.add(new ViewNoteListObject(getFileName(c.getString(1)), c
+					.getString(3), c.getString(2), db.getTagsForFile(c
+					.getString(2))));
+
 		}
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, list);
+		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
+				this, mList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position,
 					long arg3) {
-				File f = new File(real.get(position));
+				mContextText = mList.get(position).getFilename();
+				File f = new File(mContextText);
 				if (f.isFile()) {
 					targetFile = f;
 					returnTarget();

@@ -5,8 +5,7 @@
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="10dp" 
-    android:background="@drawable/line" >
+    android:paddingTop="10dp" >
 
     <TextView
         android:layout_width="wrap_content"
@@ -23,7 +22,7 @@
         tools:context=".FileBrowser" />
     
         <ListView
-        android:id="@+id/file_browser_listview"
+        android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
    		 </ListView>
