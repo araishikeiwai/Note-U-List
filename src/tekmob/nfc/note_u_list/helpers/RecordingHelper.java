@@ -37,7 +37,7 @@ public class RecordingHelper extends Activity  {
 		ImageView saveButton, discardButton, shareButton;
 		saveButton = (ImageView) findViewById(R.id.button_camera_captured_save);
 		discardButton = (ImageView) findViewById(R.id.button_camera_captured_discard);
-		shareButton = (ImageView) findViewById(R.id.button_camera_captured_share);
+//		shareButton = (ImageView) findViewById(R.id.button_camera_captured_share);
 
 		saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -70,13 +70,13 @@ public class RecordingHelper extends Activity  {
 			}
 		});
 
-		shareButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				// TODO implement!
-				Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
-						Toast.LENGTH_SHORT).show();
-			}
-		});
+		// shareButton.setOnClickListener(new OnClickListener() {
+		// public void onClick(View v) {
+		// // TODO implement!
+		// Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
+		// Toast.LENGTH_SHORT).show();
+		// }
+		// });
 	}
 	
 	private String getFilename() {

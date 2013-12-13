@@ -50,7 +50,7 @@ public class NoteActivity extends Activity {
 
 		saveButton = (ImageView) findViewById(R.id.button_camera_captured_save);
 		discardButton = (ImageView) findViewById(R.id.button_camera_captured_discard);
-		shareButton = (ImageView) findViewById(R.id.button_camera_captured_share);
+//		shareButton = (ImageView) findViewById(R.id.button_camera_captured_share);
 
 		saveButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -93,19 +93,19 @@ public class NoteActivity extends Activity {
 			}
 		});
 
-		shareButton.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				// TODO implement!
-				Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
-						Toast.LENGTH_SHORT).show();
-				// Intent result = new Intent(mActivity
-				// .getApplicationContext(), BeamActivity.class);
-				// File targetFile = new File("mnt/sdcard/mNoteTitle");
-				// result.putExtra("file", targetFile);
-				// setResult(RESULT_OK, result);
-				// startActivityForResult(result, BeamActivity.GET_TITLE_TAG);
-			}
-		});
+		// shareButton.setOnClickListener(new OnClickListener() {
+		// public void onClick(View v) {
+		// // TODO implement!
+		// Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
+		// Toast.LENGTH_SHORT).show();
+		// // Intent result = new Intent(mActivity
+		// // .getApplicationContext(), BeamActivity.class);
+		// // File targetFile = new File("mnt/sdcard/mNoteTitle");
+		// // result.putExtra("file", targetFile);
+		// // setResult(RESULT_OK, result);
+		// // startActivityForResult(result, BeamActivity.GET_TITLE_TAG);
+		// }
+		// });
 	}
 
 	@Override
