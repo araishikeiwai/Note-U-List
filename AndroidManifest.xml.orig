@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="tekmob.nfc.note_u_list"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat.Light" >
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.helpers.RecordingHelper"
+            android:label="@string/title_activity_voice_rec"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.CameraActivity"
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.AudioRecordTest"
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ViewNoteActivity"
+            android:label="@string/title_activity_view_note"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.NoteActivity"
+            android:label="@string/title_activity_note"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.AudioRecordingActivity"
+            android:label="@string/title_activity_voice_rec"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ShareActivity"
+            android:label="@string/title_activity_share"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ManActivity"
+            android:label="@string/title_activity_man"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ResultActivity"
+            android:label="@string/title_activity_result"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ViewNoteDetailActivity"
+            android:label="@string/title_activity_view_note_detail"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+            android:name="tekmob.nfc.note_u_list.RecordingHelper"
+            android:label="@string/title_activity_recording_helper" >
+=======
+=======
+>>>>>>> origin/finalweek/ricky
+=======
+>>>>>>> finalweek/ricky
+            android:name="tekmob.nfc.note_u_list.activities.FileActivity"
+            android:label="@string/title_activity_file" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.WifiActivity"
+            android:label="@string/title_activity_wifi" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.FileFixActivity"
+            android:label="@string/title_activity_file_fix" >
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 85a28737ba9388bfe9e7da149f2a1f3b3e3e3620
+=======
+>>>>>>> origin/finalweek/ricky
+=======
+>>>>>>> finalweek/ricky
+        </activity>
+    </application>
+
+</manifest>

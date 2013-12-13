@@ -6,11 +6,31 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg_paper"
     tools:context=".NoteActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/noteTitle"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:ems="10"
+        android:hint="@string/note_title"
+        android:inputType="textPersonName"
+        android:maxLines="1" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/noteContent"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/noteTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:gravity="top"
+        android:hint="@string/note_content"
+        android:inputType="textMultiLine" />
 
 </RelativeLayout>

@@ -4,21 +4,46 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
     <uses-sdk
-        android:minSdkVersion="10"
-        android:targetSdkVersion="17" />
+        android:minSdkVersion="16"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
+        android:debuggable="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.AppCompat.Light" >
+        <service
+            android:name="tekmob.nfc.note_u_list.activities.ServerService"
+            android:exported="false" />
+        <service
+            android:name="tekmob.nfc.note_u_list.activities.ClientService"
+            android:exported="false" />
+
         <activity
-            android:name="tekmob.nfc.note_u_list.MainActivity"
-            android:label="@string/app_name" >
+            android:name="tekmob.nfc.note_u_list.activities.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,36 +51,91 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.CameraActivity"
-            android:label="@string/title_activity_camera" >
-        </activity>
-         <activity
-            android:name="tekmob.nfc.note_u_list.AudioRecordTest"
-            android:label="@string/title_activity_camera" >
+            android:name="tekmob.nfc.note_u_list.activities.CameraActivity"
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.ViewNoteActivity"
-            android:label="@string/title_activity_view_note" >
+            android:name="tekmob.nfc.note_u_list.activities.AudioRecordTest"
+            android:label="@string/title_activity_camera"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.NoteActivity"
-            android:label="@string/title_activity_note" >
+            android:name="tekmob.nfc.note_u_list.activities.ViewNoteActivity"
+            android:label="@string/title_activity_view_note"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.AudioRecordingActivity"
-            android:label="@string/title_activity_voice_rec" >
+            android:name="tekmob.nfc.note_u_list.activities.NoteActivity"
+            android:label="@string/title_activity_note"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.ShareActivity"
-            android:label="@string/title_activity_share" >
+            android:name="tekmob.nfc.note_u_list.activities.AudioRecordingActivity"
+            android:label="@string/title_activity_voice_rec"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.SplashActivity"
-            android:label="@string/title_activity_splash" >
+            android:name="tekmob.nfc.note_u_list.activities.ShareActivity"
+            android:label="@string/title_activity_share"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="tekmob.nfc.note_u_list.ManActivity"
-            android:label="@string/title_activity_man" >
+            android:name="tekmob.nfc.note_u_list.activities.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ResultActivity"
+            android:label="@string/title_activity_result"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ViewNoteDetailActivity"
+            android:label="@string/title_activity_view_note_detail"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.FileActivity"
+            android:label="@string/title_activity_file" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.WifiActivity"
+            android:label="@string/title_activity_wifi" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.FileFixActivity"
+            android:label="@string/title_activity_file_fix" >
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.ClientActivity"
+            android:label="@string/title_activity_client"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.pdx.cs410.wifi.direct.file.transfer.WifiActivity" />
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.BeamActivity"
+            android:label="@string/title_activity_beam" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/tekmob.nfc.note_u_list" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="tekmob.nfc.note_u_list.activities.BeamActivity_"
+            android:label="@string/title_activity_beam" >
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/tekmob.nfc.note_u_list" />
+            </intent-filter>
         </activity>
     </application>
 

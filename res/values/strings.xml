@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="folder_name">File name</string>
     <string name="app_name">Note-U-List!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
@@ -9,7 +10,67 @@
     <string name="title_activity_camera">Take a Picture Note</string>
     <string name="title_activity_voice_rec">Record a Voice Note</string>
     <string name="title_activity_share">Share Your Notes</string>
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_man">ManActivity</string>
+    <string name="note_title">Note Title</string>
+    <string name="note_content">Note Content</string>
+    <string name="note_tag">Note Tags</string>
+    <string name="note_tag_remark">Separate using comma</string>
+    <string name="submit">Submit</string>
+    <string name="save">Save</string>
+    <string name="title_activity_result">Your Note Properties</string>
+    <string name="title_activity_splash">Note-U-List!</string>
+    <string name="title_activity_man">Man</string>
+    <string name="error_file_does_not_exists">File does not exist.</string>
+    <string name="application_not_available">Application not available</string>
+    <string name="this_folder_is_empty">This folder is empty.</string>
+    <string name="really_delete">Do you really want to delete %s?</string>
+    <string name="file_deleted">File deleted.</string>
+    <string name="folder_deleted">Folder deleted.</string>
+    <string name="file_renamed">File renamed.</string>
+    <string name="folder_renamed">Folder renamed.</string>
+    <string name="error_deleting_file">Could not delete file.</string>
+    <string name="error_folder_not_empty">Folder is not empty.</string>
+    <string name="error_renaming_file">Could not rename file.</string>
+    <string name="menu_rename">Rename</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="quit_ask">Quit application?</string>
+    <string name="quit_prompt">Are you sure you want to quit Note-U-List! application?</string>
+    <string name="title_activity_view_note_detail">Note Details</string>
+    <string name="action_filter">Filter</string>
+    <string name="title_activity_test">Test</string>
+    <string name="title_activity_recording_helper">RecordingHelper</string>
+    <string name="title_activity_file">Files</string>
+    <string name="title_activity_wifi">Wi-Fi Direct</string>
+    <string name="title_activity_file_fix">Files</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">WiFi Direct File Transfer</string>
+    <string name="main_activity_server_title">Receive a File</string>
+    <string name="path_label">Path</string>
+    <string name="temp_path">/</string>
+    <string name="browse_path_button">Browse</string>
+    <string name="start_server_button">Start Server</string>
+    <string name="stop_server_button">Stop Server</string>
+    <string name="main_activity_client_title">Send a File</string>
+    <string name="start_client">Start Client</string>
+    <string name="server_stopped">Server has stopped</string>
+    <string name="server_running">Server is running</string>
+    <string name="title_activity_file_browser">WiFi Direct File Transfer</string>
+    <string name="file_browser_title">File Browser</string>
+    <string name="peers_list">Search Results</string>
+    <string name="title_activity_client">WiFi Direct File Transfer</string>
+    <string name="client_title">Send a File</string>
+    <string name="client_search">Search</string>
+    <string name="client_send_file">Send</string>
+    <string name="no_file_selected">No file selected to transfer</string>
+    <string name="select_dir">Select Directory</string>
+    <string name="select_tag">Select note type/tags to show</string>
+    <string name="no_nfc">Sorry, NFC/Android Beam is not available on your device</string>
+    <string name="nfc_button">Send note using NFC</string>
+    <string name="wifi_button">Send note using WiFi Direct</string>
+
+    <color name="tur">#3BB3C2</color>
+
+    <string name="title_activity_beam">NFC Beam</string>
 
 </resources>
