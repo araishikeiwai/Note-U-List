@@ -34,6 +34,8 @@ public class FileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_file_browser);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#3BB3C2")));
 		showNotes();
 	}
 
@@ -54,8 +56,7 @@ public class FileActivity extends Activity {
 
 		}
 
-		ViewNoteListAdapter adapter = new ViewNoteListAdapter(
-				this, mList);
+		ViewNoteListAdapter adapter = new ViewNoteListAdapter(this, mList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View v, int position,

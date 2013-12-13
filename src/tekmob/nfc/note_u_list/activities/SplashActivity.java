@@ -3,6 +3,8 @@ package tekmob.nfc.note_u_list.activities;
 import tekmob.nfc.note_u_list.R;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,6 +19,8 @@ public class SplashActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		getActionBar().hide();
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#3BB3C2")));
 
 		new Handler().postDelayed(new Runnable() {
 			@Override

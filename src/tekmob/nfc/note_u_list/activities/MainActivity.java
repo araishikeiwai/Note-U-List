@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -22,6 +24,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		// TODO when migrating to API lv 14, change to grid layout
 		setContentView(R.layout.activity_main);
 		getActionBar().hide();
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#3BB3C2")));
 
 		mNoteButton = (ImageView) findViewById(R.id.noteButton);
 		mNoteButton.setOnClickListener(this);

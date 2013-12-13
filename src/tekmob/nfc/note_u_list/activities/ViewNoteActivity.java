@@ -86,7 +86,8 @@ public class ViewNoteActivity extends ActionBarActivity {
 				mContextText = mList.get(position).getFilename();
 				openFiles(mList.get(position).getFilename(), mList
 						.get(position).getType(), mList.get(position)
-						.getTitle(), (String) ViewNoteListAdapter.convertTagsToString(mList.get(position).getTags()));
+						.getTitle(), (String) ViewNoteListAdapter
+						.convertTagsToString(mList.get(position).getTags()));
 			}
 		});
 		// if (c.moveToFirst()) {
@@ -389,7 +390,8 @@ public class ViewNoteActivity extends ActionBarActivity {
 				mContextText = mList.get(position).getFilename();
 				openFiles(mList.get(position).getFilename(), mList
 						.get(position).getType(), mList.get(position)
-						.getTitle(), (String) ViewNoteListAdapter.convertTagsToString(mList.get(position).getTags()));
+						.getTitle(), (String) ViewNoteListAdapter
+						.convertTagsToString(mList.get(position).getTags()));
 			}
 		});
 		db.close();

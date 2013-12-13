@@ -14,6 +14,8 @@ import tekmob.nfc.note_u_list.helpers.NfcUtils;
 import tekmob.nfc.note_u_list.helpers.ViewNoteListObject;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -43,6 +45,8 @@ public class BeamActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_beam);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#3BB3C2")));
 
 		// Check for available NFC Adapter
 		mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -65,8 +69,9 @@ public class BeamActivity extends Activity implements
 		// NfcUtils.createRecord(MIME_TYPE, mToSend),
 		// NdefRecord.createApplicationRecord(PACKAGE_NAME) });
 		String text = files.getName();
-		NdefMessage msg = new NdefMessage(
-				new NdefRecord[] { NdefRecord.createMime(MIME_TYPE, mToSend),NdefRecord.createMime(MIME_TYPE, text.getBytes()) });
+		NdefMessage msg = new NdefMessage(new NdefRecord[] {
+				NdefRecord.createMime(MIME_TYPE, mToSend),
+				NdefRecord.createMime(MIME_TYPE, text.getBytes()) });
 		return msg;
 	}
 
@@ -200,23 +205,23 @@ public class BeamActivity extends Activity implements
 		// record 0 contains the MIME type, record 1 is the AAR, if present
 		String payload = new String(msg.getRecords()[0].getPayload());
 		String name = new String(msg.getRecords()[1].getPayload());
-		FileOutputStream fileOuputStream = new FileOutputStream(
-				new File("/mnt/sdcard/Note-U-List!/", name));
+		FileOutputStream fileOuputStream = new FileOutputStream(new File(
+				"/mnt/sdcard/Note-U-List!/", name));
 		fileOuputStream.write(msg.getRecords()[0].getPayload());
 		fileOuputStream.close();
 		Toast.makeText(getApplicationContext(),
 				"Message received over beam: " + name, Toast.LENGTH_LONG)
 				.show();
-		String path = "/mnt/sdcard/Note-U-List!/"+name;
+		String path = "/mnt/sdcard/Note-U-List!/" + name;
 		String ext = "";
 		int dot = path.lastIndexOf(".");
 		if (dot >= 0)
 			ext = path.substring(dot);
-		if(ext.equals(".txt"))
+		if (ext.equals(".txt"))
 			ext = ViewNoteListObject.TYPE_TEXT;
-		if(ext.equals(".jpg"))
+		if (ext.equals(".jpg"))
 			ext = ViewNoteListObject.TYPE_IMAGE;
-		if(ext.equals(".3ga"))
+		if (ext.equals(".3ga"))
 			ext = ViewNoteListObject.TYPE_AUDIO;
 		DBAdapter db = new DBAdapter(this);
 		db.open();
