@@ -18,7 +18,7 @@
     <string name="save">Save</string>
     <string name="title_activity_result">Your Note Properties</string>
     <string name="title_activity_splash">Note-U-List!</string>
-    <string name="title_activity_man">ManActivity</string>
+    <string name="title_activity_man">Man</string>
     <string name="error_file_does_not_exists">File does not exist.</string>
     <string name="application_not_available">Application not available</string>
     <string name="this_folder_is_empty">This folder is empty.</string>
@@ -37,11 +37,11 @@
     <string name="quit_prompt">Are you sure you want to quit Note-U-List! application?</string>
     <string name="title_activity_view_note_detail">Note Details</string>
     <string name="action_filter">Filter</string>
-    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_test">Test</string>
     <string name="title_activity_recording_helper">RecordingHelper</string>
-    <string name="title_activity_file">FileActivity</string>
-    <string name="title_activity_wifi">WifiActivity</string>
-    <string name="title_activity_file_fix">FileFixActivity</string>
+    <string name="title_activity_file">Files</string>
+    <string name="title_activity_wifi">Wi-Fi Direct</string>
+    <string name="title_activity_file_fix">Files</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">WiFi Direct File Transfer</string>
@@ -71,6 +71,6 @@
 
     <color name="tur">#3BB3C2</color>
 
-    <string name="title_activity_beam">BeamActivity</string>
+    <string name="title_activity_beam">NFC Beam</string>
 
 </resources>

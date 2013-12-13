@@ -98,12 +98,12 @@ public class NoteActivity extends Activity {
 				// TODO implement!
 				Toast.makeText(mActivity, "NOT YET IMPLEMENTED",
 						Toast.LENGTH_SHORT).show();
-//				Intent result = new Intent(mActivity
-//						.getApplicationContext(), BeamActivity.class);
-//				File targetFile  = new File("mnt/sdcard/mNoteTitle");
-//				result.putExtra("file", targetFile);
-//				setResult(RESULT_OK, result);
-//				startActivityForResult(result, BeamActivity.GET_TITLE_TAG);
+				// Intent result = new Intent(mActivity
+				// .getApplicationContext(), BeamActivity.class);
+				// File targetFile = new File("mnt/sdcard/mNoteTitle");
+				// result.putExtra("file", targetFile);
+				// setResult(RESULT_OK, result);
+				// startActivityForResult(result, BeamActivity.GET_TITLE_TAG);
 			}
 		});
 	}
@@ -138,5 +138,23 @@ public class NoteActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		new AlertDialog.Builder(mActivity)
+				.setTitle("Discard confirmation")
+				.setMessage(
+						"Do you really want to go back and discard this note?\nThis cannot be undone!")
+				.setIcon(android.R.drawable.ic_dialog_alert)
+				.setPositiveButton(android.R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								Toast.makeText(mActivity, "Note discarded!",
+										Toast.LENGTH_SHORT).show();
+								finish();
+							}
+						}).setNegativeButton(android.R.string.no, null).show();
 	}
 }
